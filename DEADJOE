@@ -1,0 +1,43 @@
+
+*** These modified files were found in JOE when it aborted on Fri Sep 19 13:47:46 2025
+*** JOE was aborted because the terminal closed
+
+*** Fichier '(Sans nom)'
+
+*** Fichier '(Sans nom)'
+crlf
+rmargin
+square
+
+*** Fichier '(Sans nom)'
+root
+root
+root
+
+*** Fichier '(Sans nom)'
+quit
+
+*** Fichier '(Sans nom)'
+/home/e20250003175/Documents/POA/WeAreCooked/.git/COMMIT_EDITMSG
+
+*** Fichier '/home/e20250003175/Documents/POA/WeAreCooked/.git/COMMIT_EDITMSG'
+Init
+# Veuillez saisir le message de validation pour vos modifications. Les lignes
+#
+# Sur la branche main
+# Votre branche est à jour avec 'origin/main'.
+#
+# Modifications qui seront validées :
+#	nouveau fichier : .idea/WeAreCooked.iml
+#	nouveau fichier : .idea/misc.xml
+#	nouveau fichier : .idea/modules.xml
+#	nouveau fichier : .idea/vcs.xml
+#	nouveau fichier : .idea/workspace.xml
+#	nouveau fichier : data/.gitignore
+#	nouveau fichier : data/.idea/.gitignore
+#	nouveau fichier : data/src/Main.java
+#
+
+*** Fichier '* Startup Log *'
+Traitement de '/etc/joe/editorrc'...Traitement de '/etc/joe/ftyperc'...Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc
