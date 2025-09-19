@@ -19,11 +19,11 @@ public abstract class Recette {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Recette recette = (Recette) o;
+        if (o == null || o.getClass() != ArrayList.class) return false;
+        ArrayList<Ingredient> ingredients = (ArrayList<Ingredient>) o;
         for (Ingredient ingredient : allIngredients) {
             boolean ingredientFound = false;
-            for (Ingredient ingredient2 : recette.getAllIngredients()) {
+            for (Ingredient ingredient2 : ingredients) {
                 if (ingredient.equals(ingredient2)) {
                     ingredientFound = true;
                     break;
