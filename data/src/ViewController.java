@@ -1,15 +1,15 @@
-package data.src;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.awt.Color;
+import Meuble.*;
+import Player.Player;
 
 
-public class View_Controller {
+public class ViewController {
 
     public int[][] board;
     public Player player;
@@ -73,7 +73,7 @@ public class View_Controller {
     }
 
 
-    public View_Controller() {
+    public ViewController() {
         board = new int[8][8];
         player = new Player(0, 0);
         panelBoard = new GridPanel();

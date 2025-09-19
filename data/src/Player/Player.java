@@ -1,3 +1,7 @@
+package Player;
+
+import Ingredient.Ingredient;
+
 public class Player {
 
     private int posX;

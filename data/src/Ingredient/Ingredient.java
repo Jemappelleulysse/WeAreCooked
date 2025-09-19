@@ -1,4 +1,4 @@
-package Modele;
+package Ingredient;
 
 public enum Ingredient {
     STEAK,

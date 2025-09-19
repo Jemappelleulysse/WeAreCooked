@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e16db19-dd83-4700-a7e1-346413a2dcf9" name="Changes" comment="Reorganisation des dossiers">
+    <list default="true" id="1e16db19-dd83-4700-a7e1-346413a2dcf9" name="Changes" comment="Reorganisation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Meuble/Coffre.java" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/Meuble/Coffre.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,26 +15,30 @@
   <component name="Git.Merge.Settings">
     <option name="BRANCH" value="origin/LaGraille" />
   </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="origin/quoicoubeh" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="quoicoubeh" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "JeremNcl"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JeremNcl&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Jemappelleulysse/WeAreCooked.git",
-    "accountId": "1e4f99c8-a7bd-47cb-bb11-f14a65c3cb1e"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Jemappelleulysse/WeAreCooked.git&quot;,
+    &quot;accountId&quot;: &quot;1e4f99c8-a7bd-47cb-bb11-f14a65c3cb1e&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -58,7 +61,7 @@
     "git-widget-placeholder": "modifsJeremy",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/e20250002139/Documents/POA_SMA/TP1",
+    "last_opened_file_path": "/home/e20250002139/Documents/POA_SMA/TP1/data",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -70,6 +73,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data/src" />
       <recent name="$PROJECT_DIR$/data/src/Recette" />
       <recent name="$PROJECT_DIR$/data/src/Ingredient" />
       <recent name="$PROJECT_DIR$/data/src/Player" />
@@ -92,7 +96,7 @@
       <option name="presentableId" value="Default" />
       <updated>1758282222183</updated>
       <workItem from="1758282223285" duration="40000" />
-      <workItem from="1758283481969" duration="3848000" />
+      <workItem from="1758283481969" duration="4736000" />
     </task>
     <task id="LOCAL-00001" summary="Création de la classe player">
       <option name="closed" value="true" />
@@ -142,7 +146,23 @@
       <option name="project" value="LOCAL" />
       <updated>1758287260520</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Correction getIngredient coffre">
+      <option name="closed" value="true" />
+      <created>1758287353212</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1758287353212</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Reorganisation">
+      <option name="closed" value="true" />
+      <created>1758287387556</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1758287387556</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +187,8 @@
     <MESSAGE value="Correction getPosY meuble" />
     <MESSAGE value="Implémentation de Coffre" />
     <MESSAGE value="Reorganisation des dossiers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reorganisation des dossiers" />
+    <MESSAGE value="Correction getIngredient coffre" />
+    <MESSAGE value="Reorganisation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reorganisation" />
   </component>
 </project>

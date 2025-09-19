@@ -1,3 +1,7 @@
+package Meuble;
+
+import Ingredient.Ingredient;
+
 public class Coffre extends Meuble {
 
     private Ingredient ingredient;
