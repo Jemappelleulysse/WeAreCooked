@@ -5,5 +5,6 @@ public enum Ingredient {
     SALADE,
     TOMATE,
     PAIN,
-    PATES
+    PATES,
+    TOMATE_COUPE
 }
