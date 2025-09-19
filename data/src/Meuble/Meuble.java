@@ -1,5 +1,7 @@
 package Meuble;
 
+import Ingredient.Ingredient;
+
 public abstract class Meuble {
 
     private int posX;
@@ -23,4 +25,8 @@ public abstract class Meuble {
     protected void setPosY(int posY) {
         this.posY = posY;
     }
+
+
+    /// METHODS ///
+    public abstract Ingredient interact(Ingredient ingredient);
 }

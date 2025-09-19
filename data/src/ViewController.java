@@ -125,7 +125,7 @@ public class ViewController {
                         if (player.isHoldingSomething()) {
                             if (!planDeTravail.hasSomethingOn()) {
                                 player.setHoldingSomething(false);
-                                planDeTravail.setHasSomethingOn(true);
+                                //planDeTravail.setHasSomethingOn(true);
                                 planDeTravail.setIngredientOn(player.getIngredientHolded());
                                 player.setIngredientHolded(null);
                             }
@@ -133,7 +133,7 @@ public class ViewController {
                             if (planDeTravail.hasSomethingOn()) {
                                 player.setHoldingSomething(true);
                                 player.setIngredientHolded(planDeTravail.getIngredientOn());
-                                planDeTravail.setHasSomethingOn(false);
+                                //planDeTravail.setHasSomethingOn(false);
                                 planDeTravail.setIngredientOn(null);
                             }
                         }

@@ -4,7 +4,6 @@ import Ingredient.Ingredient;
 
 public class PlanDeTravail extends Meuble {
 
-    private boolean hasSomethingOn = false;
     private Ingredient ingredientOn = null;
 
     /// CONSTRUCTOR ///
@@ -16,7 +15,7 @@ public class PlanDeTravail extends Meuble {
 
     /// GETTER ///
     public boolean hasSomethingOn() {
-        return hasSomethingOn;
+        return ingredientOn != null;
     }
 
     public Ingredient getIngredientOn() {
@@ -25,11 +24,29 @@ public class PlanDeTravail extends Meuble {
 
 
     /// SETTER ///
-    public void setHasSomethingOn(boolean hasSomethingOn) {
-        this.hasSomethingOn = hasSomethingOn;
-    }
-
     public void setIngredientOn(Ingredient ingredientOn) {
         this.ingredientOn = ingredientOn;
+    }
+
+
+    /// METHODS ///
+    @Override
+    public Ingredient interact(Ingredient ingredient) {
+
+        Ingredient returnedIngredient = null;
+
+        if(ingredient == null) {
+            if(hasSomethingOn()) {
+                returnedIngredient = this.ingredientOn;
+                setIngredientOn(null);
+            }
+        } else {
+            if(hasSomethingOn()) {
+                returnedIngredient = ingredient;
+            } else  {
+                setIngredientOn(ingredient);
+            }
+        }
+        return returnedIngredient;
     }
 }
