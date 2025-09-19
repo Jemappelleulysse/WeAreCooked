@@ -1,3 +1,5 @@
+import Ingredient.Ingredient;
+import Meuble.Coffre;
 import Recette.RecetteGenerator;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -12,7 +14,8 @@ public class Main {
         }
 
         ViewController controller = new ViewController();
-
+        controller.meubles.add(new Coffre(0,1, Ingredient.STEAK));
+        controller.meubles.add(new Coffre(0,2, Ingredient.TOMATE));
         controller.display();
     }
 }

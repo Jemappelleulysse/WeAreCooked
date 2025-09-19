@@ -10,7 +10,7 @@ public class Coffre extends Meuble {
     /// CONSTRUCTOR ///
     public Coffre(int posX, int posY, Ingredient ingredient) {
         this.setPosX(posX);
-        this.setPosX(posX);
+        this.setPosY(posY);
         this.ingredient = ingredient;
     }
 
