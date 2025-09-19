@@ -1,21 +1,21 @@
 public class Player {
 
-    private float posX;
-    private float posY;
+    private int posX;
+    private int posY;
     private boolean isHoldingSomething =  false;
     private Ingredient ingredientHolded = null;
 
-    public Player(float posX, float posY) {
+    public Player(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
     }
 
-    // GETTERS
-    public float getPosX() {
+    //// GETTERS ////
+    public int getPosX() {
         return posX;
     }
 
-    public float getPosY() {
+    public int getPosY() {
         return posY;
     }
 
@@ -27,12 +27,12 @@ public class Player {
         return ingredientHolded;
     }
 
-    // SETTERS
-    public void setPosX(float posX) {
+    //// SETTERS ////
+    public void setPosX(int posX) {
         this.posX = posX;
     }
 
-    public void setPosY(float posY) {
+    public void setPosY(int posY) {
         this.posY = posY;
     }
 
