@@ -60,33 +60,33 @@ public class View_Controller {
 
 
     public void display() {
-        System.out.println("Displaying view...");
-        JFrame frame = new JFrame("MVC Example");
-        frame.setSize(1024, 700);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setLayout(null);
-        frame.add(panelBoard);
-        panelBoard.setVisible(true);
-        frame.setResizable(false);
-        frame.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int key = e.getKeyCode();
-                if (key == KeyEvent.VK_UP && posY > 0) {
-                    posY--;
-                } else if (key == KeyEvent.VK_DOWN && posY < 7) {
-                    posY++;
-                } else if (key == KeyEvent.VK_LEFT && posX > 0) {
-                    posX--;
-                } else if (key == KeyEvent.VK_RIGHT && posX < 7) {
-                    posX++;
-                }
-                panelBoard.repaint();
+    System.out.println("Displaying view...");
+    JFrame frame = new JFrame("MVC Example");
+    frame.setSize(1024, 700);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setVisible(true);
+    frame.setLayout(null);
+    frame.add(panelBoard);
+    panelBoard.setVisible(true);
+    frame.setResizable(false);
+    frame.addKeyListener(new KeyAdapter() {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            if (key == KeyEvent.VK_UP && posY > 0) {
+                posY--;
+            } else if (key == KeyEvent.VK_DOWN && posY < 7) {
+                posY++;
+            } else if (key == KeyEvent.VK_LEFT && posX > 0) {
+                posX--;
+            } else if (key == KeyEvent.VK_RIGHT && posX < 7) {
+                posX++;
             }
-        });
-        loop();
-    }
+            panelBoard.repaint();
+        }
+    });
+    // SUPPRIME la boucle infinie ici !
+}
 
     public static void main(String[] args) {
         View_Controller vc = new View_Controller();
@@ -98,13 +98,6 @@ public class View_Controller {
         this.posX = x;
         this.posY = y;
         panelBoard.repaint(); // Redessine le panneau pour refléter la nouvelle position
-    }
-
-    public void loop() {
-        while(true) {
-
-        }
-    
     }
 
 
