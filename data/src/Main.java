@@ -14,7 +14,7 @@ public class Main {
         }
 
         ViewController controller = new ViewController();
-        controller.meubles.add(new Coffre(0,1, Ingredient.STEAK));
+        controller.meubles.add(new Coffre(0,1, Ingredient.VIANDE));
         controller.meubles.add(new Coffre(0,2, Ingredient.TOMATE));
         controller.display();
     }
