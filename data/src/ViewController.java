@@ -5,6 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.Color;
+
+import Ingredient.Ingredient;
 import Meuble.*;
 import Player.Player;
 
@@ -15,6 +17,21 @@ public class ViewController {
     public Player player;
     public GridPanel panelBoard;
     public ArrayList<Meuble> meubles = new ArrayList<>();
+
+
+    void drawIngredient(Graphics g, int centerX, int centerY, int diameter, Ingredient ingredient) {
+        switch (ingredient) {
+            case TOMATE ->  g.setColor(Color.RED);
+            case VIANDE -> g.setColor(Color.PINK);
+            case TOMATE_COUPE -> g.setColor(Color.MAGENTA);
+            case PATES ->  g.setColor(Color.ORANGE);
+        }
+        int smallDiameter = diameter / 3;
+        int smallX = centerX + diameter - smallDiameter - 2;
+        int smallY = centerY + diameter - smallDiameter - 2;
+        g.fillOval(smallX, smallY, smallDiameter, smallDiameter);
+    }
+
 
     class GridPanel extends JPanel {
         @Override
@@ -42,15 +59,7 @@ public class ViewController {
             g.setColor(Color.YELLOW);
             g.fillOval(centerX, centerY, diameter, diameter);
             if (player.isHoldingSomething()) {
-                switch (player.getIngredientHolded()) {    
-                    default:
-                        g.setColor(Color.RED);
-                        int smallDiameter = diameter / 3;
-                        int smallX = centerX + diameter - smallDiameter - 2;
-                        int smallY = centerY + diameter - smallDiameter - 2;
-                        g.fillOval(smallX, smallY, smallDiameter, smallDiameter);
-                        break;
-                }
+                drawIngredient(g, centerX, centerY, diameter, player.getIngredientHolded());
             } else {
                 g.setColor(Color.RED);
             }
@@ -58,17 +67,39 @@ public class ViewController {
 
             // Dessine les meubles en bleu
             for (Meuble meuble : meubles) {
-                switch (getClass().getSimpleName()) {
+                int meubleX = meuble.getPosX() * cellWidth;
+                int meubleY = meuble.getPosY() * cellHeight;
+
+                switch (meuble.getClass().getSimpleName()) {
                     case "PlanDeTravail":
-                        g.setColor(Color.BLUE);
-                        break;    
+                        g.setColor(new Color(221, 147, 62));
+                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
+                        if (((PlanDeTravail)meuble).hasSomethingOn()) {
+                            drawIngredient(g,meubleX,meubleY,diameter,((PlanDeTravail)meuble).getIngredientOn());
+                        }
+                        break;
+                    case "Coffre":
+                        g.setColor(new Color(81, 0,0));
+                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
+                        drawIngredient(g,meubleX,meubleY,diameter,((Coffre)meuble).getIngredient());
+                        break;
+                    case "PlancheADecoupe":
+                        g.setColor(new Color(221, 147, 62));
+                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
+                        g.setColor(Color.lightGray);
+                        g.fillRect(meubleX+cellWidth/8, meubleY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
+                        break;
+                    case "Comptoir" :
+                        g.setColor(new Color(221, 147, 62));
+                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
+                        g.setColor(Color.lightGray);
+                        g.fillOval(meubleX+cellWidth/8, meubleY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
                     default:
                         g.setColor(Color.GREEN);
                         break;
                 }
-                int meubleX = meuble.getPosX() * cellWidth;
-                int meubleY = meuble.getPosY() * cellHeight;
-                g.fillRect(meubleX, meubleY, cellWidth, cellHeight);    
+
+
             }
         }
     }
@@ -107,6 +138,8 @@ public class ViewController {
                             }
                         }
                         break;
+                    case "PlancheADecoupe" :
+                        PlancheADecoupe plancheADecoupe = (PlancheADecoupe) meuble;
                 }
             }
         }
@@ -121,10 +154,10 @@ public class ViewController {
 
     public ViewController() {
         board = new int[8][8];
-        player = new Player(0, 0);
+        player = new Player(2,2);
         panelBoard = new GridPanel();
         panelBoard.setBackground(Color.LIGHT_GRAY);
-        panelBoard.setBounds(0, 0, 400, 400);
+        panelBoard.setBounds(0, 0, 900,900);
         // Initialize board with zeros
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -138,7 +171,7 @@ public class ViewController {
     public void display() {
         System.out.println("Displaying view...");
         JFrame frame = new JFrame("MVC Example");
-        frame.setSize(1024, 700);
+        frame.setSize(900, 930);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setLayout(null);
