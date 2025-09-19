@@ -3,17 +3,16 @@ package Recette;
 import Ingredient.Ingredient;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Recette {
 
-    protected List<Ingredient> allIngredients;
+    protected ArrayList<Ingredient> allIngredients;
 
     protected Recette() {
         allIngredients = new ArrayList<>();
     }
 
-    public List<Ingredient> getAllIngredients() {
+    public ArrayList<Ingredient> getAllIngredients() {
         return allIngredients;
     }
 
