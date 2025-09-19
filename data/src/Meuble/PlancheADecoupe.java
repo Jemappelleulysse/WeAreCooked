@@ -4,6 +4,8 @@ import Ingredient.Ingredient;
 
 public class PlancheADecoupe extends Meuble {
 
+    private Ingredient ingredientOn = null;
+
     /// CONSTRUCTOR ///
     public PlancheADecoupe(int posX, int posY) {
         this.setPosX(posX);
@@ -11,13 +13,45 @@ public class PlancheADecoupe extends Meuble {
     }
 
 
+    /// GETTER ///
+    public boolean hasSomethingOn() {
+        return ingredientOn != null;
+    }
+
+    public Ingredient getIngredientOn() {
+        return ingredientOn;
+    }
+
+
+    /// SETTER ///
+    public void setIngredientOn(Ingredient ingredientOn) {
+        this.ingredientOn = ingredientOn;
+    }
+
+
     /// METHODS ///
-    public Ingredient couper(Ingredient ingredient) {
-        switch (ingredient) {
-            case Ingredient.TOMATE :
-                return Ingredient.TOMATE_COUPE;
-            default:
-                return ingredient;
+    @Override
+    public Ingredient interact(Ingredient ingredientInHand) {
+
+        Ingredient returnedIngredient = null;
+
+        if(hasSomethingOn()) {      // QUELQUE CHOSE SUR LA PLANCHE
+            if(getIngredientOn().equals(Ingredient.TOMATE)) {
+                setIngredientOn(Ingredient.TOMATE_COUPE);
+                returnedIngredient = ingredientInHand;
+            } else {
+                if(ingredientInHand == null) {
+                    returnedIngredient = getIngredientOn();
+                    setIngredientOn(null);
+                } else {
+                    returnedIngredient = ingredientInHand;
+                }
+            }
+        } else {    // RIEN SUR LA PLANCHE
+            if(ingredientInHand != null) {
+                setIngredientOn(ingredientInHand);
+            }
         }
+        return returnedIngredient;
     }
 }

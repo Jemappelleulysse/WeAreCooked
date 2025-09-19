@@ -4,8 +4,7 @@ import Ingredient.Ingredient;
 
 public class Coffre extends Meuble {
 
-    private Ingredient ingredient;
-
+    private final Ingredient ingredient;
 
     /// CONSTRUCTOR ///
     public Coffre(int posX, int posY, Ingredient ingredient) {
@@ -18,5 +17,16 @@ public class Coffre extends Meuble {
     /// GETTER ///
     public Ingredient getIngredient() {
         return ingredient;
+    }
+
+
+    /// METHODS ///
+    @Override
+    public Ingredient interact(Ingredient ingredient) {
+        if(ingredient == null) {
+            return this.ingredient;
+        } else {
+            return null;
+        }
     }
 }
