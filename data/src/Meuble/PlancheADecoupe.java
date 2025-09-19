@@ -16,7 +16,7 @@ public class PlancheADecoupe extends Meuble {
         switch (ingredient) {
             case Ingredient.TOMATE :
                 return Ingredient.TOMATE_COUPE;
-            case default :
+            default:
                 return ingredient;
         }
     }
