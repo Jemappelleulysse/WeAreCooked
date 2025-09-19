@@ -1,3 +1,5 @@
+package Meuble;
+
 public abstract class Meuble {
 
     private int posX;

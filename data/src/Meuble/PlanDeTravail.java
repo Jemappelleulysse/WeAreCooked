@@ -1,3 +1,7 @@
+package Meuble;
+
+import Ingredient.Ingredient;
+
 public class PlanDeTravail extends Meuble {
 
     private boolean hasSomethingOn = false;
