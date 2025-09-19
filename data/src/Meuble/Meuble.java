@@ -8,7 +8,7 @@ public abstract class Meuble {
         return posX;
     }
 
-    public void getPosY(int posY) {
+    public int getPosY($) {
         return posY;
     }
 
