@@ -5,37 +5,40 @@ import Ingredient.Ingredient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recette {
+public abstract class Recette {
 
-    private List<Ingredient> neededIngredients;
+    protected List<Ingredient> allIngredients;
 
-    private List<Ingredient> currentIngredients;
-
-    public Recette(List<Ingredient> ingredients) {
-        this.neededIngredients = ingredients;
-        this.currentIngredients = new ArrayList<>();
+    protected Recette() {
+        allIngredients = new ArrayList<>();
     }
 
-    public void putIngredient(Ingredient ingredient) {
-        this.currentIngredients.add(ingredient);
-        recetteValide();
+    public List<Ingredient> getAllIngredients() {
+        return allIngredients;
     }
 
-    public void recetteValide(){
-        boolean valide = true;
-        for  (Ingredient ingredient : currentIngredients) {
-            if (!neededIngredients.contains(ingredient)) {
-                valide = false;
-                break;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recette recette = (Recette) o;
+        for (Ingredient ingredient : allIngredients) {
+            boolean ingredientFound = false;
+            for (Ingredient ingredient2 : recette.getAllIngredients()) {
+                if (ingredient.equals(ingredient2)) {
+                    ingredientFound = true;
+                    break;
+                }
+            }
+            if (!ingredientFound) {
+                return false;
             }
         }
-        if(valide){
-            //TODO : Lancer la transformation en plat à rendre
-        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return neededIngredients.toString();
+        return allIngredients.toString();
     }
 }

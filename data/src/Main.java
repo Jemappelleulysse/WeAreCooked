@@ -8,7 +8,7 @@ public class Main {
         RecetteGenerator test = new RecetteGenerator();
 
         for (int i = 1; i <= 10; i++) {
-            System.out.println(test.genererAleatoire(2,5).toString());
+            System.out.println(test.genererAleatoire().toString());
         }
 
         ViewController controller = new ViewController();

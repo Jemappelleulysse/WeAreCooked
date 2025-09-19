@@ -1,9 +1,9 @@
 package Ingredient;
 
 public enum Ingredient {
-    STEAK,
+    VIANDE,
     SALADE,
     TOMATE,
-    OIGNON,
-    CHAMPIGNON
+    PAIN,
+    PATES
 }
