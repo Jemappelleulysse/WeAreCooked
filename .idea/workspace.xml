@@ -4,14 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e16db19-dd83-4700-a7e1-346413a2dcf9" name="Changes" comment="Correction getPosY meuble">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Meuble/Coffre.java" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/Meuble/Coffre.java" afterDir="false" />
+    <list default="true" id="1e16db19-dd83-4700-a7e1-346413a2dcf9" name="Changes" comment="Implémentation de Coffre">
+      <change beforePath="$PROJECT_DIR$/data/src/Modele/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/Ingredient/Ingredient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Modele/Recette.java" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/Recette/Recette.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Modele/RecetteGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/Recette/RecetteGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/LaGraille" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -67,6 +71,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data/src/Recette" />
+      <recent name="$PROJECT_DIR$/data/src/Ingredient" />
       <recent name="$PROJECT_DIR$/data/src/Player" />
       <recent name="$PROJECT_DIR$/data/src/Meuble" />
     </key>
@@ -87,7 +93,7 @@
       <option name="presentableId" value="Default" />
       <updated>1758282222183</updated>
       <workItem from="1758282223285" duration="40000" />
-      <workItem from="1758283481969" duration="3615000" />
+      <workItem from="1758283481969" duration="3747000" />
     </task>
     <task id="LOCAL-00001" summary="Création de la classe player">
       <option name="closed" value="true" />
@@ -121,7 +127,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758286631231</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Implémentation de Coffre">
+      <option name="closed" value="true" />
+      <created>1758287126043</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1758287126043</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,6 +158,7 @@
     <MESSAGE value="Création des classes meuble et plan de travail" />
     <MESSAGE value="Création de Coffre et ajout de dossiers" />
     <MESSAGE value="Correction getPosY meuble" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correction getPosY meuble" />
+    <MESSAGE value="Implémentation de Coffre" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implémentation de Coffre" />
   </component>
 </project>
