@@ -39,10 +39,12 @@ public class ViewController {
             int diameter = Math.min(cellWidth, cellHeight) - 4; // marge de 2px de chaque côté
             int centerX = player.getPosX() * cellWidth + cellWidth / 2 - diameter / 2;
             int centerY = player.getPosY() * cellHeight + cellHeight / 2 - diameter / 2;
+            g.setColor(Color.YELLOW);
+            g.fillOval(centerX, centerY, diameter, diameter);
             if (player.isHoldingSomething()) {
                 switch (player.getIngredientHolded()) {    
                     default:
-                        g.setColor(Color.YELLOW);
+                        g.setColor(Color.RED);
                         int smallDiameter = diameter / 3;
                         int smallX = centerX + diameter - smallDiameter - 2;
                         int smallY = centerY + diameter - smallDiameter - 2;
@@ -52,8 +54,7 @@ public class ViewController {
             } else {
                 g.setColor(Color.RED);
             }
-            g.setColor(Color.RED);
-            g.fillOval(centerX, centerY, diameter, diameter);
+
 
             // Dessine les meubles en bleu
             for (Meuble meuble : meubles) {
@@ -70,6 +71,43 @@ public class ViewController {
                 g.fillRect(meubleX, meubleY, cellWidth, cellHeight);    
             }
         }
+    }
+
+    public boolean move(int direction) {
+        int k = (direction == 0) ? 1 : (direction == 1) ? -1 : 0;
+        int l =  (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
+        boolean isThereSomething = false;
+        for (Meuble meuble : meubles) {
+            System.out.println(meuble.getClass().getSimpleName() + " : " + meuble.getPosX() + " : " + meuble.getPosY());
+            if (meuble.getPosX() == player.getPosX()+k && meuble.getPosY() == player.getPosY()+l) {
+                isThereSomething = true;
+                System.out.println("oui");
+                switch (meuble.getClass().getSimpleName()) {
+                    case "Coffre" :
+                        if (!player.isHoldingSomething()) {
+                            player.setIngredientHolded(((Coffre) meuble).getIngredient());
+                            player.setHoldingSomething(true);
+                        }
+                        break;
+                    case "PlanDeTravail" :
+                        PlanDeTravail planDeTravail = (PlanDeTravail) meuble;
+                        if (player.isHoldingSomething()) {
+                            if (!planDeTravail.hasSomethingOn()) {
+                                player.setHoldingSomething(false);
+                                planDeTravail.setHasSomethingOn(true);
+                                planDeTravail.setIngredientOn(player.getIngredientHolded());
+                                player.setIngredientHolded(null);
+                            }
+                        }
+                }
+            }
+        }
+        if (isThereSomething) {
+            return true;
+        }
+        player.setPosX(player.getPosX()+k);
+        player.setPosY(player.getPosY()+l);
+        return true;
     }
 
 
@@ -90,33 +128,32 @@ public class ViewController {
 
 
     public void display() {
-    System.out.println("Displaying view...");
-    JFrame frame = new JFrame("MVC Example");
-    frame.setSize(1024, 700);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setVisible(true);
-    frame.setLayout(null);
-    frame.add(panelBoard);
-    panelBoard.setVisible(true);
-    frame.setResizable(false);
-    frame.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-            if (key == KeyEvent.VK_UP && player.getPosY() > 0) {
-                player.setPosY(player.getPosY()-1);
-            } else if (key == KeyEvent.VK_DOWN && player.getPosY() < 7) {
-                player.setPosY(player.getPosY()+1);
-            } else if (key == KeyEvent.VK_LEFT && player.getPosX() > 0) {
-                player.setPosX(player.getPosX()-1);
-            } else if (key == KeyEvent.VK_RIGHT && player.getPosX() < 7) {
-                player.setPosX(player.getPosX()+1);
+        System.out.println("Displaying view...");
+        JFrame frame = new JFrame("MVC Example");
+        frame.setSize(1024, 700);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setLayout(null);
+        frame.add(panelBoard);
+        panelBoard.setVisible(true);
+        frame.setResizable(false);
+        frame.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int key = e.getKeyCode();
+                if (key == KeyEvent.VK_UP && player.getPosY() > 0) {
+                    move(3);
+                } else if (key == KeyEvent.VK_DOWN && player.getPosY() < 7) {
+                    move(2);
+                } else if (key == KeyEvent.VK_LEFT && player.getPosX() > 0) {
+                    move(1);
+                } else if (key == KeyEvent.VK_RIGHT && player.getPosX() < 7) {
+                    move(0);
+                }
+                panelBoard.repaint();
             }
-            panelBoard.repaint();
-        }
-    });
-}
-
+        });
+    }
 
 
 
