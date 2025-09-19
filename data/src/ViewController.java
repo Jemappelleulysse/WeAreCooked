@@ -58,7 +58,7 @@ public class ViewController {
             int centerY = player.getPosY() * cellHeight + cellHeight / 2 - diameter / 2;
             g.setColor(Color.YELLOW);
             g.fillOval(centerX, centerY, diameter, diameter);
-            if (player.isHoldingSomething()) {
+            if (player.getIngredientHolded()!=null) {
                 drawIngredient(g, centerX, centerY, diameter, player.getIngredientHolded());
             } else {
                 g.setColor(Color.RED);
@@ -88,12 +88,20 @@ public class ViewController {
                         g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
                         g.setColor(Color.lightGray);
                         g.fillRect(meubleX+cellWidth/8, meubleY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
+                        if (((PlancheADecoupe)meuble).hasSomethingOn()) {
+                            drawIngredient(g,meubleX,meubleY,diameter,((PlancheADecoupe)meuble).getIngredientOn());
+                        }
                         break;
                     case "Comptoir" :
                         g.setColor(new Color(221, 147, 62));
                         g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
                         g.setColor(Color.lightGray);
                         g.fillOval(meubleX+cellWidth/8, meubleY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
+                        int dec = -5;
+                        for (Ingredient ingredient : ((Comptoir)meuble).currentIngredients) {
+                            drawIngredient(g,meubleX+dec,meubleY+dec,diameter,ingredient);
+                            dec+=10;
+                        }
                     default:
                         g.setColor(Color.GREEN);
                         break;
@@ -109,38 +117,9 @@ public class ViewController {
         int l =  (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
         boolean isThereSomething = false;
         for (Meuble meuble : meubles) {
-            System.out.println(meuble.getClass().getSimpleName() + " : " + meuble.getPosX() + " : " + meuble.getPosY());
             if (meuble.getPosX() == player.getPosX()+k && meuble.getPosY() == player.getPosY()+l) {
                 isThereSomething = true;
-                System.out.println("oui");
-                switch (meuble.getClass().getSimpleName()) {
-                    case "Coffre" :
-                        if (!player.isHoldingSomething()) {
-                            player.setIngredientHolded(((Coffre) meuble).getIngredient());
-                            player.setHoldingSomething(true);
-                        }
-                        break;
-                    case "PlanDeTravail" :
-                        PlanDeTravail planDeTravail = (PlanDeTravail) meuble;
-                        if (player.isHoldingSomething()) {
-                            if (!planDeTravail.hasSomethingOn()) {
-                                player.setHoldingSomething(false);
-                                //planDeTravail.setHasSomethingOn(true);
-                                planDeTravail.setIngredientOn(player.getIngredientHolded());
-                                player.setIngredientHolded(null);
-                            }
-                        } else {
-                            if (planDeTravail.hasSomethingOn()) {
-                                player.setHoldingSomething(true);
-                                player.setIngredientHolded(planDeTravail.getIngredientOn());
-                                //planDeTravail.setHasSomethingOn(false);
-                                planDeTravail.setIngredientOn(null);
-                            }
-                        }
-                        break;
-                    case "PlancheADecoupe" :
-                        PlancheADecoupe plancheADecoupe = (PlancheADecoupe) meuble;
-                }
+                player.setIngredientHolded(meuble.interact(player.getIngredientHolded()));
             }
         }
         if (isThereSomething) {

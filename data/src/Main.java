@@ -2,7 +2,10 @@ import Ingredient.Ingredient;
 import Meuble.Coffre;
 import Meuble.PlanDeTravail;
 import Meuble.PlancheADecoupe;
+import Meuble.Comptoir;
+import Recette.Recette;
 import Recette.RecetteGenerator;
+import Recette.PatesBolo;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -11,9 +14,6 @@ public class Main {
     public static void main(String[] args) {
         RecetteGenerator test = new RecetteGenerator();
 
-        for (int i = 1; i <= 10; i++) {
-            System.out.println(test.genererAleatoire().toString());
-        }
 
         ViewController controller = new ViewController();
         controller.meubles.add(new PlanDeTravail(3,3));
@@ -24,7 +24,7 @@ public class Main {
         controller.meubles.add(new Coffre(0,2, Ingredient.TOMATE));
         controller.meubles.add(new PlancheADecoupe(6,0));
         controller.meubles.add(new PlancheADecoupe(5,0));
-        //controller.meubles.add(new Comptoir(6,7));
+        controller.meubles.add(new Comptoir(6, 7, new PatesBolo()));
         for (int x = 0; x < 8; x++) {
 
             if (!(x==6 || x==5)) controller.meubles.add(new PlanDeTravail(x, 0));  // top row
