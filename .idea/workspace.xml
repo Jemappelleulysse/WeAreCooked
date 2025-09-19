@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e16db19-dd83-4700-a7e1-346413a2dcf9" name="Changes" comment="Reorganisation">
+      <change afterPath="$PROJECT_DIR$/.idea/overcooked.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/ViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/ViewController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,15 +32,12 @@
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;JeremNcl&quot;
-  }
+  &quot;lastFilter&quot;: {}
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Jemappelleulysse/WeAreCooked.git&quot;,
-    &quot;accountId&quot;: &quot;1e4f99c8-a7bd-47cb-bb11-f14a65c3cb1e&quot;
+    &quot;accountId&quot;: &quot;d6da43db-f8d8-472b-a16b-bdd8b56cf6ab&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -54,14 +55,19 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.Main.java.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "Application.java.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "modifsJeremy",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/e20250002139/Documents/POA_SMA/TP1/data",
+    "last_opened_file_path": "/home/ulysse/Bureau/overcooked/data",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -80,11 +86,22 @@
       <recent name="$PROJECT_DIR$/data/src/Meuble" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" activateToolWindowBeforeRun="false">
+      <option name="ALTERNATIVE_JRE_PATH" value="19" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="data/src/Main.class " />
+      <module name="overcooked" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
       </set>
     </attachedChunks>
   </component>
@@ -97,6 +114,8 @@
       <updated>1758282222183</updated>
       <workItem from="1758282223285" duration="40000" />
       <workItem from="1758283481969" duration="4736000" />
+      <workItem from="1758289227856" duration="581000" />
+      <workItem from="1758289823336" duration="171000" />
     </task>
     <task id="LOCAL-00001" summary="Création de la classe player">
       <option name="closed" value="true" />
