@@ -12,7 +12,7 @@ public class Coffre extends Meuble {
 
 
     /// GETTER ///
-    public boolean getIngredient() {
-        return new Ingredient(ingredient);
+    public Ingredient getIngredient() {
+        return ingredient;
     }
 }
