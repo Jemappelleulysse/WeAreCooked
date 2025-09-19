@@ -98,7 +98,15 @@ public class ViewController {
                                 planDeTravail.setIngredientOn(player.getIngredientHolded());
                                 player.setIngredientHolded(null);
                             }
+                        } else {
+                            if (planDeTravail.hasSomethingOn()) {
+                                player.setHoldingSomething(true);
+                                player.setIngredientHolded(planDeTravail.getIngredientOn());
+                                planDeTravail.setHasSomethingOn(false);
+                                planDeTravail.setIngredientOn(null);
+                            }
                         }
+                        break;
                 }
             }
         }
