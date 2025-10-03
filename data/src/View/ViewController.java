@@ -1,12 +1,12 @@
+package View;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.awt.Color;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -18,31 +18,35 @@ import Utils.Pair;
 
 public class ViewController {
 
+
+    public static ViewController instance;
     public int[][] board;
     public Player player;
     public GridPanel panelBoard;
     public ArrayList<Meuble> meubles = new ArrayList<>();
 
 
-    void drawIngredient(Graphics g, int centerX, int centerY, int diameter, Ingredient ingredient) {
-        switch (ingredient) {
-            case TOMATE ->  g.setColor(Color.RED);
-            case VIANDE -> g.setColor(Color.PINK);
-            case TOMATE_COUPE -> g.setColor(Color.MAGENTA);
-            case PATES ->  g.setColor(Color.ORANGE);
-        }
-        int smallDiameter = diameter / 3;
-        int smallX = centerX + diameter - smallDiameter - 2;
-        int smallY = centerY + diameter - smallDiameter - 2;
-        g.fillOval(smallX, smallY, smallDiameter, smallDiameter);
-    }
-
     public void add(Meuble meuble) {
         meubles.add(meuble);
         board[meuble.getPosX()][meuble.getPosY()] = meubles.indexOf(meuble)+1;
     }
 
-    class GridPanel extends JPanel {
+    public class GridPanel extends JPanel {
+
+        void drawIngredient(Graphics g, int centerX, int centerY, int diameter, Ingredient ingredient) {
+            switch (ingredient) {
+                case TOMATE ->  g.setColor(Color.RED);
+                case VIANDE -> g.setColor(Color.PINK);
+                case TOMATE_COUPE -> g.setColor(Color.MAGENTA);
+                case PATES ->  g.setColor(Color.ORANGE);
+            }
+            int smallDiameter = diameter / 3;
+            int smallX = centerX + diameter - smallDiameter - 2;
+            int smallY = centerY + diameter - smallDiameter - 2;
+            g.fillOval(smallX, smallY, smallDiameter, smallDiameter);
+        }
+
+
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -72,6 +76,7 @@ public class ViewController {
             } else {
                 g.setColor(Color.RED);
             }
+
 
 
             // Dessine les meubles en bleu
@@ -126,7 +131,7 @@ public class ViewController {
         int l =  (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
         if (board[player.getPosX()+k][player.getPosY()+l] != -1) {
             if (board[player.getPosX()+k][player.getPosY()+l] <= meubles.size()) {
-                player.setIngredientHolded(meubles.get(board[player.getPosX()+k][player.getPosY()+l]).interact(player.getIngredientHolded()));
+                player.setIngredientHolded(meubles.get(board[player.getPosX()+k][player.getPosY()+l]-1).interact(player.getIngredientHolded()));
                 return false;
             }
         }
@@ -134,8 +139,9 @@ public class ViewController {
         player.setPosX(player.getPosX()+k);
         player.setPosY(player.getPosY()+l);
         board[player.getPosX()][player.getPosY()] = 0;
+        System.out.print(player.getPosX() + " " + player.getPosY());
         //DEBUG
-        System.out.println(this);
+        /*System.out.println(this);
         int[][] seen = new int[board.length][board[0].length];
         ArrayList<Pair> path = pathFinding(new Pair(player.getPosX(),player.getPosY()),new Pair(6, 6),seen);
         if (path != null) {
@@ -144,9 +150,20 @@ public class ViewController {
             }
         } else {
             System.out.println("PATH NOT FOUND");
-        }
+        }*/
 
         return true;
+    }
+    public boolean move(Pair p) {
+        if (p.i == 1) {
+            return move(1);
+        }else if (p.i == -1) {
+            return move(0);
+        } else if (p.j == 1) {
+            return move(3);
+        } else {
+            return move(2);
+        }
     }
 
     public ArrayList<Pair> pathFinding(Pair posDepart, Pair posArrive, int[][] seen) {
@@ -172,6 +189,9 @@ public class ViewController {
 
             // Si on est arrivé
             if (current.equals(posArrive)) {
+                for (Pair p : currentPath) {
+                    System.out.print(p);
+                }
                 return currentPath;
             }
 
@@ -196,26 +216,13 @@ public class ViewController {
     }
 
 
-
-    public ArrayList<Pair> min(ArrayList<Pair> p1, ArrayList<Pair> p2, ArrayList<Pair> p3, ArrayList<Pair> p4) {
-        int p1t = (p1 == null) ? Integer.MAX_VALUE : p1.size();
-        int p2t = (p2 == null) ? Integer.MAX_VALUE : p2.size();
-        int p3t = (p3 == null) ? Integer.MAX_VALUE : p3.size();
-        int p4t = (p4 == null) ? Integer.MAX_VALUE : p4.size();
-        int i = Math.min(Math.min(Math.min(p1t,p2t),p3t),p4t);
-        if (i == Integer.MAX_VALUE) return null;
-        if (i == p1t) {return p1;}
-        else if (i == p2t) {return p2;}
-        else if (i == p3t) {return p3;}
-        else {return p4;}
-    }
      public int getBoard(Pair ij) {
         return board[ij.i][ij.j];
     }
 
     public ViewController() {
         board = new int[8][8];
-        player = new Player(2,2);
+
         panelBoard = new GridPanel();
         panelBoard.setBackground(Color.LIGHT_GRAY);
         panelBoard.setBounds(0, 0, 900,900);
@@ -225,6 +232,7 @@ public class ViewController {
                 board[i][j] = -1;
             }
         }
+        player = new Player(2,3);
     }
 
     @Override
@@ -263,6 +271,8 @@ public class ViewController {
                     move(1);
                 } else if (key == KeyEvent.VK_RIGHT && player.getPosX() < 7) {
                     move(0);
+                } else if (key == KeyEvent.VK_Y) {
+                    player.takePath(pathFinding(new Pair(player.getPosX(), player.getPosY()),new Pair(6,6),new int[8][8]));
                 }
                 panelBoard.repaint();
             }

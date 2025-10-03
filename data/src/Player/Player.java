@@ -1,6 +1,10 @@
 package Player;
 
 import Ingredient.Ingredient;
+import Utils.Pair;
+import View.ViewController;
+
+import java.util.ArrayList;
 
 public class Player {
 
@@ -47,4 +51,15 @@ public class Player {
     public void setIngredientHolded(Ingredient ingredientHolded) {
         this.ingredientHolded = ingredientHolded;
     }
+
+    public void takePath(ArrayList<Pair> path) {
+        ArrayList<Pair> actions = Pair.coordsToDirections(path);
+        for (Pair action : actions) {
+            System.out.print(action);
+            ViewController.instance.move(action);
+        }
+    }
+
+
+
 }
