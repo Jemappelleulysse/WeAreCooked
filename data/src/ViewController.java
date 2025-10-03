@@ -3,12 +3,17 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.awt.Color;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import Ingredient.Ingredient;
 import Meuble.*;
 import Player.Player;
+import Utils.Pair;
 
 
 public class ViewController {
@@ -131,9 +136,82 @@ public class ViewController {
         board[player.getPosX()][player.getPosY()] = 0;
         //DEBUG
         System.out.println(this);
+        int[][] seen = new int[board.length][board[0].length];
+        ArrayList<Pair> path = pathFinding(new Pair(player.getPosX(),player.getPosY()),new Pair(6, 6),seen);
+        if (path != null) {
+            for (Pair p : path) {
+                System.out.println(p);
+            }
+        } else {
+            System.out.println("PATH NOT FOUND");
+        }
+
         return true;
     }
 
+    public ArrayList<Pair> pathFinding(Pair posDepart, Pair posArrive, int[][] seen) {
+        Queue<ArrayList<Pair>> queue = new LinkedList<>();
+        ArrayList<Pair> initialPath = new ArrayList<>();
+        initialPath.add(posDepart);
+        queue.add(initialPath);
+
+        while (!queue.isEmpty()) {
+            ArrayList<Pair> currentPath = queue.poll();
+            Pair current = currentPath.get(currentPath.size() - 1);
+
+            // Vérification des limites et obstacles
+            if (current.i < 0 || current.i >= board.length || current.j < 0 || current.j >= board[0].length) {
+                continue;
+            }
+            if (!(getBoard(current) == -1 || getBoard(current) == 0) || seen[current.i][current.j] == 1) {
+                continue;
+            }
+
+            // Marquer comme vu
+            seen[current.i][current.j] = 1;
+
+            // Si on est arrivé
+            if (current.equals(posArrive)) {
+                return currentPath;
+            }
+
+            // Ajouter les voisins à explorer
+            for (Pair neighbor : getNeighbors(current)) {
+                ArrayList<Pair> newPath = new ArrayList<>(currentPath);
+                newPath.add(neighbor);
+                queue.add(newPath);
+            }
+        }
+
+        return null; // Aucun chemin trouvé
+    }
+
+    private ArrayList<Pair> getNeighbors(Pair p) {
+        ArrayList<Pair> neighbors = new ArrayList<>();
+        neighbors.add(new Pair(p.i - 1, p.j)); // haut
+        neighbors.add(new Pair(p.i + 1, p.j)); // bas
+        neighbors.add(new Pair(p.i, p.j - 1)); // gauche
+        neighbors.add(new Pair(p.i, p.j + 1)); // droite
+        return neighbors;
+    }
+
+
+
+    public ArrayList<Pair> min(ArrayList<Pair> p1, ArrayList<Pair> p2, ArrayList<Pair> p3, ArrayList<Pair> p4) {
+        int p1t = (p1 == null) ? Integer.MAX_VALUE : p1.size();
+        int p2t = (p2 == null) ? Integer.MAX_VALUE : p2.size();
+        int p3t = (p3 == null) ? Integer.MAX_VALUE : p3.size();
+        int p4t = (p4 == null) ? Integer.MAX_VALUE : p4.size();
+        int i = Math.min(Math.min(Math.min(p1t,p2t),p3t),p4t);
+        if (i == Integer.MAX_VALUE) return null;
+        if (i == p1t) {return p1;}
+        else if (i == p2t) {return p2;}
+        else if (i == p3t) {return p3;}
+        else {return p4;}
+    }
+     public int getBoard(Pair ij) {
+        return board[ij.i][ij.j];
+    }
 
     public ViewController() {
         board = new int[8][8];
