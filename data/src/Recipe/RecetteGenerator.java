@@ -1,4 +1,4 @@
-package Recette;
+package Recipe;
 
 
 import java.util.ArrayList;

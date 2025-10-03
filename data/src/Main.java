@@ -3,9 +3,9 @@ import Meuble.Coffre;
 import Meuble.PlanDeTravail;
 import Meuble.PlancheADecoupe;
 import Meuble.Comptoir;
-import Recette.Recette;
-import Recette.RecetteGenerator;
-import Recette.PatesBolo;
+import Recipe.Recette;
+import Recipe.RecetteGenerator;
+import Recipe.PatesBolo;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.

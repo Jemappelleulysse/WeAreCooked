@@ -1,14 +1,14 @@
-package Recette;
+package Recipe;
 
 import Ingredient.Ingredient;
 
 import java.util.ArrayList;
 
-public abstract class Recette {
+public abstract class Recipe {
 
     protected ArrayList<Ingredient> ingredients;
 
-    protected Recette() {
+    protected Recipe() {
         ingredients = new ArrayList<>();
     }
 

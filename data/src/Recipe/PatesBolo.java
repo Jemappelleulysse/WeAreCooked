@@ -1,9 +1,9 @@
-package Recette;
+package Recipe;
 
 import Ingredient.Ingredient;
 
 
-public class PatesBolo extends Recette {
+public class PatesBolo extends Recipe {
     public PatesBolo() {
         super();
         ingredients.add(Ingredient.TOMATE_COUPE);

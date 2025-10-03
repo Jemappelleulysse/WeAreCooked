@@ -1,25 +1,25 @@
 package Meuble;
 
 import Ingredient.Ingredient;
-import Recette.Recette;
+import Recipe.Recipe;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class Comptoir extends Meuble{
 
-    private Recette currentRecette;
+    private Recipe currentRecipe;
     private boolean completed = false;
     public ArrayList<Ingredient> currentIngredients =  new ArrayList<Ingredient>();
 
     /// CONSTRUCTOR ///
-    public Comptoir(int posX, int posY, Recette recette) {
+    public Comptoir(int posX, int posY, Recipe recipe) {
         this.setPosX(posX);
         this.setPosY(posY);
-        if (recette != null) {
-            this.currentRecette = recette;
+        if (recipe != null) {
+            this.currentRecipe = recipe;
         } else  {
-            throw new NullPointerException("Recette is null");
+            throw new NullPointerException("Recipe is null");
         }
     }
 
@@ -30,24 +30,24 @@ public class Comptoir extends Meuble{
 
 
     /// GETTERS ///
-    public Recette getCurrentRecette() {
-        return currentRecette;
+    public Recipe getCurrentRecipe() {
+        return currentRecipe;
     }
 
 
     /// SETTERS ///
-    public void setCurrentRecette(Recette currentRecette) {
-        if (currentRecette != null) {
-            this.currentRecette = currentRecette;
+    public void setCurrentRecipe(Recipe currentRecipe) {
+        if (currentRecipe != null) {
+            this.currentRecipe = currentRecipe;
         }  else {
-            throw new NullPointerException("Recette can't be null");
+            throw new NullPointerException("Recipe can't be null");
         }
     }
 
 
     /// METHODS ///
-    void checkRecetteCompletion() {
-        if(currentRecette.equals(currentIngredients)) {
+    void checkRecipeCompletion() {
+        if(currentRecipe.equals(currentIngredients)) {
             if (completed) {
                 currentIngredients.clear();
                 JOptionPane.showMessageDialog(null,"You win");
@@ -60,20 +60,20 @@ public class Comptoir extends Meuble{
     @Override
     public Ingredient interact(Ingredient ingredient){
         if(ingredient == null){
-            checkRecetteCompletion();
+            checkRecipeCompletion();
             return null;
         } else {
-            if(currentRecette.getAllIngredients().contains(ingredient)){
+            if(currentRecipe.getIngredients().contains(ingredient)){
                 if(currentIngredients.contains(ingredient)){
-                    checkRecetteCompletion();
+                    checkRecipeCompletion();
                     return ingredient;
                 } else {
                     currentIngredients.add(ingredient);
-                    checkRecetteCompletion();
+                    checkRecipeCompletion();
                     return null;
                 }
             } else {
-                checkRecetteCompletion();
+                checkRecipeCompletion();
                 return ingredient;
             }
         }
