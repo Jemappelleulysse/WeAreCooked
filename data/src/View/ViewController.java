@@ -151,7 +151,7 @@ public class ViewController {
         } else {
             System.out.println("PATH NOT FOUND");
         }*/
-
+        panelBoard.repaint();
         return true;
     }
     public boolean move(Pair p) {
