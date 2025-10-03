@@ -1,8 +1,8 @@
-package Meuble;
+package Furnitures;
 
 import Ingredient.Ingredient;
 
-public abstract class Meuble {
+public abstract class Furniture {
 
     private int posX;
     private int posY;

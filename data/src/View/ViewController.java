@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import Ingredient.Ingredient;
-import Meuble.*;
+import Furnitures.*;
 import Player.Player;
 import Utils.Pair;
 
@@ -23,22 +23,22 @@ public class ViewController {
     public int[][] board;
     public Player player;
     public GridPanel panelBoard;
-    public ArrayList<Meuble> meubles = new ArrayList<>();
+    public ArrayList<Furniture> furnitures = new ArrayList<>();
 
 
-    public void add(Meuble meuble) {
-        meubles.add(meuble);
-        board[meuble.getPosX()][meuble.getPosY()] = meubles.indexOf(meuble)+1;
+    public void add(Furniture furniture) {
+        furnitures.add(furniture);
+        board[furniture.getPosX()][furniture.getPosY()] = furnitures.indexOf(furniture)+1;
     }
 
     public class GridPanel extends JPanel {
 
         void drawIngredient(Graphics g, int centerX, int centerY, int diameter, Ingredient ingredient) {
             switch (ingredient) {
-                case TOMATE ->  g.setColor(Color.RED);
-                case VIANDE -> g.setColor(Color.PINK);
-                case TOMATE_COUPE -> g.setColor(Color.MAGENTA);
-                case PATES ->  g.setColor(Color.ORANGE);
+                case TOMATO ->  g.setColor(Color.RED);
+                case MEAT -> g.setColor(Color.PINK);
+                case SLICED_TOMATO -> g.setColor(Color.MAGENTA);
+                case PASTA ->  g.setColor(Color.ORANGE);
             }
             int smallDiameter = diameter / 3;
             int smallX = centerX + diameter - smallDiameter - 2;
@@ -71,50 +71,50 @@ public class ViewController {
             int centerY = player.getPosY() * cellHeight + cellHeight / 2 - diameter / 2;
             g.setColor(Color.YELLOW);
             g.fillOval(centerX, centerY, diameter, diameter);
-            if (player.getIngredientHolded()!=null) {
-                drawIngredient(g, centerX, centerY, diameter, player.getIngredientHolded());
+            if (player.getIngredientHeld()!=null) {
+                drawIngredient(g, centerX, centerY, diameter, player.getIngredientHeld());
             } else {
                 g.setColor(Color.RED);
             }
 
 
 
-            // Dessine les meubles en bleu
-            for (Meuble meuble : meubles) {
-                int meubleX = meuble.getPosX() * cellWidth;
-                int meubleY = meuble.getPosY() * cellHeight;
+            // Dessine les furnitures en bleu
+            for (Furniture furniture : furnitures) {
+                int furnitureX = furniture.getPosX() * cellWidth;
+                int furnitureY = furniture.getPosY() * cellHeight;
 
-                switch (meuble.getClass().getSimpleName()) {
-                    case "PlanDeTravail":
+                switch (furniture.getClass().getSimpleName()) {
+                    case "WorkSurface":
                         g.setColor(new Color(221, 147, 62));
-                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
-                        if (((PlanDeTravail)meuble).hasSomethingOn()) {
-                            drawIngredient(g,meubleX,meubleY,diameter,((PlanDeTravail)meuble).getIngredientOn());
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
+                        if (((WorkSurface)furniture).hasSomethingOn()) {
+                            drawIngredient(g,furnitureX,furnitureY,diameter,((WorkSurface)furniture).getIngredientOn());
                         }
                         break;
-                    case "Coffre":
+                    case "IngredientChest":
                         g.setColor(new Color(81, 0,0));
-                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
-                        drawIngredient(g,meubleX,meubleY,diameter,((Coffre)meuble).getIngredient());
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
+                        drawIngredient(g,furnitureX,furnitureY,diameter,((IngredientChest)furniture).getIngredient());
                         break;
-                    case "PlancheADecoupe":
+                    case "CuttingBoard":
                         g.setColor(new Color(221, 147, 62));
-                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
                         g.setColor(Color.lightGray);
-                        g.fillRect(meubleX+cellWidth/8, meubleY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
-                        if (((PlancheADecoupe)meuble).hasSomethingOn()) {
-                            drawIngredient(g,meubleX,meubleY,diameter,((PlancheADecoupe)meuble).getIngredientOn());
+                        g.fillRect(furnitureX+cellWidth/8, furnitureY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
+                        if (((CuttingBoard)furniture).hasSomethingOn()) {
+                            drawIngredient(g,furnitureX,furnitureY,diameter,((CuttingBoard)furniture).getIngredientOn());
                         }
                         //g.setColor(Color.darkGray);
                         break;
-                    case "Comptoir" :
+                    case "Counter" :
                         g.setColor(new Color(221, 147, 62));
-                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
                         g.setColor(Color.lightGray);
-                        g.fillOval(meubleX+cellWidth/8, meubleY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
+                        g.fillOval(furnitureX+cellWidth/8, furnitureY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
                         int dec = -5;
-                        for (Ingredient ingredient : ((Comptoir)meuble).currentIngredients) {
-                            drawIngredient(g,meubleX+dec,meubleY+dec,diameter,ingredient);
+                        for (Ingredient ingredient : ((Counter)furniture).currentIngredients) {
+                            drawIngredient(g,furnitureX+dec,furnitureY+dec,diameter,ingredient);
                             dec+=10;
                         }
                     default:
@@ -131,8 +131,8 @@ public class ViewController {
         int k = (direction == 0) ? 1 : (direction == 1) ? -1 : 0;
         int l =  (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
         if (board[player.getPosX()+k][player.getPosY()+l] != -1) {
-            if (board[player.getPosX()+k][player.getPosY()+l] <= meubles.size()) {
-                player.setIngredientHolded(meubles.get(board[player.getPosX()+k][player.getPosY()+l]-1).interact(player.getIngredientHolded()));
+            if (board[player.getPosX()+k][player.getPosY()+l] <= furnitures.size()) {
+                player.setIngredientHeld(furnitures.get(board[player.getPosX()+k][player.getPosY()+l]-1).interact(player.getIngredientHeld()));
                 return false;
             }
         }
@@ -175,7 +175,7 @@ public class ViewController {
 
         while (!queue.isEmpty()) {
             ArrayList<Pair> currentPath = queue.poll();
-            Pair current = currentPath.get(currentPath.size() - 1);
+            Pair current = currentPath.getLast();
 
             // Vérification des limites et obstacles
             if (current.i < 0 || current.i >= board.length || current.j < 0 || current.j >= board[0].length) {

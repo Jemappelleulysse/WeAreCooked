@@ -45,7 +45,7 @@ public class Agent {
     /// SETTERS ///
     /// /////// ///
     private void refreshHand() {
-        heldIngredient = player.getIngredientHolded();
+        heldIngredient = player.getIngredientHeld();
         //this.currentIngredients = currentIngredients;
     }
 

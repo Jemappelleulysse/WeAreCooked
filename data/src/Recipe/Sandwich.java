@@ -6,9 +6,9 @@ public class Sandwich extends Recipe {
 
     public Sandwich() {
         super();
-        ingredients.add(Ingredient.PAIN);
-        ingredients.add(Ingredient.TOMATE_COUPE);
-        ingredients.add(Ingredient.SALADE);
-        ingredients.add(Ingredient.VIANDE);
+        ingredients.add(Ingredient.BREAD);
+        ingredients.add(Ingredient.SLICED_TOMATO);
+        ingredients.add(Ingredient.SALAD);
+        ingredients.add(Ingredient.MEAT);
     }
 }

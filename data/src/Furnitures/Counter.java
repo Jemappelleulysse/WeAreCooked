@@ -1,4 +1,4 @@
-package Meuble;
+package Furnitures;
 
 import Ingredient.Ingredient;
 import Recipe.Recipe;
@@ -6,14 +6,14 @@ import Recipe.Recipe;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class Comptoir extends Meuble{
+public class Counter extends Furniture{
 
     private Recipe currentRecipe;
     private boolean completed = false;
     public ArrayList<Ingredient> currentIngredients =  new ArrayList<Ingredient>();
 
     /// CONSTRUCTOR ///
-    public Comptoir(int posX, int posY, Recipe recipe) {
+    public Counter(int posX, int posY, Recipe recipe) {
         this.setPosX(posX);
         this.setPosY(posY);
         if (recipe != null) {
@@ -23,7 +23,7 @@ public class Comptoir extends Meuble{
         }
     }
 
-    public Comptoir(int posX, int posY) {
+    public Counter(int posX, int posY) {
         this.setPosX(posX);
         this.setPosY(posY);
     }

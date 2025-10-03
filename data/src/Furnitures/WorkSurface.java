@@ -1,13 +1,13 @@
-package Meuble;
+package Furnitures;
 
 import Ingredient.Ingredient;
 
-public class PlanDeTravail extends Meuble {
+public class WorkSurface extends Furniture {
 
     private Ingredient ingredientOn = null;
 
     /// CONSTRUCTOR ///
-    public PlanDeTravail(int posX, int posY) {
+    public WorkSurface(int posX, int posY) {
         this.setPosX(posX);
         this.setPosY(posY);
     }

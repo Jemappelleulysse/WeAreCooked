@@ -14,14 +14,19 @@ public class Player {
     private int posX;
     private int posY;
     private boolean isHoldingSomething =  false;
-    private Ingredient ingredientHolded = null;
+    private Ingredient ingredientHeld = null;
 
+    /// /////////// ///
+    /// CONSTRUCTOR ///
+    /// /////////// ///
     public Player(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
     }
 
-    //// GETTERS ////
+    /// /////// ///
+    /// GETTERS ///
+    /// /////// ///
     public int getPosX() {
         return posX;
     }
@@ -34,11 +39,13 @@ public class Player {
         return isHoldingSomething;
     }
 
-    public Ingredient getIngredientHolded() {
-        return ingredientHolded;
+    public Ingredient getIngredientHeld() {
+        return ingredientHeld;
     }
 
-    //// SETTERS ////
+    /// /////// ///
+    /// SETTERS ///
+    /// /////// ///
     public void setPosX(int posX) {
         this.posX = posX;
     }
@@ -47,14 +54,14 @@ public class Player {
         this.posY = posY;
     }
 
-    public void setHoldingSomething(boolean holdingSomething) {
-        isHoldingSomething = holdingSomething;
+    public void setIngredientHeld(Ingredient ingredientHeld) {
+        this.ingredientHeld = ingredientHeld;
+        isHoldingSomething = ingredientHeld != null;
     }
 
-    public void setIngredientHolded(Ingredient ingredientHolded) {
-        this.ingredientHolded = ingredientHolded;
-    }
-
+    /// /////// ///
+    /// METHODS ///
+    /// /////// ///
     public void takePath(ArrayList<Pair> path) {
         ArrayList<Pair> actions = Pair.coordsToDirections(path);
         // Timer delay in milliseconds
@@ -75,7 +82,5 @@ public class Player {
 
         new Timer(delay, taskPerformer).start();
     }
-
-
 
 }
