@@ -56,24 +56,13 @@ public class Player {
     }
 
     public void takePath(ArrayList<Pair> path) {
+
         ArrayList<Pair> actions = Pair.coordsToDirections(path);
-        // Timer delay in milliseconds
-        int delay = 300;
-
-        ActionListener taskPerformer = new ActionListener() {
-            private int counter = 0;
-
-            public void actionPerformed(ActionEvent evt) {
-                if (counter >= actions.size()) {
-                    ((Timer)evt.getSource()).stop();
-                } else {
-                    Pair action = actions.get(counter++);
-                    ViewController.instance.move(action);
-                }
+        for (Pair pair : actions) {
+            if (!ViewController.instance.move(pair)) {
+                break;
             }
-        };
-
-        new Timer(delay, taskPerformer).start();
+        }
     }
 
 

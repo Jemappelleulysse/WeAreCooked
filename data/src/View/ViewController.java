@@ -2,14 +2,14 @@ package View;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.awt.Color;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import Agent.Agent;
 import Ingredient.Ingredient;
 import Meuble.*;
 import Player.Player;
@@ -18,7 +18,7 @@ import Utils.Pair;
 
 public class ViewController {
 
-
+    public Agent agent;
     public static ViewController instance;
     public int[][] board;
     public Player player;
@@ -273,7 +273,13 @@ public class ViewController {
                 } else if (key == KeyEvent.VK_RIGHT && player.getPosX() < 7) {
                     move(0);
                 } else if (key == KeyEvent.VK_Y) {
-                    player.takePath(pathFinding(new Pair(player.getPosX(), player.getPosY()),new Pair(6,6),new int[8][8]));
+                    agent.goPlaceHeldIngredientOnPlate();
+                } else if (key == KeyEvent.VK_P) {
+                    agent.goGrab(Ingredient.TOMATE);
+                } else if (key == KeyEvent.VK_M) {
+                    agent.goPrepareHeldIngredient();
+                } else if (key == KeyEvent.VK_V) {
+                    agent.goValidateRecipe();
                 }
                 panelBoard.repaint();
             }

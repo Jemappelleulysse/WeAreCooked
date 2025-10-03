@@ -1,3 +1,4 @@
+import Agent.Agent;
 import Ingredient.Ingredient;
 import Meuble.Coffre;
 import Meuble.PlanDeTravail;
@@ -12,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         ViewController.instance = new ViewController();
-
+        ViewController.instance.agent = new Agent(ViewController.instance.player,new PatesBolo());
         ViewController.instance.add(new PlanDeTravail(3,3));
         ViewController.instance.add(new PlanDeTravail(3,3));
         ViewController.instance.add(new PlanDeTravail(3,4));
@@ -34,5 +35,6 @@ public class Main {
             ViewController.instance.add(new PlanDeTravail(7, y));   // right column
         }
         ViewController.instance.display();
+
     }
 }
