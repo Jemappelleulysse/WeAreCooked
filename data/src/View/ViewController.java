@@ -105,6 +105,7 @@ public class ViewController {
                         if (((PlancheADecoupe)meuble).hasSomethingOn()) {
                             drawIngredient(g,meubleX,meubleY,diameter,((PlancheADecoupe)meuble).getIngredientOn());
                         }
+                        //g.setColor(Color.darkGray);
                         break;
                     case "Comptoir" :
                         g.setColor(new Color(221, 147, 62));
