@@ -53,7 +53,6 @@ public class Comptoir extends Meuble{
                 JOptionPane.showMessageDialog(null,"You win");
             }
             completed = !completed;
-
         }
     }
 

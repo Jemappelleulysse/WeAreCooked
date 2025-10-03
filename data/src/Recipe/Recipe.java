@@ -21,6 +21,7 @@ public abstract class Recipe {
         if (this == o) return true;
         if (o == null || o.getClass() != ArrayList.class) return false;
         ArrayList<Ingredient> ingredients = (ArrayList<Ingredient>) o;
+        if(ingredients.size() != this.ingredients.size()) return false;
         for (Ingredient ingredient : ingredients) {
             boolean ingredientFound = false;
             for (Ingredient ingredient2 : ingredients) {
