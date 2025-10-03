@@ -16,32 +16,28 @@ public class Main {
 
 
         ViewController controller = new ViewController();
-        controller.meubles.add(new PlanDeTravail(3,3));
-        controller.meubles.add(new PlanDeTravail(3,4));
-        controller.meubles.add(new PlanDeTravail(4,3));
-        controller.meubles.add(new PlanDeTravail(4,4));
-        controller.meubles.add(new Coffre(0,1, Ingredient.PATES));
-        controller.meubles.add(new Coffre(0,2, Ingredient.TOMATE));
-        controller.meubles.add(new PlancheADecoupe(6,0));
-        controller.meubles.add(new PlancheADecoupe(5,0));
-        controller.meubles.add(new Comptoir(6, 7, new PatesBolo()));
+        controller.add(new PlanDeTravail(3,3));
+        controller.add(new PlanDeTravail(3,3));
+        controller.add(new PlanDeTravail(3,4));
+        controller.add(new PlanDeTravail(4,3));
+        controller.add(new PlanDeTravail(4,4));
+        controller.add(new Coffre(0,1, Ingredient.PATES));
+        controller.add(new Coffre(0,2, Ingredient.TOMATE));
+        controller.add(new PlancheADecoupe(6,0));
+        controller.add(new PlancheADecoupe(5,0));
+        controller.add(new Comptoir(6, 7, new PatesBolo()));
         for (int x = 0; x < 8; x++) {
 
-            if (!(x==6 || x==5)) controller.meubles.add(new PlanDeTravail(x, 0));  // top row
-            if (!(x==6))  controller.meubles.add(new PlanDeTravail(x, 7));   // bottom row
+            if (!(x==6 || x==5)) controller.add(new PlanDeTravail(x, 0));  // top row
+            if (!(x==6))  controller.add(new PlanDeTravail(x, 7));   // bottom row
         }
         for (int y = 1; y < 7; y++) { // avoid duplicating corners
 
-            if(!(y==1 || y == 2)) controller.meubles.add(new PlanDeTravail(0, y));   // left column
-            controller.meubles.add(new PlanDeTravail(7, y));   // right column
+            if(!(y==1 || y == 2)) controller.add(new PlanDeTravail(0, y));   // left column
+            controller.add(new PlanDeTravail(7, y));   // right column
         }
 
 
-
-
-
-
-        //controller.meubles.add(new Comptoir(7,3));
         controller.display();
     }
 }

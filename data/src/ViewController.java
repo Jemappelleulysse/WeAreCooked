@@ -32,6 +32,10 @@ public class ViewController {
         g.fillOval(smallX, smallY, smallDiameter, smallDiameter);
     }
 
+    public void add(Meuble meuble) {
+        meubles.add(meuble);
+        board[meuble.getPosX()][meuble.getPosY()] = meubles.indexOf(meuble)+1;
+    }
 
     class GridPanel extends JPanel {
         @Override
@@ -115,18 +119,18 @@ public class ViewController {
     public boolean move(int direction) {
         int k = (direction == 0) ? 1 : (direction == 1) ? -1 : 0;
         int l =  (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
-        boolean isThereSomething = false;
-        for (Meuble meuble : meubles) {
-            if (meuble.getPosX() == player.getPosX()+k && meuble.getPosY() == player.getPosY()+l) {
-                isThereSomething = true;
-                player.setIngredientHolded(meuble.interact(player.getIngredientHolded()));
+        if (board[player.getPosX()+k][player.getPosY()+l] != -1) {
+            if (board[player.getPosX()+k][player.getPosY()+l] <= meubles.size()) {
+                player.setIngredientHolded(meubles.get(board[player.getPosX()+k][player.getPosY()+l]).interact(player.getIngredientHolded()));
+                return false;
             }
         }
-        if (isThereSomething) {
-            return true;
-        }
+        board[player.getPosX()][player.getPosY()] = -1;
         player.setPosX(player.getPosX()+k);
         player.setPosY(player.getPosY()+l);
+        board[player.getPosX()][player.getPosY()] = 0;
+        //DEBUG
+        System.out.println(this);
         return true;
     }
 
@@ -140,9 +144,21 @@ public class ViewController {
         // Initialize board with zeros
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                board[i][j] = 0;
+                board[i][j] = -1;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        for (int i = 0; i < board.length ; i++) {
+            for (int j = 0; j < board.length; j++) {
+                s = s + "[" + board[j][i] + "] ";
+            }
+            s += "\n";
+        }
+        return s;
     }
 
 
