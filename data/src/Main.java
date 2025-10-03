@@ -3,8 +3,6 @@ import Meuble.Coffre;
 import Meuble.PlanDeTravail;
 import Meuble.PlancheADecoupe;
 import Meuble.Comptoir;
-import Recipe.Recette;
-import Recipe.RecetteGenerator;
 import Recipe.PatesBolo;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -12,8 +10,6 @@ import Recipe.PatesBolo;
 public class Main {
 
     public static void main(String[] args) {
-        RecetteGenerator test = new RecetteGenerator();
-
 
         ViewController controller = new ViewController();
         controller.meubles.add(new PlanDeTravail(3,3));
