@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 public abstract class Recette {
 
-    protected ArrayList<Ingredient> allIngredients;
+    protected ArrayList<Ingredient> ingredients;
 
     protected Recette() {
-        allIngredients = new ArrayList<>();
+        ingredients = new ArrayList<>();
     }
 
-    public ArrayList<Ingredient> getAllIngredients() {
-        return allIngredients;
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
     }
 
     @Override
@@ -21,7 +21,7 @@ public abstract class Recette {
         if (this == o) return true;
         if (o == null || o.getClass() != ArrayList.class) return false;
         ArrayList<Ingredient> ingredients = (ArrayList<Ingredient>) o;
-        for (Ingredient ingredient : allIngredients) {
+        for (Ingredient ingredient : ingredients) {
             boolean ingredientFound = false;
             for (Ingredient ingredient2 : ingredients) {
                 if (ingredient.equals(ingredient2)) {
@@ -38,6 +38,6 @@ public abstract class Recette {
 
     @Override
     public String toString() {
-        return allIngredients.toString();
+        return ingredients.toString();
     }
 }
