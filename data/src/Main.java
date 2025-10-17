@@ -1,18 +1,8 @@
-import Ingredient.Ingredient;
-import Furnitures.IngredientChest;
-import Furnitures.WorkSurface;
-import Furnitures.CuttingBoard;
-import Furnitures.Counter;
-import View.ViewController;
 import Model.Model;
 import View.View;
-import Recipe.PatesBolo;
 import Controller.Controller;
 
-import javax.naming.ldap.Control;
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.

@@ -4,6 +4,8 @@ import Ingredient.Ingredient;
 import Utils.Pair;
 import View.View;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Player {
@@ -63,25 +65,4 @@ public class Player {
     /// /////// ///
     /// METHODS ///
     /// /////// ///
-    public void takePath(ArrayList<Pair> path) {
-        ArrayList<Pair> actions = Pair.coordsToDirections(path);
-        // Timer delay in milliseconds
-        int delay = 300;
-
-        ActionListener taskPerformer = new ActionListener() {
-            private int counter = 0;
-
-            public void actionPerformed(ActionEvent evt) {
-                if (counter >= actions.size()) {
-                    ((Timer)evt.getSource()).stop();
-                } else {
-                    Pair action = actions.get(counter++);
-                    ViewController.instance.move(action);
-                }
-            }
-        };
-
-        new Timer(delay, taskPerformer).start();
-    }
-
 }

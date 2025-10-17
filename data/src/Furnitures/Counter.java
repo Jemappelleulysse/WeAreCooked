@@ -1,7 +1,7 @@
 package Furnitures;
 
 import Ingredient.Ingredient;
-import Recipe.Recipe;
+import Recipes.Recipe;
 
 import javax.swing.*;
 import java.util.ArrayList;
