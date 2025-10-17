@@ -120,8 +120,11 @@ public class Model {
         //
 
         while(doContinue) {
+
             float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
+
             lastTime = System.nanoTime();
+
             for (Furniture furniture : furnitures) {
                 furniture.update(dt);
             }
@@ -131,6 +134,8 @@ public class Model {
 
             //System.out.println(System.currentTimeMillis() - dt + " ms needed for the agent Update");
         }
+
+
     }
 
 

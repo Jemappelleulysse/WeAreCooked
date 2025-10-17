@@ -20,7 +20,7 @@ public class Agent {
     private ArrayList<Ingredient> missingIngredients;
     private ArrayList<Pair> actionsToDo;
     private float timeBeforeNextAction = 4f;
-    private float timeBetweenActions = 0;
+    private float timeBetweenActions = 4f;
 
     /// /////////// ///
     /// CONSTRUCTOR ///
@@ -73,10 +73,10 @@ public class Agent {
                 goValidateRecipe();
             }
             Ingredient nextIngredient = getNextIngredient();
-            if (nextIngredient == Ingredient.TOMATE_COUPE) {
-                goGrab(Ingredient.TOMATE);
-            } else if (nextIngredient == Ingredient.PATES_CUITES) {
-                goGrab(Ingredient.PATES);
+            if (nextIngredient == Ingredient.SLICED_TOMATO) {
+                goGrab(Ingredient.TOMATO);
+            } else if (nextIngredient == Ingredient.COOKED_PASTA) {
+                goGrab(Ingredient.PASTA);
             }
         }
         else {
@@ -101,7 +101,6 @@ public class Agent {
             actionsToDo.removeFirst();
             model.move(action);
         }
-
     }
 
     /// ///////////////////// ///
