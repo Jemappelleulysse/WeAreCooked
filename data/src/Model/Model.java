@@ -2,15 +2,9 @@ package Model;
 
 import Agent.Agent;
 import Ingredient.Ingredient;
-import Meuble.Meuble;
-import Meuble.Comptoir;
-import Meuble.PlancheADecoupe;
-import Meuble.PlanDeTravail;
-import Meuble.Gaziniere;
-import Meuble.Coffre;
-import Meuble.Evier;
+import Furnitures.*;
 import Player.Player;
-import Recipe.PatesBolo;
+import Recipes.BolognesePasta;
 import Utils.Pair;
 import View.View;
 
@@ -29,11 +23,11 @@ public class Model {
     public int[][] board;
     public Player player;
     private View view;
-    public ArrayList<Meuble> meubles = new ArrayList<>();
+    public ArrayList<Furniture> furnitures = new ArrayList<>();
 
-    public void add(Meuble meuble) {
-        meubles.add(meuble);
-        board[meuble.getPosX()][meuble.getPosY()] = meubles.indexOf(meuble)+1;
+    public void add(Furniture furniture) {
+        furnitures.add(furniture);
+        board[furniture.getPosX()][furniture.getPosY()] = furnitures.indexOf(furniture)+1;
     }
 
 
@@ -41,8 +35,8 @@ public class Model {
         int k = (direction == 0) ? 1 : (direction == 1) ? -1 : 0;
         int l =  (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
         if (board[player.getPosX()+k][player.getPosY()+l] != -1) {
-            if (board[player.getPosX()+k][player.getPosY()+l] <= meubles.size()) {
-                player.setIngredientHolded(meubles.get(board[player.getPosX()+k][player.getPosY()+l]-1).interact(player.getIngredientHolded()));
+            if (board[player.getPosX()+k][player.getPosY()+l] <= furnitures.size()) {
+                player.setIngredientHeld(furnitures.get(board[player.getPosX()+k][player.getPosY()+l]-1).interact(player.getIngredientHeld()));
                 return false;
             }
         }
@@ -50,18 +44,7 @@ public class Model {
         player.setPosX(player.getPosX()+k);
         player.setPosY(player.getPosY()+l);
         board[player.getPosX()][player.getPosY()] = 0;
-        //System.out.print(player.getPosX() + " " + player.getPosY());
-        //DEBUG
-        /*System.out.println(this);
-        int[][] seen = new int[board.length][board[0].length];
-        ArrayList<Pair> path = pathFinding(new Pair(player.getPosX(),player.getPosY()),new Pair(6, 6),seen);
-        if (path != null) {
-            for (Pair p : path) {
-                System.out.println(p);
-            }
-        } else {
-            System.out.println("PATH NOT FOUND");
-        }*/
+
         return true;
     }
 
@@ -79,12 +62,6 @@ public class Model {
         }
     }
 
-
-
-
-
-
-
     public Model() {
         board = new int[8][8];
         player = new Player(2,3);
@@ -96,30 +73,30 @@ public class Model {
         }
 
 
-        agent = new Agent(this, new PatesBolo());
-        add(new PlanDeTravail(3, 3));
-        add(new PlanDeTravail(3, 3));
-        add(new PlanDeTravail(3, 4));
-        add(new PlanDeTravail(4, 3));
-        add(new PlanDeTravail(4, 4));
-        add(new Coffre(0, 1, Ingredient.PATES));
-        add(new Coffre(0, 2, Ingredient.TOMATE));
-        add(new PlancheADecoupe(6, 0));
-        add(new PlancheADecoupe(5, 0));
-        add(new Gaziniere(2,7));
-        add(new Gaziniere(3,7));
-        add(new Comptoir(6, 7, new PatesBolo()));
-        add(new Evier(7,3));
-        add(new Evier(7,4));
+        agent = new Agent(this, new BolognesePasta());
+        add(new WorkSurface(3, 3));
+        add(new WorkSurface(3, 3));
+        add(new WorkSurface(3, 4));
+        add(new WorkSurface(4, 3));
+        add(new WorkSurface(4, 4));
+        add(new IngredientChest(0, 1, Ingredient.PASTA));
+        add(new IngredientChest(0, 2, Ingredient.TOMATO));
+        add(new CuttingBoard(6, 0));
+        add(new CuttingBoard(5, 0));
+        add(new GasStove(2,7));
+        add(new GasStove(3,7));
+        add(new Counter(6, 7, new BolognesePasta()));
+        add(new Sink(7,3));
+        add(new Sink(7,4));
         for (int x = 0; x < 8; x++) {
 
-            if (!(x == 6 || x == 5)) add(new PlanDeTravail(x, 0));  // top row
-            if (!(x == 6 || x ==2 || x == 3)) add(new PlanDeTravail(x, 7));   // bottom row
+            if (!(x == 6 || x == 5)) add(new WorkSurface(x, 0));  // top row
+            if (!(x == 6 || x ==2 || x == 3)) add(new WorkSurface(x, 7));   // bottom row
         }
         for (int y = 1; y < 7; y++) { // avoid duplicating corners
 
-            if (!(y == 1 || y == 2)) add(new PlanDeTravail(0, y));   // left column
-            if (!(y ==3 || y ==4)) add(new PlanDeTravail(7, y));   // right column
+            if (!(y == 1 || y == 2)) add(new WorkSurface(0, y));   // left column
+            if (!(y ==3 || y ==4)) add(new WorkSurface(7, y));   // right column
         }
 
     }
@@ -145,8 +122,8 @@ public class Model {
         while(doContinue) {
             float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
             lastTime = System.nanoTime();
-            for (Meuble meuble : meubles) {
-                meuble.update(dt);
+            for (Furniture furniture : furnitures) {
+                furniture.update(dt);
             }
             SwingUtilities.invokeLater(() -> view.update(dt));
             //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");

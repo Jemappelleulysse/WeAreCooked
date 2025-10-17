@@ -1,14 +1,13 @@
 package Ingredient;
 
 public enum Ingredient {
-    VIANDE,
-    SALADE,
-    TOMATE,
-    PAIN,
-    PATES,
-    TOMATE_COUPE,
-    POT_VIDE,
-    PATES_CUITES,
-    POT_REMPLI
-
+    MEAT,
+    SALAD,
+    TOMATO,
+    BREAD,
+    PASTA,
+    SLICED_TOMATO,
+    COOKED_PASTA,
+    EMPTY_POT,
+    FULL_POT
 }

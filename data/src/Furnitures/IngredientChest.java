@@ -1,13 +1,13 @@
-package Meuble;
+package Furnitures;
 
 import Ingredient.Ingredient;
 
-public class Coffre extends Meuble {
+public class IngredientChest extends Furniture {
 
     private final Ingredient ingredient;
 
     /// CONSTRUCTOR ///
-    public Coffre(int posX, int posY, Ingredient ingredient) {
+    public IngredientChest(int posX, int posY, Ingredient ingredient) {
         this.setPosX(posX);
         this.setPosY(posY);
         this.ingredient = ingredient;

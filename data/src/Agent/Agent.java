@@ -1,8 +1,8 @@
 package Agent;
 
+import Furnitures.*;
 import Ingredient.Ingredient;
-import Meuble.*;
-import Recipe.Recipe;
+import Recipes.Recipe;
 import Utils.Pair;
 import Model.Model;
 
@@ -54,7 +54,7 @@ public class Agent {
     /// SETTERS ///
     /// /////// ///
     private void refreshHand() {
-        heldIngredient = model.player.getIngredientHolded();
+        heldIngredient = model.player.getIngredientHeld();
         //this.currentIngredients = currentIngredients;
     }
 
@@ -109,29 +109,30 @@ public class Agent {
     /// ///////////////////// ///
 
     public void goGrab(Ingredient ingredient) {
-        Coffre coffreIng = null;
-        for (Meuble meuble : model.meubles) {
-            if (meuble.getClass() == Coffre.class && ((Coffre) meuble).getIngredient().equals(ingredient)) {
-                coffreIng = (Coffre) meuble;
+        IngredientChest chest = null;
+        for (Furniture furniture : model.furnitures) {
+            if (furniture.getClass() == IngredientChest.class && ((IngredientChest) furniture).getIngredient().equals(ingredient)) {
+                chest = (IngredientChest) furniture;
             }
         }
-        if (coffreIng == null) {
-            System.out.print("PAS DE MEUBLE A " + ingredient + "TROUVE");
+        if (chest == null) {
+            System.out.print("PAS DE furniture A " + ingredient + "TROUVE");
             return;
         }
-        Pair destination = videProcheMeuble(new Pair(coffreIng.getPosX(),coffreIng.getPosY()));
+        Pair destination = nextEmptyCase(new Pair(chest.getPosX(),chest.getPosY()));
         if (destination == null) {
             System.out.print("PAS D'EMPLACEMENT VIDE TROUVE");
             return;
         }
-        
+
         ArrayList<Pair> actions = Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));
         actionsToDo.addAll(actions);
-        actionsToDo.add(destination.sub(new Pair(coffreIng.getPosX(),coffreIng.getPosY())));
+        actionsToDo.add(destination.sub(new Pair(chest.getPosX(),chest.getPosY())));
 
         refreshHand();
     }
-    public Pair videProcheMeuble(Pair pos) {
+
+    public Pair nextEmptyCase(Pair pos) {
         Pair[] posAutour = new Pair[4];
         for (int i = 0; i < posAutour.length; i++) {
             int k = (i == 0) ? 1 : ((i == 1) ? -1 : 0);
@@ -155,18 +156,18 @@ public class Agent {
 
     public void goValidateRecipe() {
         Pair destination = null;
-        Meuble meubleTravail = null;
-        for (Meuble meuble : model.meubles) {
-            if (meuble.getClass() == Comptoir.class) {
-                meubleTravail = meuble;
+        Furniture workSurface = null;
+        for (Furniture furniture : model.furnitures) {
+            if (furniture.getClass() == Counter.class) {
+                workSurface = furniture;
                 break;
             }
         }
-        if (meubleTravail == null) {
+        if (workSurface == null) {
             System.out.print("PAS DE COMPTOIR TROUVE");
             return;
         }
-        destination = videProcheMeuble(new Pair(meubleTravail.getPosX(),meubleTravail.getPosY()));
+        destination = nextEmptyCase(new Pair(workSurface.getPosX(),workSurface.getPosY()));
 
         if (destination == null) {
             System.out.print("PAS D'EMPLACEMENT VIDE TROUVE");
@@ -174,7 +175,7 @@ public class Agent {
         }
         ArrayList<Pair> actions =  Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));;
         actionsToDo.addAll(actions);
-        actionsToDo.add(destination.sub(new Pair(meubleTravail.getPosX(),meubleTravail.getPosY())));
+        actionsToDo.add(destination.sub(new Pair(workSurface.getPosX(),workSurface.getPosY())));
 
 
         // Aller valider la recette
@@ -185,20 +186,20 @@ public class Agent {
 
     public void goPrepareHeldIngredient() {
         Pair destination = null;
-        Meuble meubleTravail = null;
+        Furniture workSurface = null;
         switch (heldIngredient) {
-            case Ingredient.TOMATE :
-                for (Meuble meuble : model.meubles) {
-                    if (meuble.getClass() == PlancheADecoupe.class && ((PlancheADecoupe) meuble).getIngredientOn() == null) {
-                        meubleTravail = meuble;
+            case Ingredient.TOMATO :
+                for (Furniture furniture : model.furnitures) {
+                    if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getIngredientOn() == null) {
+                        workSurface = furniture;
                         break;
                     }
                 }
-                if (meubleTravail == null) {
+                if (workSurface == null) {
                     System.out.print("PAS DE PLANCHE VIDE TROUVE");
                     return;
                 }
-                destination = videProcheMeuble(new Pair(meubleTravail.getPosX(),meubleTravail.getPosY()));
+                destination = nextEmptyCase(new Pair(workSurface.getPosX(),workSurface.getPosY()));
                 break;
             default :
                 System.out.println("Pas d'ingredient dans la main");
@@ -206,9 +207,9 @@ public class Agent {
         }
         ArrayList<Pair> actions =  Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));
         actionsToDo.addAll(actions);
-        actionsToDo.add(destination.sub(new Pair(meubleTravail.getPosX(),meubleTravail.getPosY())));
-        actionsToDo.add(destination.sub(new Pair(meubleTravail.getPosX(),meubleTravail.getPosY())));
-        actionsToDo.add(destination.sub(new Pair(meubleTravail.getPosX(),meubleTravail.getPosY())));
+        actionsToDo.add(destination.sub(new Pair(workSurface.getPosX(),workSurface.getPosY())));
+        actionsToDo.add(destination.sub(new Pair(workSurface.getPosX(),workSurface.getPosY())));
+        actionsToDo.add(destination.sub(new Pair(workSurface.getPosX(),workSurface.getPosY())));
 
         refreshHand();
     }
@@ -216,19 +217,19 @@ public class Agent {
     public void goPlaceHeldIngredientOnPlate() {
         // Place l'ingrédient tenu sur l'assiette du comptoir
         Pair destination = null;
-        Meuble meubleTravail = null;
-        for (Meuble meuble : model.meubles) {
-            if (meuble.getClass() == Comptoir.class) {
-                meubleTravail = meuble;
+        Furniture workSurface = null;
+        for (Furniture furniture : model.furnitures) {
+            if (furniture.getClass() == Counter.class) {
+                workSurface = furniture;
                 break;
             }
         }
-        if (meubleTravail == null) {
+        if (workSurface == null) {
             System.out.print("PAS DE COMPTOIR TROUVE");
             return;
         }
-        System.out.println("\n-----------------------------\n"+meubleTravail.getPosX() +" " + meubleTravail.getPosY()+"\n---------------------------------");
-        destination = videProcheMeuble(new Pair(meubleTravail.getPosX(),meubleTravail.getPosY()));
+        System.out.println("\n-----------------------------\n"+workSurface.getPosX() +" " + workSurface.getPosY()+"\n---------------------------------");
+        destination = nextEmptyCase(new Pair(workSurface.getPosX(),workSurface.getPosY()));
 
         if (destination == null) {
             System.out.print("PAS D'EMPLACEMENT VIDE TROUVE");
@@ -236,7 +237,7 @@ public class Agent {
         }
         ArrayList<Pair> actions =  Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));
         actionsToDo.addAll(actions);
-        actionsToDo.add(destination.sub(new Pair(meubleTravail.getPosX(),meubleTravail.getPosY())));
+        actionsToDo.add(destination.sub(new Pair(workSurface.getPosX(),workSurface.getPosY())));
 
 
         currentIngredients.add(heldIngredient);

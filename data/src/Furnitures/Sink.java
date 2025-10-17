@@ -1,13 +1,13 @@
-package Meuble;
+package Furnitures;
 
 import Ingredient.Ingredient;
 
-public class Evier extends Meuble {
+public class Sink extends Furniture {
 
     private Ingredient ingredientOn = null;
 
     /// CONSTRUCTOR ///
-    public Evier(int posX, int posY) {
+    public Sink(int posX, int posY) {
         this.setPosX(posX);
         this.setPosY(posY);
     }
@@ -36,8 +36,8 @@ public class Evier extends Meuble {
 
         Ingredient returnedIngredient = null;
 
-        if (ingredientInHand == Ingredient.POT_VIDE) {
-            returnedIngredient = Ingredient.POT_REMPLI;
+        if (ingredientInHand == Ingredient.EMPTY_POT) {
+            returnedIngredient = Ingredient.FULL_POT;
         } else {
             returnedIngredient = ingredientInHand;
         }

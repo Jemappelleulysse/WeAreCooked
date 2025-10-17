@@ -5,7 +5,7 @@ import java.awt.*;
 
 import Ingredient.Ingredient;
 import Model.Model;
-import Meuble.*;
+import Furnitures.*;
 
 import static View.PixelArts.*;
 
@@ -29,25 +29,25 @@ public class View extends JPanel {
             int smallX = centerX + diameter - smallDiameter - 2;
             int smallY = centerY + diameter - smallDiameter - 2;
             switch (ingredient) {
-                case TOMATE :
+                case TOMATO :
                     drawWholeTomato( g, smallX, smallY );
                     break;
-                case VIANDE :
+                case MEAT :
                     g.setColor(Color.PINK);
                     break;
-                case TOMATE_COUPE :
+                case SLICED_TOMATO :
                     drawSlicedTomato(g, smallX, smallY);
                     break;
-                case PATES :
+                case PASTA :
                     drawRawPasta(g, smallX, smallY);
                     break;
-                case PATES_CUITES:
+                case COOKED_PASTA:
                     drawCookedPasta(g, smallX, smallY);
                     break;
-                case POT_REMPLI:
+                case FULL_POT:
                     drawPotWithWater(g, centerX, centerY);
                     break;
-                case POT_VIDE:
+                case EMPTY_POT:
                     drawTopViewPot(g, centerX, centerY);
                     break;
             }
@@ -88,8 +88,8 @@ public class View extends JPanel {
             drawChefHat(g,model.player.getPos().i*cellHeight+26,model.player.getPos().j * cellHeight);
             drawMustache(g,centerXPlayer-3,model.player.getPos().j * cellHeight+70);
 
-            if (model.player.getIngredientHolded()!=null) {
-                drawIngredient(g, centerX, centerY, diameter, model.player.getIngredientHolded());
+            if (model.player.getIngredientHeld()!=null) {
+                drawIngredient(g, centerX, centerY, diameter, model.player.getIngredientHeld());
             } else {
                 g.setColor(Color.RED);
             }
@@ -106,68 +106,68 @@ public class View extends JPanel {
 
 
 
-            // Dessine les meubles en bleu
-            for (Meuble meuble : model.meubles) {
-                int meubleX = meuble.getPosX() * cellWidth;
-                int meubleY = meuble.getPosY() * cellHeight;
+            // Dessine les furnitures en bleu
+            for (Furniture furniture : model.furnitures) {
+                int furnitureX = furniture.getPosX() * cellWidth;
+                int furnitureY = furniture.getPosY() * cellHeight;
 
 
-                switch (meuble.getClass().getSimpleName()) {
-                    case "PlanDeTravail":
+                switch (furniture.getClass().getSimpleName()) {
+                    case "WorkSurface":
                         g.setColor(new Color(221, 147, 62));
-                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
-                        if (((PlanDeTravail)meuble).hasSomethingOn()) {
-                            drawIngredient(g,meubleX,meubleY,diameter,((PlanDeTravail)meuble).getIngredientOn());
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
+                        if (((WorkSurface)furniture).hasSomethingOn()) {
+                            drawIngredient(g,furnitureX,furnitureY,diameter,((WorkSurface)furniture).getIngredientOn());
                         }
                         break;
-                    case "Coffre":
+                    case "IngredientChest":
                         g.setColor(new Color(81, 0,0));
-                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
-                        drawIngredient(g,meubleX,meubleY,diameter,((Coffre)meuble).getIngredient());
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
+                        drawIngredient(g,furnitureX,furnitureY,diameter,((IngredientChest)furniture).getIngredient());
                         break;
-                    case "PlancheADecoupe":
+                    case "CuttingBoard":
                         g.setColor(new Color(221, 147, 62));
-                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
                         g.setColor(Color.lightGray);
-                        g.fillRect(meubleX+cellWidth/8 + 8, meubleY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
-                        if (((PlancheADecoupe)meuble).hasSomethingOn()) {
-                            drawIngredient(g,meubleX,meubleY,diameter,((PlancheADecoupe)meuble).getIngredientOn());
+                        g.fillRect(furnitureX+cellWidth/8 + 8, furnitureY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
+                        if (((CuttingBoard)furniture).hasSomethingOn()) {
+                            drawIngredient(g,furnitureX,furnitureY,diameter,((CuttingBoard)furniture).getIngredientOn());
                         }
-                        drawKnife(g,meubleX+3,meubleY+10);
-                        if (((PlancheADecoupe)meuble).hasSomethingOn() && ((PlancheADecoupe)meuble).getIngredientOn() == Ingredient.TOMATE) {
-                            drawProgressBar(g,meubleX+30,meubleY,(int)(((PlancheADecoupe)meuble).nbactuel*100/(((PlancheADecoupe)meuble).nbDecoupe)));
+                        drawKnife(g,furnitureX+3,furnitureY+10);
+                        if (((CuttingBoard)furniture).hasSomethingOn() && ((CuttingBoard)furniture).getIngredientOn() == Ingredient.TOMATO) {
+                            drawProgressBar(g,furnitureX+30,furnitureY,(int)(((CuttingBoard)furniture).currNb*100/(((CuttingBoard)furniture).cutNb)));
                         }
                         //g.setColor(Color.darkGray);
                         break;
-                    case "Comptoir" :
+                    case "Counter" :
                         g.setColor(new Color(221, 147, 62));
-                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
                         g.setColor(Color.lightGray);
-                        g.fillOval(meubleX+cellWidth/8, meubleY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
+                        g.fillOval(furnitureX+cellWidth/8, furnitureY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
                         int dec = -5;
-                        for (Ingredient ingredient : ((Comptoir)meuble).currentIngredients) {
-                            drawIngredient(g,meubleX+dec,meubleY+dec,diameter,ingredient);
+                        for (Ingredient ingredient : ((Counter)furniture).currentIngredients) {
+                            drawIngredient(g,furnitureX+dec,furnitureY+dec,diameter,ingredient);
                             dec+=10;
                         }
                         break;
-                    case "Gaziniere" :
+                    case "GasStove" :
                         g.setColor(new Color(221, 147, 62));
-                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
-                        drawMinimalStove(g, meubleX + cellWidth / 2 - diameter / 2, meubleY + cellHeight / 2 - diameter / 2 );
-                        if (((Gaziniere)meuble).hasAPot() && ((Gaziniere)meuble).hasSomethingOn()) {
-                            drawPotWithPasta(g, meubleX + cellWidth / 2 - diameter / 2, meubleY + cellHeight / 2 - diameter / 2 );
-                            drawProgressBar(g,meubleX+30,meubleY,(int)((((Gaziniere)meuble).tempsActuel*100)/((Gaziniere)meuble).tempsCuisson));
-                            System.out.println(((Gaziniere)meuble).tempsActuel);
-                        } else if (((Gaziniere)meuble).hasAPot() && ((Gaziniere)meuble).getPot() == Ingredient.POT_REMPLI) {
-                            drawPotWithWater(g, meubleX + cellWidth / 2 - diameter / 2, meubleY + cellHeight / 2 - diameter / 2 );
-                        } else if (((Gaziniere)meuble).hasAPot()) {
-                            drawTopViewPot(g, meubleX + cellWidth / 2 - diameter / 2, meubleY + cellHeight / 2 - diameter / 2 );
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
+                        drawMinimalStove(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                        if (((GasStove)furniture).hasAPot() && ((GasStove)furniture).hasSomethingOn()) {
+                            drawPotWithPasta(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                            drawProgressBar(g,furnitureX+30,furnitureY,(int)((((GasStove)furniture).tempsActuel*100)/((GasStove)furniture).tempsCuisson));
+                            System.out.println(((GasStove)furniture).tempsActuel);
+                        } else if (((GasStove)furniture).hasAPot() && ((GasStove)furniture).getPot() == Ingredient.FULL_POT) {
+                            drawPotWithWater(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                        } else if (((GasStove)furniture).hasAPot()) {
+                            drawTopViewPot(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
                         }
                         break;
-                    case "Evier" :
+                    case "Sink" :
                         g.setColor(new Color(221, 147, 62));
-                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
-                        drawSink(g, meubleX + cellWidth / 2 - diameter / 2, meubleY + cellHeight / 2 - diameter / 2 );
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
+                        drawSink(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
                         break;
                     default:
                         g.setColor(Color.GREEN);

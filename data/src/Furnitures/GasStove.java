@@ -1,10 +1,10 @@
-package Meuble;
+package Furnitures;
 
 import Ingredient.Ingredient;
 
-public class Gaziniere extends Meuble {
+public class GasStove extends Furniture {
 
-    private Ingredient pot = Ingredient.POT_VIDE;
+    private Ingredient pot = Ingredient.EMPTY_POT;
     private Ingredient ingredientOn = null;
 
     public float tempsCuisson = 4;
@@ -12,14 +12,14 @@ public class Gaziniere extends Meuble {
 
 
     /// CONSTRUCTOR ///
-    public Gaziniere(int posX, int posY) {
+    public GasStove(int posX, int posY) {
         this.setPosX(posX);
         this.setPosY(posY);
     }
 
     @Override
     public void update(float temps) {
-        if (pot == Ingredient.POT_REMPLI && ingredientOn == Ingredient.PATES) {
+        if (pot == Ingredient.FULL_POT && ingredientOn == Ingredient.PASTA) {
             tempsActuel += temps;
             if (tempsActuel >= tempsCuisson) {
                 tempsActuel = tempsCuisson+0.001f;
@@ -57,16 +57,16 @@ public class Gaziniere extends Meuble {
         Ingredient returnedIngredient = null;
 
         if (!hasAPot()) {
-            if (ingredientInHand == Ingredient.POT_VIDE || ingredientInHand == Ingredient.POT_REMPLI) {
+            if (ingredientInHand == Ingredient.EMPTY_POT || ingredientInHand == Ingredient.FULL_POT) {
                 pot = ingredientInHand;
             }
         } else if (hasSomethingOn()) {
-            if (getIngredientOn().equals(Ingredient.PATES)) {
+            if (getIngredientOn().equals(Ingredient.PASTA)) {
                 System.out.println(tempsActuel);
                 if (tempsActuel >= tempsCuisson) {
-                    setIngredientOn(Ingredient.PATES_CUITES);
+                    setIngredientOn(Ingredient.COOKED_PASTA);
                     returnedIngredient = ingredientInHand;
-                    pot = Ingredient.POT_VIDE;
+                    pot = Ingredient.EMPTY_POT;
 
                 } else {
                     returnedIngredient = ingredientInHand;
@@ -80,7 +80,7 @@ public class Gaziniere extends Meuble {
                 }
             }
         } else {
-            if (ingredientInHand == Ingredient.PATES && pot == Ingredient.POT_REMPLI) {
+            if (ingredientInHand == Ingredient.PASTA && pot == Ingredient.FULL_POT) {
                 setIngredientOn(ingredientInHand);
 
             } else if (ingredientInHand == null) {

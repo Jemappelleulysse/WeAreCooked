@@ -1,15 +1,15 @@
-package Meuble;
+package Furnitures;
 
 import Ingredient.Ingredient;
 
-public class PlancheADecoupe extends Meuble {
+public class CuttingBoard extends Furniture {
 
     private Ingredient ingredientOn = null;
-    public int nbDecoupe = 3;
-    public int nbactuel = 0;
+    public int cutNb = 3;
+    public int currNb = 0;
 
     /// CONSTRUCTOR ///
-    public PlancheADecoupe(int posX, int posY) {
+    public CuttingBoard(int posX, int posY) {
         this.setPosX(posX);
         this.setPosY(posY);
     }
@@ -38,14 +38,14 @@ public class PlancheADecoupe extends Meuble {
         Ingredient returnedIngredient = null;
 
         if(hasSomethingOn()) {      // QUELQUE CHOSE SUR LA PLANCHE
-            if(getIngredientOn().equals(Ingredient.TOMATE)) {
-                if (nbactuel < nbDecoupe-1) {
-                    nbactuel++;
+            if(getIngredientOn().equals(Ingredient.TOMATO)) {
+                if (currNb < cutNb-1) {
+                    currNb++;
                     returnedIngredient = ingredientInHand;
                 } else {
-                    setIngredientOn(Ingredient.TOMATE_COUPE);
+                    setIngredientOn(Ingredient.SLICED_TOMATO);
                     returnedIngredient = ingredientInHand;
-                    nbactuel = 0;
+                    currNb = 0;
                 }
 
             } else {

@@ -1,4 +1,4 @@
-package Recipe;
+package Recipes;
 
 import Ingredient.Ingredient;
 

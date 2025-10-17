@@ -30,7 +30,7 @@ public class Controller extends KeyAdapter {
             } else if (key == KeyEvent.VK_Y) {
                 model.agent.goPlaceHeldIngredientOnPlate();
             } else if (key == KeyEvent.VK_P) {
-                model.agent.goGrab(Ingredient.TOMATE);
+                model.agent.goGrab(Ingredient.TOMATO);
             } else if (key == KeyEvent.VK_M) {
                 model.agent.goPrepareHeldIngredient();
             } else if (key == KeyEvent.VK_V) {
