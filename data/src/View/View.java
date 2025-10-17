@@ -44,8 +44,11 @@ public class View extends JPanel {
                 case PATES_CUITES:
                     drawCookedPasta(g, smallX, smallY);
                     break;
-                case POT :
+                case POT_REMPLI:
                     drawPotWithWater(g, centerX, centerY);
+                    break;
+                case POT_VIDE:
+                    drawTopViewPot(g, centerX, centerY);
                     break;
             }
 
@@ -131,6 +134,9 @@ public class View extends JPanel {
                             drawIngredient(g,meubleX,meubleY,diameter,((PlancheADecoupe)meuble).getIngredientOn());
                         }
                         drawKnife(g,meubleX+3,meubleY+10);
+                        if (((PlancheADecoupe)meuble).hasSomethingOn() && ((PlancheADecoupe)meuble).getIngredientOn() == Ingredient.TOMATE) {
+                            drawProgressBar(g,meubleX+30,meubleY,(int)(((PlancheADecoupe)meuble).nbactuel*100/(((PlancheADecoupe)meuble).nbDecoupe)));
+                        }
                         //g.setColor(Color.darkGray);
                         break;
                     case "Comptoir" :
@@ -148,13 +154,21 @@ public class View extends JPanel {
                         g.setColor(new Color(221, 147, 62));
                         g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
                         drawMinimalStove(g, meubleX + cellWidth / 2 - diameter / 2, meubleY + cellHeight / 2 - diameter / 2 );
-                        if (((Gaziniere)meuble).isHasAPot() && ((Gaziniere)meuble).hasSomethingOn()) {
+                        if (((Gaziniere)meuble).hasAPot() && ((Gaziniere)meuble).hasSomethingOn()) {
                             drawPotWithPasta(g, meubleX + cellWidth / 2 - diameter / 2, meubleY + cellHeight / 2 - diameter / 2 );
-                        } else if (((Gaziniere)meuble).isHasAPot()) {
+                            drawProgressBar(g,meubleX+30,meubleY,(int)((((Gaziniere)meuble).tempsActuel*100)/((Gaziniere)meuble).tempsCuisson));
+                            System.out.println(((Gaziniere)meuble).tempsActuel);
+                        } else if (((Gaziniere)meuble).hasAPot() && ((Gaziniere)meuble).getPot() == Ingredient.POT_REMPLI) {
                             drawPotWithWater(g, meubleX + cellWidth / 2 - diameter / 2, meubleY + cellHeight / 2 - diameter / 2 );
+                        } else if (((Gaziniere)meuble).hasAPot()) {
+                            drawTopViewPot(g, meubleX + cellWidth / 2 - diameter / 2, meubleY + cellHeight / 2 - diameter / 2 );
                         }
                         break;
-
+                    case "Evier" :
+                        g.setColor(new Color(221, 147, 62));
+                        g.fillRect(meubleX, meubleY, cellWidth, cellHeight);
+                        drawSink(g, meubleX + cellWidth / 2 - diameter / 2, meubleY + cellHeight / 2 - diameter / 2 );
+                        break;
                     default:
                         g.setColor(Color.GREEN);
                         break;

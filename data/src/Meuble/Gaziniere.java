@@ -4,8 +4,12 @@ import Ingredient.Ingredient;
 
 public class Gaziniere extends Meuble {
 
-    private boolean hasAPot = true;
+    private Ingredient pot = Ingredient.POT_VIDE;
     private Ingredient ingredientOn = null;
+
+    public float tempsCuisson = 4;
+    public float tempsActuel = 0;
+
 
     /// CONSTRUCTOR ///
     public Gaziniere(int posX, int posY) {
@@ -13,18 +17,27 @@ public class Gaziniere extends Meuble {
         this.setPosY(posY);
     }
 
+    @Override
+    public void update(float temps) {
+        if (pot == Ingredient.POT_REMPLI && ingredientOn == Ingredient.PATES) {
+            tempsActuel += temps;
+            if (tempsActuel >= tempsCuisson) {
+                tempsActuel = tempsCuisson+0.001f;
+            }
+        }
+    }
 
     /// GETTER ///
     public boolean hasSomethingOn() {
         return ingredientOn != null;
     }
 
-    public boolean isHasAPot() {
-        return hasAPot;
+    public boolean hasAPot() {
+        return pot != null;
     }
 
-    public void setHasAPot(boolean hasAPot) {
-        this.hasAPot = hasAPot;
+    public Ingredient getPot() {
+        return pot;
     }
 
     public Ingredient getIngredientOn() {
@@ -37,21 +50,27 @@ public class Gaziniere extends Meuble {
         this.ingredientOn = ingredientOn;
     }
 
-
     /// METHODS ///
     @Override
     public Ingredient interact(Ingredient ingredientInHand) {
 
         Ingredient returnedIngredient = null;
 
-        if (!hasAPot) {
-            if (ingredientInHand == Ingredient.POT) {
-                hasAPot = true;
+        if (!hasAPot()) {
+            if (ingredientInHand == Ingredient.POT_VIDE || ingredientInHand == Ingredient.POT_REMPLI) {
+                pot = ingredientInHand;
             }
         } else if (hasSomethingOn()) {
             if (getIngredientOn().equals(Ingredient.PATES)) {
-                setIngredientOn(Ingredient.PATES_CUITES);
-                returnedIngredient = ingredientInHand;
+                System.out.println(tempsActuel);
+                if (tempsActuel >= tempsCuisson) {
+                    setIngredientOn(Ingredient.PATES_CUITES);
+                    returnedIngredient = ingredientInHand;
+                    pot = Ingredient.POT_VIDE;
+
+                } else {
+                    returnedIngredient = ingredientInHand;
+                }
             } else {
                 if (ingredientInHand == null) {
                     returnedIngredient = getIngredientOn();
@@ -61,11 +80,14 @@ public class Gaziniere extends Meuble {
                 }
             }
         } else {
-            if (ingredientInHand == Ingredient.PATES) {
+            if (ingredientInHand == Ingredient.PATES && pot == Ingredient.POT_REMPLI) {
                 setIngredientOn(ingredientInHand);
+
             } else if (ingredientInHand == null) {
-                returnedIngredient = Ingredient.POT;
-                hasAPot = false;
+                returnedIngredient = pot;
+                pot = null;
+            } else {
+                returnedIngredient = ingredientInHand;
             }
         }
         return returnedIngredient;

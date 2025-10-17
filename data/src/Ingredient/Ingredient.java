@@ -7,7 +7,8 @@ public enum Ingredient {
     PAIN,
     PATES,
     TOMATE_COUPE,
-    POT,
+    POT_VIDE,
     PATES_CUITES,
     POT_REMPLI
+
 }

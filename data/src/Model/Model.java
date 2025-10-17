@@ -8,6 +8,7 @@ import Meuble.PlancheADecoupe;
 import Meuble.PlanDeTravail;
 import Meuble.Gaziniere;
 import Meuble.Coffre;
+import Meuble.Evier;
 import Player.Player;
 import Recipe.PatesBolo;
 import Utils.Pair;
@@ -19,7 +20,8 @@ import java.util.ArrayList;
 public class Model {
 
 
-    private float dt;
+    long lastTime = System.nanoTime();
+    long currentTime = System.nanoTime();
     private float timer = 16;
 
     private boolean doContinue = true;
@@ -107,6 +109,8 @@ public class Model {
         add(new Gaziniere(2,7));
         add(new Gaziniere(3,7));
         add(new Comptoir(6, 7, new PatesBolo()));
+        add(new Evier(7,3));
+        add(new Evier(7,4));
         for (int x = 0; x < 8; x++) {
 
             if (!(x == 6 || x == 5)) add(new PlanDeTravail(x, 0));  // top row
@@ -115,7 +119,7 @@ public class Model {
         for (int y = 1; y < 7; y++) { // avoid duplicating corners
 
             if (!(y == 1 || y == 2)) add(new PlanDeTravail(0, y));   // left column
-            add(new PlanDeTravail(7, y));   // right column
+            if (!(y ==3 || y ==4)) add(new PlanDeTravail(7, y));   // right column
         }
 
     }
@@ -139,13 +143,15 @@ public class Model {
         //
 
         while(doContinue) {
-            dt = System.currentTimeMillis() - dt;
+            float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
+            lastTime = System.nanoTime();
             for (Meuble meuble : meubles) {
                 meuble.update(dt);
             }
             SwingUtilities.invokeLater(() -> view.update(dt));
             //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");
             agent.update(dt);
+
             //System.out.println(System.currentTimeMillis() - dt + " ms needed for the agent Update");
         }
     }

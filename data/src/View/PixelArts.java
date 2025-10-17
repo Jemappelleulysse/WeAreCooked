@@ -92,6 +92,8 @@ public class PixelArts {
     }
 
     public static void drawTopViewPot(Graphics g, int i, int j) {
+        int offsety = 30;
+        int offsetx = 30;
         int diameter = 60;
         int rimThickness = 6;
         int handleWidth = 10;
@@ -99,22 +101,22 @@ public class PixelArts {
 
         // Corps extérieur (gris foncé)
         g.setColor(new Color(100, 100, 100));
-        g.fillOval(i, j, diameter, diameter);
+        g.fillOval(offsetx+i, j+offsety, diameter, diameter);
 
         // Intérieur (gris clair)
         g.setColor(new Color(180, 180, 180));
-        g.fillOval(i + rimThickness, j + rimThickness, diameter - 2 * rimThickness, diameter - 2 * rimThickness);
+        g.fillOval(offsetx+ i + rimThickness, j + rimThickness + offsety, diameter - 2 * rimThickness, diameter - 2 * rimThickness);
 
         // Ombre centrale (gris moyen)
         g.setColor(new Color(140, 140, 140));
-        g.fillOval(i + diameter / 4, j + diameter / 4, diameter / 2, diameter / 2);
+        g.fillOval(offsetx+i + diameter / 4, j + diameter / 4+offsety, diameter / 2, diameter / 2);
 
         // Poignée gauche
         g.setColor(new Color(80, 80, 80));
-        g.fillRect(i - handleWidth, j + diameter / 2 - handleHeight / 2, handleWidth, handleHeight);
+        g.fillRect(offsetx+i - handleWidth, j + diameter / 2 - handleHeight / 2+offsety, handleWidth, handleHeight);
 
         // Poignée droite
-        g.fillRect(i + diameter, j + diameter / 2 - handleHeight / 2, handleWidth, handleHeight);
+        g.fillRect(offsetx+i + diameter, j + diameter / 2 - handleHeight / 2+offsety, handleWidth, handleHeight);
     }
 
     public static void drawPotWithPasta(Graphics g, int i, int j) {
@@ -328,5 +330,24 @@ public class PixelArts {
         // Bouton de commande à droite
         g.setColor(new Color(60, 60, 60));
         g.fillOval(i + width - 15+offsetx, j + height / 2 - 5+offsety, 10, 10);
+    }
+
+
+    public static void drawProgressBar(Graphics g, int x, int y, int percent) {
+        int width = 60;
+        int height = 8;
+
+        // Encadré blanc
+        g.setColor(Color.WHITE);
+        g.fillRect(x, y, width, height);
+
+        // Bord noir (facultatif pour contraste)
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y, width, height);
+
+        // Remplissage vert selon le pourcentage
+        int filledWidth = (int)(width * percent / 100.0);
+        g.setColor(new Color(0, 180, 0)); // vert vif
+        g.fillRect(x, y, filledWidth, height);
     }
 }
