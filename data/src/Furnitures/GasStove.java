@@ -67,6 +67,8 @@ public class GasStove extends Furniture {
                     setIngredientOn(Ingredient.COOKED_PASTA);
                     returnedIngredient = ingredientInHand;
                     pot = Ingredient.EMPTY_POT;
+                    returnedIngredient = getIngredientOn();
+                    setIngredientOn(null);
 
                 } else {
                     returnedIngredient = ingredientInHand;
