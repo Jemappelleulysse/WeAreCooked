@@ -70,6 +70,7 @@ public class Agent {
 
     public void start() {
         this.dostart = !dostart;
+        actionsToDo.clear();
     }
 
     /// /////// ///
