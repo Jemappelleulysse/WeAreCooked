@@ -16,7 +16,7 @@ public class View extends JPanel {
 
         public View() {
             this.setBackground(Color.LIGHT_GRAY);
-            this.setBounds(0, 0, 900,900);
+            this.setBounds(0, 0, 900,1015);
             setDoubleBuffered(true);
         }
 
@@ -60,11 +60,12 @@ public class View extends JPanel {
 
         @Override
         protected void paintComponent(Graphics g) {
+            int offsety = 115;
             super.paintComponent(g);
             int rows = 8;
             int cols = 8;
             int cellWidth = (getWidth()) / cols;
-            int cellHeight = (getHeight()) / rows;
+            int cellHeight = (getHeight()-offsety) / rows;
             g.setColor(Color.BLACK);
             // Dessine les lignes horizontales
             for (int i = 0; i <= rows; i++) {
@@ -103,8 +104,6 @@ public class View extends JPanel {
                     //drawMinimalStove( g, i * cellWidth + cellWidth / 2 - diameter / 2, j * cellHeight + cellHeight / 2 - diameter / 2 );
                 }
             }
-
-
 
             // Dessine les furnitures en bleu
             for (Furniture furniture : model.furnitures) {
@@ -175,8 +174,9 @@ public class View extends JPanel {
                 }
 
             }
-
-
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 896, 900, 130);
+            drawRecipeProgress(g, 0,900);
     }
 
 
