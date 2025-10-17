@@ -19,7 +19,7 @@ public class Agent {
     private final ArrayList<Ingredient> currentIngredients = new ArrayList<Ingredient>();
     private ArrayList<Ingredient> missingIngredients;
     private ArrayList<Pair> actionsToDo;
-    private float timeBeforeNextAction = 0;
+    private float timeBeforeNextAction = 4f;
     private float timeBetweenActions = 0;
 
     /// /////////// ///
@@ -50,7 +50,6 @@ public class Agent {
         return missingIngredients.getFirst();
     }
 
-
     /// /////// ///
     /// SETTERS ///
     /// /////// ///
@@ -73,7 +72,12 @@ public class Agent {
             if (isRecipeFinished()) {
                 goValidateRecipe();
             }
-            goGrab(getNextIngredient());
+            Ingredient nextIngredient = getNextIngredient();
+            if (nextIngredient == Ingredient.TOMATE_COUPE) {
+                goGrab(Ingredient.TOMATE);
+            } else if (nextIngredient == Ingredient.PATES_CUITES) {
+                goGrab(Ingredient.PATES);
+            }
         }
         else {
             if(isHoldingNeededIngredient()) {
@@ -86,21 +90,18 @@ public class Agent {
     }
 
     public void update(float dt) {
-        if (true) return;
-
-        if (actionsToDo.isEmpty()) {
-            System.out.println("oui");
-            doNextAction();
-        } else {
-            timeBeforeNextAction -= dt;
-            if (timeBeforeNextAction <= 0) {
-                timeBeforeNextAction += timeBetweenActions;
-                Pair action = actionsToDo.getFirst();
-                actionsToDo.removeFirst();
-                model.move(action);
+        timeBeforeNextAction -= dt;
+        System.out.println(dt);
+        if (timeBeforeNextAction <=0) {
+            timeBeforeNextAction = timeBetweenActions;
+            if (actionsToDo.isEmpty()) {
+                doNextAction();
             }
+            Pair action = actionsToDo.getFirst();
+            actionsToDo.removeFirst();
+            model.move(action);
         }
-        return ;
+
     }
 
     /// ///////////////////// ///
