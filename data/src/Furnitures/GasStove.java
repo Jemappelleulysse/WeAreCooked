@@ -65,7 +65,6 @@ public class GasStove extends Furniture {
                 System.out.println(tempsActuel);
                 if (tempsActuel >= tempsCuisson) {
                     setIngredientOn(Ingredient.COOKED_PASTA);
-                    returnedIngredient = ingredientInHand;
                     pot = Ingredient.EMPTY_POT;
                     returnedIngredient = getIngredientOn();
                     setIngredientOn(null);
