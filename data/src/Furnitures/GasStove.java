@@ -24,6 +24,7 @@ public class GasStove extends Furniture {
             if (tempsActuel >= tempsCuisson) {
                 pot = Ingredient.EMPTY_POT;
                 setIngredientOn(Ingredient.COOKED_PASTA);
+                tempsActuel = 0;
             }
         }
     }

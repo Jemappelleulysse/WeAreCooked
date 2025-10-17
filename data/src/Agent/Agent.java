@@ -22,6 +22,12 @@ public class Agent {
     private ArrayList<Pair> actionsToDo;
     private float timeBeforeNextAction = 0f;
     private float timeBetweenActions = 0.07f;
+    private boolean dostart = false;
+
+
+    public void start() {
+        this.dostart = !dostart;
+    }
 
     /// /////////// ///
     /// CONSTRUCTOR ///
@@ -146,6 +152,7 @@ public class Agent {
     }
 
     public void update(float dt) {
+        if(!dostart) return;
         //if (true) return;
         timeBeforeNextAction -= dt;
         //System.out.println(dt);

@@ -27,14 +27,8 @@ public class Controller extends KeyAdapter {
                 model.move(1);
             } else if (key == KeyEvent.VK_RIGHT && model.player.getPosY() < 7) {
                 model.move(0);
-            } else if (key == KeyEvent.VK_Y) {
-                model.agent.goPlaceHeldIngredientOnPlate();
-            } else if (key == KeyEvent.VK_P) {
-                model.agent.goGrab(Ingredient.TOMATO);
-            } else if (key == KeyEvent.VK_M) {
-                model.agent.goPrepareHeldIngredient();
-            } else if (key == KeyEvent.VK_V) {
-                model.agent.goValidateRecipe();
+            } else if (key == KeyEvent.VK_S) {
+                model.agent.start();
             }
         }
 
