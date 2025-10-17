@@ -2,11 +2,8 @@ package Player;
 
 import Ingredient.Ingredient;
 import Utils.Pair;
-import View.ViewController;
+import View.View;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Player {
@@ -33,6 +30,10 @@ public class Player {
 
     public int getPosY() {
         return posY;
+    }
+
+    public Pair getPos() {
+        return new Pair(posX, posY);
     }
 
     public boolean isHoldingSomething() {

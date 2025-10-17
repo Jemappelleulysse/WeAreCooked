@@ -5,6 +5,8 @@ import Ingredient.Ingredient;
 public class CuttingBoard extends Furniture {
 
     private Ingredient ingredientOn = null;
+    public int nbCut = 3;
+    public int nbCurr = 0;
 
     /// CONSTRUCTOR ///
     public CuttingBoard(int posX, int posY) {
@@ -37,8 +39,15 @@ public class CuttingBoard extends Furniture {
 
         if(hasSomethingOn()) {      // QUELQUE CHOSE SUR LA PLANCHE
             if(getIngredientOn().equals(Ingredient.TOMATO)) {
-                setIngredientOn(Ingredient.SLICED_TOMATO);
-                returnedIngredient = ingredientInHand;
+                if (nbCurr < nbCut-1) {
+                    nbCurr++;
+                    returnedIngredient = ingredientInHand;
+                } else {
+                    setIngredientOn(Ingredient.SLICED_TOMATO);
+                    returnedIngredient = ingredientInHand;
+                    nbCurr = 0;
+                }
+
             } else {
                 if(ingredientInHand == null) {
                     returnedIngredient = getIngredientOn();

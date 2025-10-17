@@ -21,6 +21,7 @@ public class Pair {
     }
 
     public static ArrayList<Pair> coordsToDirections(ArrayList<Pair> path) {
+        if (path.size() < 2)  return new ArrayList<>();
         ArrayList<Pair> result = new ArrayList<>();
         for (int i = 1 ; i < path.size() ; i++) {
             result.add(new Pair( new Pair(path.get(i-1)).sub(path.get(i))));
@@ -38,5 +39,9 @@ public class Pair {
         if (o == null || getClass() != o.getClass()) return false;
         Pair pair = (Pair) o;
         return i == pair.i && j == pair.j;
+    }
+
+    public static int getTableau(Pair ij,int[][] tableau) {
+        return tableau[ij.i][ij.j];
     }
 }

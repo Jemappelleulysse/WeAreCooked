@@ -16,6 +16,8 @@ public abstract class Furniture {
         return posY;
     }
 
+    public void update(float dt) {}
+
 
     //// SETTERS ////
     protected void setPosX(int posX) {
