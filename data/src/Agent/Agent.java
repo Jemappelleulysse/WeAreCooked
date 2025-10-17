@@ -75,12 +75,12 @@ public class Agent {
     /// /////// ///
     /// METHODS ///
     /// /////// ///
-    private Furniture getFurnitureWithIngredientOn(Ingredient ingredient) {
+    private Furniture getFurnitureWithIngredientOn(HoldableObject neededObject) {
         for (Furniture furniture : model.furnitures) {
-            if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getIngredientOn() == ingredient ||
-                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getIngredientOn() == ingredient ||
-                    furniture.getClass() == GasStove.class && ((GasStove)furniture).getPot() == ingredient ||
-                    (furniture.getClass() == GasStove.class && ((GasStove)furniture).getIngredientOn() == ingredient && ingredient!= Ingredient.PASTA)
+            if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == neededObject ||
+                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == neededObject ||
+                    furniture.getClass() == GasStove.class && ((GasStove)furniture).getPot() == neededObject ||
+                    (furniture.getClass() == GasStove.class && ((GasStove)furniture).getIngredientInPot() == neededObject && neededObject!= Ingredient.PASTA)
                     ) {
                 return furniture;
             }
@@ -90,10 +90,10 @@ public class Agent {
 
     private int checkPotFull() {
         for (Furniture furniture : model.furnitures) {
-            if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == Ingredient.FULL_POT && ((GasStove) furniture).getIngredientOn() == null ) {
+            if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == KitchenUstensils.FULL_POT && ((GasStove) furniture).getIngredientInPot() == null ) {
                 return 2;
-            } else if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getIngredientOn() == Ingredient.FULL_POT ||
-                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getIngredientOn() == Ingredient.FULL_POT) {
+            } else if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == KitchenUstensils.FULL_POT ||
+                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == KitchenUstensils.FULL_POT) {
                 return 1;
             }
         }
@@ -127,7 +127,7 @@ public class Agent {
                     //System.out.println("Je suis un Bozo3");
 
                     goGrab(KitchenUstensils.FULL_POT);
-                } else if (getFurnitureWithIngredientOn(Ingredient.EMPTY_POT) != null){
+                } else if (getFurnitureWithIngredientOn(KitchenUstensils.EMPTY_POT) != null){
                     goGrab(KitchenUstensils.EMPTY_POT);
                     //System.out.println("Je suis un Bozo4");
                 } else {
@@ -169,12 +169,12 @@ public class Agent {
     /// PLAYER ACTION METHODS ///
     /// ///////////////////// ///
 
-    public void goGrab(Ingredient ingredient) {
-        Furniture furniture = getFurnitureWithIngredientOn(ingredient);
+    public void goGrab(HoldableObject object) {
+        Furniture furniture = getFurnitureWithIngredientOn(object);
         Pair destination = null;
         if (furniture == null) {
             for (Furniture fur : model.furnitures) {
-                if (fur.getClass() == IngredientChest.class && ((IngredientChest) fur).getIngredient().equals(ingredient)) {
+                if (fur.getClass() == IngredientChest.class && ((IngredientChest) fur).getIngredient().equals(object)) {
                     furniture = fur;
                 }
             }
@@ -248,7 +248,7 @@ public class Agent {
         switch (heldObject) {
             case Ingredient.TOMATO :
                 for (Furniture furniture : model.furnitures) {
-                    if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getIngredientOn() == null) {
+                    if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == null) {
                         workSurface = furniture;
                         break;
                     }
@@ -257,13 +257,13 @@ public class Agent {
                 break;
             case Ingredient.PASTA:
                 for (Furniture furniture : model.furnitures) {
-                    if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getIngredientOn() == null) {
+                    if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getIngredientInPot() == null) {
                         workSurface = furniture;
                         break;
                     }
                 }
                 break;
-            case Ingredient.EMPTY_POT:
+            case KitchenUstensils.EMPTY_POT:
                 for (Furniture furniture : model.furnitures) {
                     if (furniture.getClass() == Sink.class) {
                         workSurface = furniture;
@@ -271,7 +271,7 @@ public class Agent {
                     }
                 }
                 break;
-            case Ingredient.FULL_POT:
+            case KitchenUstensils.FULL_POT:
                 for (Furniture furniture : model.furnitures) {
                     if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == null) {
                         workSurface = furniture;

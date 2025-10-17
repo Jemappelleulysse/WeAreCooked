@@ -55,6 +55,8 @@ public class GasStove extends Furniture {
         if ( !hasAPot() ) {     // Il n'y a pas de casserole sur la gazinière
             if (objectInHand  == KitchenUstensils.EMPTY_POT || objectInHand  == KitchenUstensils.FULL_POT) {
                 pot = (KitchenUstensils) objectInHand;
+            } else {
+                returnedObject = objectInHand;
             }
         } else if (hasIngredientInPot()) {
             if (getIngredientInPot().equals(Ingredient.PASTA)) {

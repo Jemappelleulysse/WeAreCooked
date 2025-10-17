@@ -5,7 +5,7 @@ import HoldableObjects.Ingredient;
 
 public class CuttingBoard extends Furniture {
 
-    private Ingredient ingredientOn = null;
+    private HoldableObject objectOn = null;
     public int cutNb = 3;
     public int currNb = 0;
 
@@ -21,18 +21,18 @@ public class CuttingBoard extends Furniture {
     /// GETTER ///
     /// ////// ///
     public boolean hasSomethingOn() {
-        return ingredientOn != null;
+        return objectOn != null;
     }
 
-    public Ingredient getIngredientOn() {
-        return ingredientOn;
+    public HoldableObject getObjectOn() {
+        return objectOn;
     }
 
     /// ////// ///
     /// SETTER ///
     /// ////// ///
-    public void setIngredientOn(Ingredient ingredientOn) {
-        this.ingredientOn = ingredientOn;
+    public void setObjectOn(HoldableObject objectOn) {
+        this.objectOn = objectOn;
     }
 
     /// /////// ///
@@ -44,26 +44,26 @@ public class CuttingBoard extends Furniture {
         HoldableObject returnedObject = null;
 
         if(hasSomethingOn()) {      // Il y a un ingrédient sur la planche
-            Ingredient ingredientOnBoard = getIngredientOn();
-            switch (ingredientOnBoard) {
 
-                case TOMATO:
+            HoldableObject objectOnBoard = getObjectOn();
+            switch (objectOnBoard) {
+                case Ingredient.TOMATO:
                     if (currNb < cutNb-1) {
                         currNb++;
                         returnedObject = objectInHand;
                     } else {
-                        setIngredientOn(Ingredient.SLICED_TOMATO);
+                        setObjectOn(Ingredient.SLICED_TOMATO);
                         returnedObject = objectInHand;
                         currNb = 0;
                     }
                     break;
 
-                case BREAD:
+                case Ingredient.BREAD:
                     if (currNb < cutNb-1) {
                         currNb++;
                         returnedObject = objectInHand;
                     } else {
-                        setIngredientOn(Ingredient.SLICED_BREAD);
+                        setObjectOn(Ingredient.SLICED_BREAD);
                         returnedObject = objectInHand;
                         currNb = 0;
                     }
@@ -71,8 +71,8 @@ public class CuttingBoard extends Furniture {
 
                 default:    // Il y a un ingrédient non coupable sur la planche
                     if(objectInHand == null) {  // Le joueur a les mains vides
-                        returnedObject = getIngredientOn();
-                        setIngredientOn(null);
+                        returnedObject = getObjectOn();
+                        setObjectOn(null);
                     } else {    // Le joueur a quelque chose dans les mains
                         returnedObject = objectInHand;
                     }
@@ -81,7 +81,7 @@ public class CuttingBoard extends Furniture {
         } else {    // Il n'y a rien sur la planche
             if (objectInHand != null) {     // Le joueur a quelque chose en main
                 if (objectInHand instanceof Ingredient) {   // Le joueur tien en ingrédient
-                    setIngredientOn((Ingredient) objectInHand);
+                    setObjectOn((Ingredient) objectInHand);
                 } else {    // Le joueur tien autre chose
                     returnedObject = objectInHand;
                 }

@@ -148,10 +148,10 @@ public class View extends JPanel {
                         g.setColor(Color.lightGray);
                         g.fillRect(furnitureX+cellWidth/8 + 8, furnitureY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
                         if (((CuttingBoard)furniture).hasSomethingOn()) {
-                            drawHoldableObject(g,furnitureX,furnitureY,diameter,((CuttingBoard)furniture).getIngredientOn());
+                            drawHoldableObject(g,furnitureX,furnitureY,diameter,((CuttingBoard)furniture).getObjectOn());
                         }
                         drawKnife(g,furnitureX+3,furnitureY+10);
-                        if (((CuttingBoard)furniture).hasSomethingOn() && ((CuttingBoard)furniture).getIngredientOn() == Ingredient.TOMATO) {
+                        if (((CuttingBoard)furniture).hasSomethingOn() && ((CuttingBoard)furniture).getObjectOn() == Ingredient.TOMATO) {
                             drawProgressBar(g,furnitureX+30,furnitureY,(int)(((CuttingBoard)furniture).currNb*100/(((CuttingBoard)furniture).cutNb)));
                         }
                         //g.setColor(Color.darkGray);

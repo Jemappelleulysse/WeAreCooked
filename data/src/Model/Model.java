@@ -15,8 +15,6 @@ public class Model {
 
 
     long lastTime = System.nanoTime();
-    long currentTime = System.nanoTime();
-    private float timer = 16;
 
     private boolean doContinue = true;
     public Agent agent;
@@ -128,7 +126,7 @@ public class Model {
             for (Furniture furniture : furnitures) {
                 furniture.update(dt);
             }
-            SwingUtilities.invokeLater(() -> view.update(dt));
+            view.update(dt);
             //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");
             agent.update(dt);
 
