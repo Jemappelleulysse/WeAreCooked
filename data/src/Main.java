@@ -18,7 +18,7 @@ public class Main {
 
         System.out.println("Displaying view...");
         JFrame frame = new JFrame("MVC Example");
-        frame.setSize(900, 930);
+        frame.setSize(900, 1050);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setLayout(null);

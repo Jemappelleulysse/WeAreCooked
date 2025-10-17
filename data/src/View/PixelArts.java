@@ -350,4 +350,37 @@ public class PixelArts {
         g.setColor(new Color(0, 180, 0)); // vert vif
         g.fillRect(x, y, filledWidth, height);
     }
+
+    public static void drawRecipeProgress(Graphics g, int x, int y) {
+
+        int offsetx = 5+x;
+        int offsety = 5+y;
+
+        int width = 120;
+        int height = 50;
+
+        // Encadré blanc
+        g.setColor(Color.WHITE);
+        g.fillRect(offsetx, offsety, width, height);
+
+        // Bord Gris
+        g.setColor(Color.GRAY);
+        g.drawRect(offsetx, offsety, width, height);
+
+        // Image Recette
+        drawCookedPasta(g, offsetx+40, offsety+8);
+        drawSlicedTomato(g, offsetx+49, offsety+17);
+
+        // Encadré Gris détail
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(offsetx, offsety+height, width, height);
+
+        // Bord Noir
+        g.setColor(Color.BLACK);
+        g.drawRect(offsetx, offsety+height, width, height);
+
+        // Image ingrédient
+        drawWholeTomato(g, offsetx+18, offsety+height+15);
+        drawRawPasta(g, offsetx+62, offsety+height+8);
+    }
 }
