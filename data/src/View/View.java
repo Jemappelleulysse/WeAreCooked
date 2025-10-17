@@ -154,10 +154,10 @@ public class View extends JPanel {
                         g.setColor(new Color(221, 147, 62));
                         g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
                         drawMinimalStove(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
-                        if (((GasStove)furniture).hasAPot() && ((GasStove)furniture).hasSomethingOn()) {
+                        if (((GasStove)furniture).hasSomethingOn()) {
                             drawPotWithPasta(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
                             drawProgressBar(g,furnitureX+30,furnitureY,(int)((((GasStove)furniture).tempsActuel*100)/((GasStove)furniture).tempsCuisson));
-                            System.out.println(((GasStove)furniture).tempsActuel);
+                            //System.out.println(((GasStove)furniture).tempsActuel);
                         } else if (((GasStove)furniture).hasAPot() && ((GasStove)furniture).getPot() == Ingredient.FULL_POT) {
                             drawPotWithWater(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
                         } else if (((GasStove)furniture).hasAPot()) {

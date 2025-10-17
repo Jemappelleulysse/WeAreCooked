@@ -31,7 +31,7 @@ public class Util {
             // Si on est arrivé
             if (current.equals(posArrive)) {
                 for (Pair p : currentPath) {
-                    System.out.print(p);
+                    //System.out.print(p);
                 }
                 return currentPath;
             }

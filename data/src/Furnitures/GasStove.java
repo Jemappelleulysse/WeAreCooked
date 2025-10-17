@@ -22,7 +22,8 @@ public class GasStove extends Furniture {
         if (pot == Ingredient.FULL_POT && ingredientOn == Ingredient.PASTA) {
             tempsActuel += temps;
             if (tempsActuel >= tempsCuisson) {
-                tempsActuel = tempsCuisson+0.001f;
+                pot = Ingredient.EMPTY_POT;
+                setIngredientOn(Ingredient.COOKED_PASTA);
             }
         }
     }
@@ -62,15 +63,10 @@ public class GasStove extends Furniture {
             }
         } else if (hasSomethingOn()) {
             if (getIngredientOn().equals(Ingredient.PASTA)) {
-                System.out.println(tempsActuel);
-                if (tempsActuel >= tempsCuisson) {
-                    setIngredientOn(Ingredient.COOKED_PASTA);
-                    returnedIngredient = ingredientInHand;
-                    pot = Ingredient.EMPTY_POT;
-
-                } else {
-                    returnedIngredient = ingredientInHand;
-                }
+                returnedIngredient = ingredientInHand;
+            } else if (getIngredientOn().equals(Ingredient.COOKED_PASTA)) {
+                returnedIngredient = getIngredientOn();
+                setIngredientOn(null);
             } else {
                 if (ingredientInHand == null) {
                     returnedIngredient = getIngredientOn();
