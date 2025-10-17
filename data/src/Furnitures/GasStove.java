@@ -56,22 +56,18 @@ public class GasStove extends Furniture {
             if (objectInHand  == KitchenUstensils.EMPTY_POT || objectInHand  == KitchenUstensils.FULL_POT) {
                 pot = (KitchenUstensils) objectInHand;
             }
-        } else if ( hasIngredientInPot() ) {    // Il y a une casserole sur la gazinière et un ingrédient dans la casserole
-            if (getIngredientInPot().equals(Ingredient.PASTA)) {    // L'ingrédient dans la casserole sont des pâtes
-                if (currTime >= cookingTime) {  // L'ingrédient est cuit
-                    setIngredientInPot (Ingredient.COOKED_PASTA);
-                    pot = KitchenUstensils.EMPTY_POT;
-                    returnedObject  = getIngredientInPot();
-                    setIngredientInPot (null);
-                } else {    // L'ingrédient n'est pas encore cuit
-                    returnedObject  = objectInHand ;
-                }
-            } else {    // L'ingrédient dans la casserole est autre chose que des pâtes
-                if (objectInHand  == null) {    // Le joueur n'a rien en main
-                    returnedObject  = getIngredientInPot ();
+        } else if (hasIngredientInPot()) {
+            if (getIngredientInPot().equals(Ingredient.PASTA)) {
+                returnedObject = objectInHand;
+            } else if (getIngredientInPot().equals(Ingredient.COOKED_PASTA)) {
+                returnedObject = getIngredientInPot();
+                setIngredientInPot(null);
+            } else {
+                if (objectInHand == null) {
+                    returnedObject = getIngredientInPot();
                     setIngredientInPot(null);
-                } else {    // Le joueur a quelque chose en main
-                    returnedObject  = objectInHand ;
+                } else {
+                    returnedObject = objectInHand;
                 }
             }
         } else {    // Il y a une casserole sans ingrédient
@@ -96,15 +92,17 @@ public class GasStove extends Furniture {
         if (pot == KitchenUstensils.FULL_POT && ingredientInPot == Ingredient.PASTA) {
             currTime += temps;
             if (currTime >= cookingTime) {
-                currTime = cookingTime + 0.001f;
+                pot = KitchenUstensils.EMPTY_POT;
+                setIngredientInPot(Ingredient.COOKED_PASTA);
+                currTime = 0;
             }
-        }
-
-        if (pot == KitchenUstensils.EMPTY_POT && ingredientInPot == Ingredient.RAW_MEAT) {
+        } else if (pot == KitchenUstensils.EMPTY_POT && ingredientInPot == Ingredient.RAW_MEAT) {
             currTime += temps;
             if (currTime >= cookingTime) {
-                currTime = cookingTime + 0.001f;
+                setIngredientInPot(Ingredient.COOKED_PASTA);
+                currTime = 0;
             }
         }
     }
+
 }

@@ -52,7 +52,7 @@ public class Counter extends Furniture{
         if(currentRecipe.equals(currentIngredients)) {
             if (completed) {
                 currentIngredients.clear();
-                JOptionPane.showMessageDialog(null,"You win");
+                //JOptionPane.showMessageDialog(null,"You win");
             }
             completed = !completed;
         }
