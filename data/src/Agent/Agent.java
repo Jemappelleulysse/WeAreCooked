@@ -1,7 +1,8 @@
 package Agent;
 
 import Furnitures.*;
-import Ingredient.Ingredient;
+import HoldableObjects.HoldableObject;
+import HoldableObjects.Ingredient;
 import Recipes.Recipe;
 import Utils.Pair;
 import Model.Model;
@@ -15,7 +16,7 @@ import static Utils.Util.pathFinding;
 public class Agent {
 
     private Model model;
-    private Ingredient heldIngredient = null;
+    private HoldableObject heldObject = null;
     private final ArrayList<Ingredient> currentIngredients = new ArrayList<Ingredient>();
     private ArrayList<Ingredient> missingIngredients;
     private ArrayList<Pair> actionsToDo;
@@ -35,7 +36,7 @@ public class Agent {
     /// GETTERS ///
     /// /////// ///
     private boolean isPlayerHandEmpty() {
-        return (heldIngredient == null);
+        return (heldObject == null);
     }
 
     private boolean isRecipeFinished() {
@@ -43,7 +44,7 @@ public class Agent {
     }
 
     private boolean isHoldingNeededIngredient() {
-        return (missingIngredients.contains(heldIngredient));
+        return (missingIngredients.contains(heldObject));
     }
 
     private Ingredient getNextIngredient() {
@@ -55,12 +56,12 @@ public class Agent {
     /// SETTERS ///
     /// /////// ///
     private void refreshHand() {
-        heldIngredient = model.player.getIngredientHeld();
+        heldObject = model.player.getObjectHeld();
         //this.currentIngredients = currentIngredients;
     }
 
     private void reset(Recipe recipe) {
-        heldIngredient = null;
+        heldObject = null;
         currentIngredients.clear();
         missingIngredients = new ArrayList<Ingredient>(recipe.getIngredients());
     }
@@ -186,7 +187,7 @@ public class Agent {
     public void goPrepareHeldIngredient() {
         Pair destination = null;
         Furniture workSurface = null;
-        switch (heldIngredient) {
+        switch (heldObject) {
             case Ingredient.TOMATO :
                 for (Furniture furniture : model.furnitures) {
                     if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getIngredientOn() == null) {
@@ -239,8 +240,8 @@ public class Agent {
         actionsToDo.add(destination.sub(new Pair(workSurface.getPosX(),workSurface.getPosY())));
 
 
-        currentIngredients.add(heldIngredient);
-        missingIngredients.remove(heldIngredient);
+        currentIngredients.add((Ingredient) heldObject);
+        missingIngredients.remove(heldObject);
 
 
         refreshHand();

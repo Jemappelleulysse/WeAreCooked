@@ -6,7 +6,6 @@ import java.util.Queue;
 
 public class Util {
 
-
     public static ArrayList<Pair> pathFinding(Pair posDepart, Pair posArrive,int[][] board, int[][] seen) {
         Queue<ArrayList<Pair>> queue = new LinkedList<>();
         ArrayList<Pair> initialPath = new ArrayList<>();

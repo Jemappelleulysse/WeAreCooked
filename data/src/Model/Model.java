@@ -1,7 +1,7 @@
 package Model;
 
 import Agent.Agent;
-import Ingredient.Ingredient;
+import HoldableObjects.Ingredient;
 import Furnitures.*;
 import Player.Player;
 import Recipes.BolognesePasta;
@@ -36,7 +36,7 @@ public class Model {
         int l =  (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
         if (board[player.getPosX()+k][player.getPosY()+l] != -1) {
             if (board[player.getPosX()+k][player.getPosY()+l] <= furnitures.size()) {
-                player.setIngredientHeld(furnitures.get(board[player.getPosX()+k][player.getPosY()+l]-1).interact(player.getIngredientHeld()));
+                player.setObjectHeld(furnitures.get(board[player.getPosX()+k][player.getPosY()+l]-1).interact(player.getObjectHeld()));
                 return false;
             }
         }

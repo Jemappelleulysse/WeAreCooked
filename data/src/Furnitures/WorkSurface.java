@@ -1,10 +1,10 @@
 package Furnitures;
 
-import Ingredient.Ingredient;
+import HoldableObjects.HoldableObject;
 
 public class WorkSurface extends Furniture {
 
-    private Ingredient ingredientOn = null;
+    private HoldableObject objectOn = null;
 
     /// CONSTRUCTOR ///
     public WorkSurface(int posX, int posY) {
@@ -15,38 +15,38 @@ public class WorkSurface extends Furniture {
 
     /// GETTER ///
     public boolean hasSomethingOn() {
-        return ingredientOn != null;
+        return objectOn != null;
     }
 
-    public Ingredient getIngredientOn() {
-        return ingredientOn;
+    public HoldableObject getObjectOn() {
+        return objectOn;
     }
 
 
     /// SETTER ///
-    public void setIngredientOn(Ingredient ingredientOn) {
-        this.ingredientOn = ingredientOn;
+    public void setHoldableObjectOn(HoldableObject objectOn) {
+        this.objectOn = objectOn;
     }
 
 
     /// METHODS ///
     @Override
-    public Ingredient interact(Ingredient ingredient) {
+    public HoldableObject interact(HoldableObject object) {
 
-        Ingredient returnedIngredient = null;
+        HoldableObject returnedHoldableObject = null;
 
-        if(ingredient == null) {
+        if(object == null) {
             if(hasSomethingOn()) {
-                returnedIngredient = this.ingredientOn;
-                setIngredientOn(null);
+                returnedHoldableObject = this.objectOn;
+                setHoldableObjectOn(null);
             }
         } else {
             if(hasSomethingOn()) {
-                returnedIngredient = ingredient;
+                returnedHoldableObject = object;
             } else  {
-                setIngredientOn(ingredient);
+                setHoldableObjectOn(object);
             }
         }
-        return returnedIngredient;
+        return returnedHoldableObject;
     }
 }

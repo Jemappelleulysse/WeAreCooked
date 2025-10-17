@@ -1,6 +1,8 @@
 package Furnitures;
 
-import Ingredient.Ingredient;
+import HoldableObjects.HoldableObject;
+import HoldableObjects.Ingredient;
+import HoldableObjects.KitchenUstensils;
 import Recipes.Recipe;
 
 import javax.swing.*;
@@ -12,7 +14,9 @@ public class Counter extends Furniture{
     private boolean completed = false;
     public ArrayList<Ingredient> currentIngredients =  new ArrayList<Ingredient>();
 
+    /// /////////// ///
     /// CONSTRUCTOR ///
+    /// /////////// ///
     public Counter(int posX, int posY, Recipe recipe) {
         this.setPosX(posX);
         this.setPosY(posY);
@@ -23,19 +27,16 @@ public class Counter extends Furniture{
         }
     }
 
-    public Counter(int posX, int posY) {
-        this.setPosX(posX);
-        this.setPosY(posY);
-    }
-
-
+    /// /////// ///
     /// GETTERS ///
+    /// /////// ///
     public Recipe getCurrentRecipe() {
         return currentRecipe;
     }
 
-
+    /// /////// ///
     /// SETTERS ///
+    /// /////// ///
     public void setCurrentRecipe(Recipe currentRecipe) {
         if (currentRecipe != null) {
             this.currentRecipe = currentRecipe;
@@ -44,8 +45,9 @@ public class Counter extends Furniture{
         }
     }
 
-
+    /// /////// ///
     /// METHODS ///
+    /// /////// ///
     void checkRecipeCompletion() {
         if(currentRecipe.equals(currentIngredients)) {
             if (completed) {
@@ -57,14 +59,16 @@ public class Counter extends Furniture{
     }
 
     @Override
-    public Ingredient interact(Ingredient ingredient){
-        if(ingredient == null){
-            checkRecipeCompletion();
+    public HoldableObject interact(HoldableObject object){
+        checkRecipeCompletion();
+        if(object == null){
             return null;
+        } else if(object instanceof KitchenUstensils){
+            return object;
         } else {
+            Ingredient ingredient = (Ingredient) object;
             if(currentRecipe.getIngredients().contains(ingredient)){
                 if(currentIngredients.contains(ingredient)){
-                    checkRecipeCompletion();
                     return ingredient;
                 } else {
                     currentIngredients.add(ingredient);
@@ -72,7 +76,6 @@ public class Counter extends Furniture{
                     return null;
                 }
             } else {
-                checkRecipeCompletion();
                 return ingredient;
             }
         }

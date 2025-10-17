@@ -1,12 +1,11 @@
 package Controller;
 
-import Ingredient.Ingredient;
+import HoldableObjects.Ingredient;
 import Model.Model;
 
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class Controller extends KeyAdapter {
 

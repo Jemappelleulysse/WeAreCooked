@@ -1,6 +1,6 @@
 package Furnitures;
 
-import Ingredient.Ingredient;
+import HoldableObjects.*;
 
 public class IngredientChest extends Furniture {
 
@@ -22,8 +22,8 @@ public class IngredientChest extends Furniture {
 
     /// METHODS ///
     @Override
-    public Ingredient interact(Ingredient ingredient) {
-        if(ingredient == null) {
+    public HoldableObject interact(HoldableObject object) {
+        if(object == null) {
             return this.ingredient;
         } else {
             return null;

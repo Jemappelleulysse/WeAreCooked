@@ -1,6 +1,6 @@
 package Furnitures;
 
-import Ingredient.Ingredient;
+import HoldableObjects.HoldableObject;
 
 public abstract class Furniture {
 
@@ -30,5 +30,5 @@ public abstract class Furniture {
 
 
     /// METHODS ///
-    public abstract Ingredient interact(Ingredient ingredient);
+    public abstract HoldableObject interact(HoldableObject object);
 }

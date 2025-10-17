@@ -1,6 +1,6 @@
 package Recipes;
 
-import Ingredient.Ingredient;
+import HoldableObjects.Ingredient;
 
 import java.util.ArrayList;
 

@@ -1,14 +1,14 @@
 package Recipes;
 
-import Ingredient.Ingredient;
+import HoldableObjects.Ingredient;
 
 public class Sandwich extends Recipe {
 
     public Sandwich() {
         super();
-        ingredients.add(Ingredient.BREAD);
+        ingredients.add(Ingredient.SLICED_BREAD);
         ingredients.add(Ingredient.SLICED_TOMATO);
-        ingredients.add(Ingredient.SALAD);
-        ingredients.add(Ingredient.MEAT);
+        ingredients.add(Ingredient.WASHED_SALAD);
+        ingredients.add(Ingredient.COOKED_MEAT);
     }
 }

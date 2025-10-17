@@ -1,19 +1,14 @@
 package Player;
 
-import Ingredient.Ingredient;
+import HoldableObjects.HoldableObject;
 import Utils.Pair;
-import View.View;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class Player {
 
     private int posX;
     private int posY;
     private boolean isHoldingSomething =  false;
-    private Ingredient ingredientHeld = null;
+    private HoldableObject objectHeld = null;
 
     /// /////////// ///
     /// CONSTRUCTOR ///
@@ -42,8 +37,8 @@ public class Player {
         return isHoldingSomething;
     }
 
-    public Ingredient getIngredientHeld() {
-        return ingredientHeld;
+    public HoldableObject getObjectHeld() {
+        return objectHeld;
     }
 
     /// /////// ///
@@ -57,9 +52,9 @@ public class Player {
         this.posY = posY;
     }
 
-    public void setIngredientHeld(Ingredient ingredientHeld) {
-        this.ingredientHeld = ingredientHeld;
-        isHoldingSomething = ingredientHeld != null;
+    public void setObjectHeld(HoldableObject objectHeld) {
+        this.objectHeld = objectHeld;
+        isHoldingSomething = objectHeld != null;
     }
 
     /// /////// ///

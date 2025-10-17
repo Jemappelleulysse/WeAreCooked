@@ -3,7 +3,7 @@ package View;
 import javax.swing.JPanel;
 import java.awt.*;
 
-import Ingredient.Ingredient;
+import HoldableObjects.*;
 import Model.Model;
 import Furnitures.*;
 
@@ -24,39 +24,57 @@ public class View extends JPanel {
             this.model = model;
         }
 
-        void drawIngredient(Graphics g, int centerX, int centerY, int diameter, Ingredient ingredient) {
+        void drawHoldableObject(Graphics g, int centerX, int centerY, int diameter, HoldableObject object) {
             int smallDiameter = diameter / 3;
             int smallX = centerX + diameter - smallDiameter - 2;
             int smallY = centerY + diameter - smallDiameter - 2;
-            switch (ingredient) {
-                case TOMATO :
+            switch (object) {
+                case Ingredient.BREAD:
+                    //todo
+                    //drawBread(g, smallX, smallY, diameter);
+                    break;
+                case Ingredient.SLICED_BREAD:
+                    //todo
+                    //drawSlicedBread(g, smallX, smallY, smallDiameter);
+                    break;
+                case Ingredient.TOMATO:
                     drawWholeTomato( g, smallX, smallY );
                     break;
-                case MEAT :
-                    g.setColor(Color.PINK);
-                    break;
-                case SLICED_TOMATO :
+                case Ingredient.SLICED_TOMATO:
                     drawSlicedTomato(g, smallX, smallY);
                     break;
-                case PASTA :
+                case Ingredient.SALAD:
+                    //todo
+                    //drawSalad(g, smallX, smallY);
+                    break;
+                case Ingredient.WASHED_SALAD:
+                    //todo
+                    //drawWashedSalad(g, smallX, smallY);
+                    break;
+                case Ingredient.RAW_MEAT :
+                    //todo
+                    //drawRawMeat(g, smallX, smallY);
+                    break;
+                case Ingredient.COOKED_MEAT:
+                    //todo
+                    //drawCookedMeat(g, smallX, smallY);
+                    break;
+                case Ingredient.PASTA :
                     drawRawPasta(g, smallX, smallY);
                     break;
-                case COOKED_PASTA:
+                case Ingredient.COOKED_PASTA:
                     drawCookedPasta(g, smallX, smallY);
                     break;
-                case FULL_POT:
+                case KitchenUstensils.FULL_POT:
                     drawPotWithWater(g, centerX, centerY);
                     break;
-                case EMPTY_POT:
+                case KitchenUstensils.EMPTY_POT:
                     drawTopViewPot(g, centerX, centerY);
                     break;
+                default:
+                    throw new IllegalArgumentException("Objet inconnu : " + object.toString());
             }
-
         }
-
-
-
-
 
         @Override
         protected void paintComponent(Graphics g) {
@@ -88,8 +106,8 @@ public class View extends JPanel {
             drawChefHat(g,model.player.getPos().i*cellHeight+26,model.player.getPos().j * cellHeight);
             drawMustache(g,centerXPlayer-3,model.player.getPos().j * cellHeight+70);
 
-            if (model.player.getIngredientHeld()!=null) {
-                drawIngredient(g, centerX, centerY, diameter, model.player.getIngredientHeld());
+            if (model.player.getObjectHeld()!=null) {
+                drawHoldableObject(g, centerX, centerY, diameter, model.player.getObjectHeld());
             } else {
                 g.setColor(Color.RED);
             }
@@ -117,13 +135,13 @@ public class View extends JPanel {
                         g.setColor(new Color(221, 147, 62));
                         g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
                         if (((WorkSurface)furniture).hasSomethingOn()) {
-                            drawIngredient(g,furnitureX,furnitureY,diameter,((WorkSurface)furniture).getIngredientOn());
+                            drawHoldableObject(g,furnitureX,furnitureY,diameter,((WorkSurface)furniture).getObjectOn());
                         }
                         break;
                     case "IngredientChest":
                         g.setColor(new Color(81, 0,0));
                         g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
-                        drawIngredient(g,furnitureX,furnitureY,diameter,((IngredientChest)furniture).getIngredient());
+                        drawHoldableObject(g,furnitureX,furnitureY,diameter,((IngredientChest)furniture).getIngredient());
                         break;
                     case "CuttingBoard":
                         g.setColor(new Color(221, 147, 62));
@@ -131,7 +149,7 @@ public class View extends JPanel {
                         g.setColor(Color.lightGray);
                         g.fillRect(furnitureX+cellWidth/8 + 8, furnitureY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
                         if (((CuttingBoard)furniture).hasSomethingOn()) {
-                            drawIngredient(g,furnitureX,furnitureY,diameter,((CuttingBoard)furniture).getIngredientOn());
+                            drawHoldableObject(g,furnitureX,furnitureY,diameter,((CuttingBoard)furniture).getIngredientOn());
                         }
                         drawKnife(g,furnitureX+3,furnitureY+10);
                         if (((CuttingBoard)furniture).hasSomethingOn() && ((CuttingBoard)furniture).getIngredientOn() == Ingredient.TOMATO) {
@@ -146,7 +164,7 @@ public class View extends JPanel {
                         g.fillOval(furnitureX+cellWidth/8, furnitureY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
                         int dec = -5;
                         for (Ingredient ingredient : ((Counter)furniture).currentIngredients) {
-                            drawIngredient(g,furnitureX+dec,furnitureY+dec,diameter,ingredient);
+                            drawHoldableObject(g,furnitureX+dec,furnitureY+dec,diameter,ingredient);
                             dec+=10;
                         }
                         break;
@@ -154,11 +172,11 @@ public class View extends JPanel {
                         g.setColor(new Color(221, 147, 62));
                         g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
                         drawMinimalStove(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
-                        if (((GasStove)furniture).hasAPot() && ((GasStove)furniture).hasSomethingOn()) {
+                        if (((GasStove)furniture).hasAPot() && ((GasStove)furniture).hasIngredientInPot()) {
                             drawPotWithPasta(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
-                            drawProgressBar(g,furnitureX+30,furnitureY,(int)((((GasStove)furniture).tempsActuel*100)/((GasStove)furniture).tempsCuisson));
-                            System.out.println(((GasStove)furniture).tempsActuel);
-                        } else if (((GasStove)furniture).hasAPot() && ((GasStove)furniture).getPot() == Ingredient.FULL_POT) {
+                            drawProgressBar(g,furnitureX+30,furnitureY,(int)((((GasStove)furniture).currTime *100)/((GasStove)furniture).cookingTime));
+                            System.out.println(((GasStove)furniture).currTime);
+                        } else if (((GasStove)furniture).hasAPot() && ((GasStove)furniture).getPot() == KitchenUstensils.FULL_POT) {
                             drawPotWithWater(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
                         } else if (((GasStove)furniture).hasAPot()) {
                             drawTopViewPot(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
@@ -173,27 +191,11 @@ public class View extends JPanel {
                         g.setColor(Color.GREEN);
                         break;
                 }
-
             }
-
-
     }
-
-
 
     public void update(float dt) {
             repaint();
     }
 
-
-
-
-
-
-
-
-
-
-
-    
 }

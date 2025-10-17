@@ -1,6 +1,7 @@
 package Furnitures;
 
-import Ingredient.Ingredient;
+import HoldableObjects.HoldableObject;
+import HoldableObjects.Ingredient;
 
 public class CuttingBoard extends Furniture {
 
@@ -8,14 +9,17 @@ public class CuttingBoard extends Furniture {
     public int cutNb = 3;
     public int currNb = 0;
 
+    /// /////////// ///
     /// CONSTRUCTOR ///
+    /// /////////// ///
     public CuttingBoard(int posX, int posY) {
         this.setPosX(posX);
         this.setPosY(posY);
     }
 
-
+    /// ////// ///
     /// GETTER ///
+    /// ////// ///
     public boolean hasSomethingOn() {
         return ingredientOn != null;
     }
@@ -24,43 +28,65 @@ public class CuttingBoard extends Furniture {
         return ingredientOn;
     }
 
-
+    /// ////// ///
     /// SETTER ///
+    /// ////// ///
     public void setIngredientOn(Ingredient ingredientOn) {
         this.ingredientOn = ingredientOn;
     }
 
-
+    /// /////// ///
     /// METHODS ///
+    /// /////// ///
     @Override
-    public Ingredient interact(Ingredient ingredientInHand) {
+    public HoldableObject interact(HoldableObject objectInHand) {
 
-        Ingredient returnedIngredient = null;
+        HoldableObject returnedObject = null;
 
-        if(hasSomethingOn()) {      // QUELQUE CHOSE SUR LA PLANCHE
-            if(getIngredientOn().equals(Ingredient.TOMATO)) {
-                if (currNb < cutNb-1) {
-                    currNb++;
-                    returnedIngredient = ingredientInHand;
-                } else {
-                    setIngredientOn(Ingredient.SLICED_TOMATO);
-                    returnedIngredient = ingredientInHand;
-                    currNb = 0;
-                }
+        if(hasSomethingOn()) {      // Il y a un ingrédient sur la planche
+            Ingredient ingredientOnBoard = getIngredientOn();
+            switch (ingredientOnBoard) {
 
-            } else {
-                if(ingredientInHand == null) {
-                    returnedIngredient = getIngredientOn();
-                    setIngredientOn(null);
-                } else {
-                    returnedIngredient = ingredientInHand;
-                }
+                case TOMATO:
+                    if (currNb < cutNb-1) {
+                        currNb++;
+                        returnedObject = objectInHand;
+                    } else {
+                        setIngredientOn(Ingredient.SLICED_TOMATO);
+                        returnedObject = objectInHand;
+                        currNb = 0;
+                    }
+                    break;
+
+                case BREAD:
+                    if (currNb < cutNb-1) {
+                        currNb++;
+                        returnedObject = objectInHand;
+                    } else {
+                        setIngredientOn(Ingredient.SLICED_BREAD);
+                        returnedObject = objectInHand;
+                        currNb = 0;
+                    }
+                    break;
+
+                default:    // Il y a un ingrédient non coupable sur la planche
+                    if(objectInHand == null) {  // Le joueur a les mains vides
+                        returnedObject = getIngredientOn();
+                        setIngredientOn(null);
+                    } else {    // Le joueur a quelque chose dans les mains
+                        returnedObject = objectInHand;
+                    }
+                    break;
             }
-        } else {    // RIEN SUR LA PLANCHE
-            if(ingredientInHand != null) {
-                setIngredientOn(ingredientInHand);
+        } else {    // Il n'y a rien sur la planche
+            if (objectInHand != null) {     // Le joueur a quelque chose en main
+                if (objectInHand instanceof Ingredient) {   // Le joueur tien en ingrédient
+                    setIngredientOn((Ingredient) objectInHand);
+                } else {    // Le joueur tien autre chose
+                    returnedObject = objectInHand;
+                }
             }
         }
-        return returnedIngredient;
+        return returnedObject;
     }
 }
