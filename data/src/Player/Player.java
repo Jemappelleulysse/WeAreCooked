@@ -2,11 +2,8 @@ package Player;
 
 import Ingredient.Ingredient;
 import Utils.Pair;
-import View.ViewController;
+import View.View;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Player {
@@ -26,9 +23,9 @@ public class Player {
         return posX;
     }
 
-    public int getPosY() {
-        return posY;
-    }
+    public int getPosY() { return posY; }
+
+    public Pair getPos() { return new Pair(posX, posY);}
 
     public boolean isHoldingSomething() {
         return isHoldingSomething;
@@ -55,15 +52,6 @@ public class Player {
         this.ingredientHolded = ingredientHolded;
     }
 
-    public void takePath(ArrayList<Pair> path) {
-
-        ArrayList<Pair> actions = Pair.coordsToDirections(path);
-        for (Pair pair : actions) {
-            if (!ViewController.instance.move(pair)) {
-                break;
-            }
-        }
-    }
 
 
 

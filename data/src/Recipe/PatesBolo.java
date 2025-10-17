@@ -7,6 +7,6 @@ public class PatesBolo extends Recipe {
     public PatesBolo() {
         super();
         ingredients.add(Ingredient.TOMATE_COUPE);
-        ingredients.add(Ingredient.PATES);
+        ingredients.add(Ingredient.PATES_CUITES);
     }
 }

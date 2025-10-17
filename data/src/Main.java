@@ -4,37 +4,43 @@ import Meuble.Coffre;
 import Meuble.PlanDeTravail;
 import Meuble.PlancheADecoupe;
 import Meuble.Comptoir;
-import View.ViewController;
+import Model.Model;
+import View.View;
 import Recipe.PatesBolo;
+import Controller.Controller;
+
+import javax.naming.ldap.Control;
+import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
     public static void main(String[] args) {
-        ViewController.instance = new ViewController();
-        ViewController.instance.agent = new Agent(ViewController.instance.player,new PatesBolo());
-        ViewController.instance.add(new PlanDeTravail(3,3));
-        ViewController.instance.add(new PlanDeTravail(3,3));
-        ViewController.instance.add(new PlanDeTravail(3,4));
-        ViewController.instance.add(new PlanDeTravail(4,3));
-        ViewController.instance.add(new PlanDeTravail(4,4));
-        ViewController.instance.add(new Coffre(0,1, Ingredient.PATES));
-        ViewController.instance.add(new Coffre(0,2, Ingredient.TOMATE));
-        ViewController.instance.add(new PlancheADecoupe(6,0));
-        ViewController.instance.add(new PlancheADecoupe(5,0));
-        ViewController.instance.add(new Comptoir(6, 7, new PatesBolo()));
-        for (int x = 0; x < 8; x++) {
 
-            if (!(x==6 || x==5)) ViewController.instance.add(new PlanDeTravail(x, 0));  // top row
-            if (!(x==6))  ViewController.instance.add(new PlanDeTravail(x, 7));   // bottom row
-        }
-        for (int y = 1; y < 7; y++) { // avoid duplicating corners
+        Model model = new Model();
+        View view = new View();
+        Controller controller = new Controller(model);
+        model.setView(view);
+        view.setModel(model);
 
-            if(!(y==1 || y == 2)) ViewController.instance.add(new PlanDeTravail(0, y));   // left column
-            ViewController.instance.add(new PlanDeTravail(7, y));   // right column
-        }
-        ViewController.instance.display();
+        System.out.println("Displaying view...");
+        JFrame frame = new JFrame("MVC Example");
+        frame.setSize(900, 930);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setLayout(null);
+        frame.add(view);
+        view.setVisible(true);
+        frame.setResizable(false);
+        frame.addKeyListener(controller);
+
+
+        model.start();
+
 
     }
+    
 }
