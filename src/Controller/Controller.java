@@ -31,7 +31,7 @@ public class Controller extends KeyAdapter {
         // Des trucs à initialiser?
         //
 
-        //TODO : A Modifier (recuper la/les recette via le model)
+        //TODO : A Modifier (recuperer la/les recette via le model)
 
         agents.add(new Agent(model, new BolognesePasta(), 0));
 

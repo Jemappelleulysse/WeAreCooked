@@ -15,7 +15,6 @@ public class Model {
 
     public int[][] board;
     public ArrayList<Player> players;
-    //public Player player;
     public ArrayList<Furniture> furnitures = new ArrayList<>();
 
     public void add(Furniture furniture) {
