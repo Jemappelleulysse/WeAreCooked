@@ -42,7 +42,7 @@ public class Controller extends KeyAdapter {
             lastTime = System.nanoTime();
 
             model.update(dt);
-            view.update(dt);
+            view.update(dt, model.player, model.furnitures);
             //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");
             for (Agent agent : agents) {
                 agent.update(dt);
