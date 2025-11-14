@@ -5,13 +5,13 @@ import HoldableObjects.Ingredient;
 import Furnitures.*;
 import Player.Player;
 import Recipes.BolognesePasta;
-import Utils.Pair;
 import View.View;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class Model {
+
 
     long lastTime = System.nanoTime();
 
@@ -68,6 +68,7 @@ public class Model {
                     board[i][j] = -1;
             }
         }
+
 
         agent = new Agent(this, new BolognesePasta());
         add(new WorkSurface(3, 3));

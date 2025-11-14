@@ -1,10 +1,11 @@
 package Player;
 
 import HoldableObjects.HoldableObject;
-import Utils.Pair;
+import Utils.Vec2;
 
 public class Player {
 
+    private int ID;
     private int posX;
     private int posY;
     private boolean isHoldingSomething =  false;
@@ -13,7 +14,8 @@ public class Player {
     /// /////////// ///
     /// CONSTRUCTOR ///
     /// /////////// ///
-    public Player(int posX, int posY) {
+    public Player(int posX, int posY, int ID) {
+        this.ID = ID;
         this.posX = posX;
         this.posY = posY;
     }
@@ -29,8 +31,8 @@ public class Player {
         return posY;
     }
 
-    public Pair getPos() {
-        return new Pair(posX, posY);
+    public Vec2 getPos() {
+        return new Vec2(posX, posY);
     }
 
     public boolean isHoldingSomething() {
@@ -55,6 +57,15 @@ public class Player {
     public void setObjectHeld(HoldableObject objectHeld) {
         this.objectHeld = objectHeld;
         isHoldingSomething = objectHeld != null;
+    }
+
+
+    /// /////// ///
+    /// GETTERS ///
+    /// /////// ///
+
+    public int getID() {
+        return ID;
     }
 
     /// /////// ///

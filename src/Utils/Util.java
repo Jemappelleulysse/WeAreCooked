@@ -6,38 +6,38 @@ import java.util.Queue;
 
 public class Util {
 
-    public static ArrayList<Pair> pathFinding(Pair posDepart, Pair posArrive,int[][] board, int[][] seen) {
-        Queue<ArrayList<Pair>> queue = new LinkedList<>();
-        ArrayList<Pair> initialPath = new ArrayList<>();
+    public static ArrayList<Vec2> pathFinding(Vec2 posDepart, Vec2 posArrive, int[][] board, int[][] seen) {
+        Queue<ArrayList<Vec2>> queue = new LinkedList<>();
+        ArrayList<Vec2> initialPath = new ArrayList<>();
         initialPath.add(posDepart);
         queue.add(initialPath);
 
         while (!queue.isEmpty()) {
-            ArrayList<Pair> currentPath = queue.poll();
-            Pair current = currentPath.get(currentPath.size() - 1);
+            ArrayList<Vec2> currentPath = queue.poll();
+            Vec2 current = currentPath.get(currentPath.size() - 1);
 
             // Vérification des limites et obstacles
-            if (current.i < 0 || current.i >= board.length || current.j < 0 || current.j >= board[0].length) {
+            if (current.getX() < 0 || current.getX() >= board.length || current.getY() < 0 || current.getY() >= board[0].length) {
                 continue;
             }
-            if (!(Pair.getTableau(current,board) == -1 || Pair.getTableau(current,board) == 0) || seen[current.i][current.j] == 1) {
+            if (!(Vec2.getTableau(current,board) == -1 || Vec2.getTableau(current,board) == 0) || seen[current.getX()][current.getY()] == 1) {
                 continue;
             }
 
             // Marquer comme vu
-            seen[current.i][current.j] = 1;
+            seen[current.getX()][current.getY()] = 1;
 
             // Si on est arrivé
             if (current.equals(posArrive)) {
-                for (Pair p : currentPath) {
+                for (Vec2 p : currentPath) {
                     //System.out.print(p);
                 }
                 return currentPath;
             }
 
             // Ajouter les voisins à explorer
-            for (Pair neighbor : getNeighbors(current)) {
-                ArrayList<Pair> newPath = new ArrayList<>(currentPath);
+            for (Vec2 neighbor : getNeighbors(current)) {
+                ArrayList<Vec2> newPath = new ArrayList<>(currentPath);
                 newPath.add(neighbor);
                 queue.add(newPath);
             }
@@ -47,12 +47,12 @@ public class Util {
     }
 
 
-    private static ArrayList<Pair> getNeighbors(Pair p) {
-        ArrayList<Pair> neighbors = new ArrayList<>();
-        neighbors.add(new Pair(p.i - 1, p.j)); // haut
-        neighbors.add(new Pair(p.i + 1, p.j)); // bas
-        neighbors.add(new Pair(p.i, p.j - 1)); // gauche
-        neighbors.add(new Pair(p.i, p.j + 1)); // droite
+    private static ArrayList<Vec2> getNeighbors(Vec2 p) {
+        ArrayList<Vec2> neighbors = new ArrayList<>();
+        neighbors.add(new Vec2(p.getX() - 1, p.getY())); // haut
+        neighbors.add(new Vec2(p.getX() + 1, p.getY())); // bas
+        neighbors.add(new Vec2(p.getX(), p.getY() - 1)); // gauche
+        neighbors.add(new Vec2(p.getX(), p.getY() + 1)); // droite
         return neighbors;
     }
 }

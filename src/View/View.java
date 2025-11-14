@@ -2,26 +2,23 @@ package View;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.ArrayList;
 
 import HoldableObjects.*;
-import Model.Model;
 import Furnitures.*;
+import Player.Player;
 
 import static View.PixelArts.*;
 
-
 public class View extends JPanel {
 
-        private Model model;
+        private ArrayList<Player> players;
+        private ArrayList<Furniture> furnitures;
 
         public View() {
             this.setBackground(Color.LIGHT_GRAY);
             this.setBounds(0, 0, 900,1015);
             setDoubleBuffered(true);
-        }
-
-        public void setModel(Model model) {
-            this.model = model;
         }
 
         void drawHoldableObject(Graphics g, int centerX, int centerY, int diameter, HoldableObject object) {
@@ -96,22 +93,25 @@ public class View extends JPanel {
                 int x = (j == cols) ? getWidth() - 1 : j * cellWidth;
                 g.drawLine(x, 0, x, getHeight() - 1);
             }
-            // Dessine le personnage en rouge
             int diameter =(Math.min(cellWidth, cellHeight)); // marge de 2px de chaque côté
-            int diameterPlayer = (int)(diameter * 2./3.);
-            int centerX = model.player.getPos().i * cellWidth + cellWidth / 2 - diameter / 2;
-            int centerXPlayer = model.player.getPos().i * cellWidth + cellWidth / 2 - diameterPlayer / 2;
-            int centerY = model.player.getPos().j * cellHeight + cellHeight / 2 - diameter / 2;
-            int centerYPlayer = model.player.getPos().j * cellHeight + cellHeight / 2 - diameterPlayer / 2+10;
-            g.setColor(Color.YELLOW);
-            g.fillOval(centerXPlayer, centerYPlayer, diameterPlayer, diameterPlayer);
-            drawChefHat(g,model.player.getPos().i*cellHeight+26,model.player.getPos().j * cellHeight);
-            drawMustache(g,centerXPlayer-3,model.player.getPos().j * cellHeight+70);
 
-            if (model.player.getObjectHeld()!=null) {
-                drawHoldableObject(g, centerX, centerY, diameter, model.player.getObjectHeld());
-            } else {
-                g.setColor(Color.RED);
+            // Dessine le personnage en rouge
+            for(Player p : players) {
+                int diameterPlayer = (int)(diameter * 2./3.);
+                int centerX = p.getPos().i * cellWidth + cellWidth / 2 - diameter / 2;
+                int centerXPlayer = p.getPos().i * cellWidth + cellWidth / 2 - diameterPlayer / 2;
+                int centerY = p.getPos().j * cellHeight + cellHeight / 2 - diameter / 2;
+                int centerYPlayer = p.getPos().j * cellHeight + cellHeight / 2 - diameterPlayer / 2+10;
+                g.setColor(Color.YELLOW);
+                g.fillOval(centerXPlayer, centerYPlayer, diameterPlayer, diameterPlayer);
+                drawChefHat(g,p.getPos().i*cellHeight+26,p.getPos().j * cellHeight);
+                drawMustache(g,centerXPlayer-3,p.getPos().j * cellHeight+70);
+
+                if (p.getObjectHeld()!=null) {
+                    drawHoldableObject(g, centerX, centerY, diameter, p.getObjectHeld());
+                } else {
+                    g.setColor(Color.RED);
+                }
             }
             for (int i = 0 ; i < 8 ; i++) {
                 for (int j = 0 ; j < 8 ; j++) {
@@ -125,7 +125,7 @@ public class View extends JPanel {
             }
 
             // Dessine les furnitures en bleu
-            for (Furniture furniture : model.furnitures) {
+            for (Furniture furniture : furnitures) {
                 int furnitureX = furniture.getPosX() * cellWidth;
                 int furnitureY = furniture.getPosY() * cellHeight;
 
@@ -196,7 +196,9 @@ public class View extends JPanel {
             drawRecipeProgress(g, 0,900);
     }
 
-    public void update(float dt) {
+    public void update(float dt, ArrayList<Player> players, ArrayList<Furniture> furnitures) {
+            this.players = players;
+            this.furnitures = furnitures;
             repaint();
     }
 
