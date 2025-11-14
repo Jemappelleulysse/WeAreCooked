@@ -17,6 +17,7 @@ import static Utils.Util.pathFinding;
 
 public class Agent {
 
+    private int ID;
     private Model model;
     private HoldableObject heldObject = null;
     private final ArrayList<Ingredient> currentIngredients = new ArrayList<Ingredient>();
@@ -29,8 +30,10 @@ public class Agent {
     /// /////////// ///
     /// CONSTRUCTOR ///
     /// /////////// ///
-    public Agent(Model model, Recipe recipe) {
+    public Agent(Model model, Recipe recipe, int id) {
+        this.ID = id;
         this.model = model;
+        model.addPlayer(this.ID);
         this.actionsToDo = new ArrayList<>();
         this.missingIngredients = new ArrayList<Ingredient>(recipe.getIngredients());
     }
@@ -58,7 +61,7 @@ public class Agent {
     /// SETTERS ///
     /// /////// ///
     private void refreshHand() {
-        heldObject = model.player.getObjectHeld();
+        heldObject = model.getPlayer(this.ID).getObjectHeld();
         //this.currentIngredients = currentIngredients;
     }
 
@@ -161,7 +164,7 @@ public class Agent {
             Pair action = actionsToDo.getFirst();
             actionsToDo.removeFirst();
             if (!(action.i ==0  && action.j == 0))
-                model.move(action);
+                model.move(action, this.ID);
             refreshHand();
         }
     }
@@ -187,7 +190,7 @@ public class Agent {
             return;
         }
 
-        ArrayList<Pair> actions = Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));
+        ArrayList<Pair> actions = Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(this.ID).getPos(), destination, model.board, new int[8][8])));
         actionsToDo.addAll(actions);
         actionsToDo.add(destination.sub(new Pair(furniture.getPosX(),furniture.getPosY())));
         refreshHand();
@@ -231,7 +234,7 @@ public class Agent {
             actionsToDo.add(new Pair(0,-1));
             return;
         }
-        ArrayList<Pair> actions =  Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));;
+        ArrayList<Pair> actions =  Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(this.ID).getPos(), destination, model.board, new int[8][8])));;
         actionsToDo.addAll(actions);
         actionsToDo.add(destination.sub(new Pair(workSurface.getPosX(),workSurface.getPosY())));
         actionsToDo.add(destination.sub(new Pair(workSurface.getPosX(),workSurface.getPosY())));
@@ -290,7 +293,7 @@ public class Agent {
         }
         destination = nextEmptyCase(new Pair(workSurface.getPosX(),workSurface.getPosY()));
         //System.out.println("\n-----------------------------\n"+workSurface.getPosX() +" " + workSurface.getPosY()+"\n---------------------------------");
-        ArrayList<Pair> actions =  Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));
+        ArrayList<Pair> actions =  Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(this.ID).getPos(), destination, model.board, new int[8][8])));
         actionsToDo.addAll(actions);
         if (workSurface.getClass() == CuttingBoard.class) {
             actionsToDo.add(destination.sub(new Pair(workSurface.getPosX(),workSurface.getPosY())));
@@ -323,7 +326,7 @@ public class Agent {
         if (destination == null) {
             return;
         }
-        ArrayList<Pair> actions =  Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));
+        ArrayList<Pair> actions =  Pair.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(this.ID).getPos(), destination, model.board, new int[8][8])));
         actionsToDo.addAll(actions);
         actionsToDo.add(destination.sub(new Pair(workSurface.getPosX(),workSurface.getPosY())));
 

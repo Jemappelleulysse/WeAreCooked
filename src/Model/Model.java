@@ -14,7 +14,8 @@ import java.util.ArrayList;
 public class Model {
 
     public int[][] board;
-    public Player player;
+    public ArrayList<Player> players;
+    //public Player player;
     public ArrayList<Furniture> furnitures = new ArrayList<>();
 
     public void add(Furniture furniture) {
@@ -22,8 +23,22 @@ public class Model {
         board[furniture.getPosX()][furniture.getPosY()] = furnitures.indexOf(furniture)+1;
     }
 
+    public Player getPlayer(int ID) {
+        Player player = null;
+        for  (Player p : players) {
+            if (p.getID() == ID) {
+                player = p;
+                break;
+            }
+        }
+        if (player == null) {
+            throw new IllegalArgumentException("Player with ID " + ID + " not found");
+        }
+        return player;
+    }
 
-    public boolean move(int direction) {
+    public boolean move(int direction, int ID) {
+        Player player = this.getPlayer(ID);
         int k = (direction == 0) ? 1 : (direction == 1) ? -1 : 0;
         int l =  (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
         if (board[player.getPosX()+k][player.getPosY()+l] != -1) {
@@ -40,21 +55,21 @@ public class Model {
         return true;
     }
 
-    public boolean move(Pair p) {
+    public boolean move(Pair p, int ID) {
         if (p.i == 1) {
-            return move(1);
+            return move(1, ID);
         }else if (p.i == -1) {
-            return move(0);
+            return move(0, ID);
         } else if (p.j == 1) {
-            return move(3);
+            return move(3, ID);
         } else {
-            return move(2);
+            return move(2, ID);
         }
     }
 
     public Model() {
         board = new int[8][8];
-        player = new Player(2,3);
+        this.players = new ArrayList<>();
         // Initialize board with zeros
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -93,6 +108,12 @@ public class Model {
         for (Furniture furniture : furnitures) {
             furniture.update(dt);
         }
+    }
+
+    //TODO : Modifer pour éviter que les players nouvellements créer
+    //      ne se chevauche
+    public void addPlayer(int ID) {
+        players.add(new Player(2,3, ID));
     }
 
     @Override

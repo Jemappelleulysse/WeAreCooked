@@ -12,17 +12,17 @@ import java.util.ArrayList;
 
 public class Controller extends KeyAdapter {
 
-    private Model model;
+    private final Model model;
     private ArrayList<Agent> agents;
-    private boolean doContinue;
-    private View view;
+    private boolean isRunning;
+    private final View view;
     private long lastTime;
 
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
         this.agents = new ArrayList<>();
-        this.doContinue = true;
+        this.isRunning = true;
         this.lastTime = System.nanoTime();
     }
 
@@ -33,16 +33,17 @@ public class Controller extends KeyAdapter {
 
         //TODO : A Modifier (recuper la/les recette via le model)
 
-        agents.add(new Agent(model, new BolognesePasta()));
+        agents.add(new Agent(model, new BolognesePasta(), 0));
 
-        while(doContinue) {
+        while(isRunning) {
 
             float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
 
             lastTime = System.nanoTime();
 
             model.update(dt);
-            view.update(dt, model.player, model.furnitures);
+
+            view.update(dt, model.players, model.furnitures);
             //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");
             for (Agent agent : agents) {
                 agent.update(dt);
@@ -56,15 +57,7 @@ public class Controller extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_UP && model.player.getPosY() > 0) {
-            model.move(3);
-        } else if (key == KeyEvent.VK_DOWN && model.player.getPosY() < 7) {
-            model.move(2);
-        } else if (key == KeyEvent.VK_LEFT && model.player.getPosX() > 0) {
-            model.move(1);
-        } else if (key == KeyEvent.VK_RIGHT && model.player.getPosY() < 7) {
-            model.move(0);
-        } else if (key == KeyEvent.VK_S) {
+        if (key == KeyEvent.VK_S) {
             for(Agent agent : agents) {
                 agent.start();
             }

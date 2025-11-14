@@ -5,6 +5,7 @@ import Utils.Pair;
 
 public class Player {
 
+    private int ID;
     private int posX;
     private int posY;
     private boolean isHoldingSomething =  false;
@@ -13,7 +14,8 @@ public class Player {
     /// /////////// ///
     /// CONSTRUCTOR ///
     /// /////////// ///
-    public Player(int posX, int posY) {
+    public Player(int posX, int posY, int ID) {
+        this.ID = ID;
         this.posX = posX;
         this.posY = posY;
     }
@@ -55,6 +57,15 @@ public class Player {
     public void setObjectHeld(HoldableObject objectHeld) {
         this.objectHeld = objectHeld;
         isHoldingSomething = objectHeld != null;
+    }
+
+
+    /// /////// ///
+    /// GETTERS ///
+    /// /////// ///
+
+    public int getID() {
+        return ID;
     }
 
     /// /////// ///
