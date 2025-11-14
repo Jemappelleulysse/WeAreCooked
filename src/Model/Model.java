@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class Model {
 
-
     long lastTime = System.nanoTime();
 
     private boolean doContinue = true;
@@ -69,7 +68,6 @@ public class Model {
                     board[i][j] = -1;
             }
         }
-
 
         agent = new Agent(this, new BolognesePasta());
         add(new WorkSurface(3, 3));

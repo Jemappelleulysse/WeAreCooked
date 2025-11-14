@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Nettoyage complet de l'arborescence : déplacement de tout les fichiers et dossiers à la racine et non dans le dossier data">
-      <change beforePath="$PROJECT_DIR$/src/View/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/View.java" afterDir="false" />
+    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Mise à jour du workspace et correction dans view">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Agent/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agent/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Model.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +75,15 @@
       <option name="presentableId" value="Default" />
       <updated>1763125535483</updated>
     </task>
+    <task id="LOCAL-00001" summary="Mise à jour du workspace et correction dans view">
+      <option name="closed" value="true" />
+      <created>1763129378028</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1763129378028</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -87,6 +99,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Nettoyage complet de l'arborescence : déplacement de tout les fichiers et dossiers à la racine et non dans le dossier data" />
-    <option name="LAST_COMMIT_MESSAGE" value="Nettoyage complet de l'arborescence : déplacement de tout les fichiers et dossiers à la racine et non dans le dossier data" />
+    <MESSAGE value="Mise à jour du workspace et correction dans view" />
+    <option name="LAST_COMMIT_MESSAGE" value="Mise à jour du workspace et correction dans view" />
   </component>
 </project>

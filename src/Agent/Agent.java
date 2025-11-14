@@ -17,7 +17,7 @@ import static Utils.Util.pathFinding;
 
 public class Agent {
 
-    private Model model;
+    private final Model model;
     private HoldableObject heldObject = null;
     private final ArrayList<Ingredient> currentIngredients = new ArrayList<Ingredient>();
     private ArrayList<Ingredient> missingIngredients;
