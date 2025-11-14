@@ -4,183 +4,119 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e16db19-dd83-4700-a7e1-346413a2dcf9" name="Changes" comment="Reorganisation" />
+    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Nettoyage complet de l'arborescence : déplacement de tout les fichiers et dossiers à la racine et non dans le dossier data">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Agent/Agent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Controller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Furnitures/Counter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Furnitures/CuttingBoard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Furnitures/Furniture.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Furnitures/GasStove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Furnitures/IngredientChest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Furnitures/Sink.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Furnitures/WorkSurface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HoldableObjects/HoldableObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HoldableObjects/Ingredient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HoldableObjects/KitchenUstensils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Model.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Player/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Recipes/BolognesePasta.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Recipes/Recipe.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Recipes/Sandwich.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Utils/Pair.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Utils/Util.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/View/PixelArts.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/View/View.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/TP1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/projet.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/WeAreCooked.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/overcooked.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Agent/Agent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Controller/Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/Counter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/CuttingBoard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/Furniture.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/GasStove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/IngredientChest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/Sink.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/WorkSurface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/HoldableObjects/HoldableObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/HoldableObjects/Ingredient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/HoldableObjects/KitchenUstensils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Model/Model.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Player/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Recipes/BolognesePasta.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Recipes/Recipe.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Recipes/Sandwich.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Utils/Pair.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/Utils/Util.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/View/PixelArts.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/View/View.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/LaGraille" />
-  </component>
-  <component name="Git.Rebase.Settings">
-    <option name="NEW_BASE" value="origin/quoicoubeh" />
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="quoicoubeh" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {}
-}</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Jemappelleulysse/WeAreCooked.git",
-    "accountId": "1e4f99c8-a7bd-47cb-bb11-f14a65c3cb1e"
-  }
-}]]></component>
   <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
 }</component>
-  <component name="ProjectId" id="32utKLkVkcUAOCq5eJKzn6cSjlf" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="35TECa7FqEbnHGpmgyVP8paynpr" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.java.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Application.java.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;modifsJeremy&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ulysse/Bureau/overcooked/data&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "nettoyageArborescence",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/jerem/Documents/M1_IMAGINE_2025-2026/POA_SMA/Projet/projet.iml",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/data/src" />
-      <recent name="$PROJECT_DIR$/data/src/Recette" />
-      <recent name="$PROJECT_DIR$/data/src/Ingredient" />
-      <recent name="$PROJECT_DIR$/data/src/Player" />
-      <recent name="$PROJECT_DIR$/data/src/Meuble" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" activateToolWindowBeforeRun="false">
-      <option name="ALTERNATIVE_JRE_PATH" value="19" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="data/src/Main.class " />
-      <module name="overcooked" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
       </set>
     </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1e16db19-dd83-4700-a7e1-346413a2dcf9" name="Changes" comment="" />
-      <created>1758282222183</created>
+      <changelist id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="" />
+      <created>1763125535483</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1758282222183</updated>
-      <workItem from="1758282223285" duration="40000" />
-      <workItem from="1758283481969" duration="4736000" />
-      <workItem from="1758289227856" duration="581000" />
-      <workItem from="1758289823336" duration="171000" />
-      <workItem from="1758700268425" duration="11000" />
+      <updated>1763125535483</updated>
     </task>
-    <task id="LOCAL-00001" summary="Création de la classe player">
-      <option name="closed" value="true" />
-      <created>1758284206174</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1758284206174</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Création des classes meuble et plan de travail">
-      <option name="closed" value="true" />
-      <created>1758285743839</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1758285743839</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Création de Coffre et ajout de dossiers">
-      <option name="closed" value="true" />
-      <created>1758286027291</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1758286027291</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Correction getPosY meuble">
-      <option name="closed" value="true" />
-      <created>1758286631231</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1758286631231</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Implémentation de Coffre">
-      <option name="closed" value="true" />
-      <created>1758287126043</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1758287126043</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Reorganisation des dossiers">
-      <option name="closed" value="true" />
-      <created>1758287260520</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1758287260520</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Correction getIngredient coffre">
-      <option name="closed" value="true" />
-      <created>1758287353212</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1758287353212</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Reorganisation">
-      <option name="closed" value="true" />
-      <created>1758287387556</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1758287387556</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -194,15 +130,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Init" />
-    <MESSAGE value="Création de la classe player" />
-    <MESSAGE value="Création des classes meuble et plan de travail" />
-    <MESSAGE value="Création de Coffre et ajout de dossiers" />
-    <MESSAGE value="Correction getPosY meuble" />
-    <MESSAGE value="Implémentation de Coffre" />
-    <MESSAGE value="Reorganisation des dossiers" />
-    <MESSAGE value="Correction getIngredient coffre" />
-    <MESSAGE value="Reorganisation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reorganisation" />
+    <MESSAGE value="Nettoyage complet de l'arborescence : déplacement de tout les fichiers et dossiers à la racine et non dans le dossier data" />
+    <option name="LAST_COMMIT_MESSAGE" value="Nettoyage complet de l'arborescence : déplacement de tout les fichiers et dossiers à la racine et non dans le dossier data" />
   </component>
 </project>

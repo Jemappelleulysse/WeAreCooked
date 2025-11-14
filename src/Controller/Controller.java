@@ -1,6 +1,5 @@
 package Controller;
 
-import HoldableObjects.Ingredient;
 import Model.Model;
 
 import java.awt.event.KeyEvent;
