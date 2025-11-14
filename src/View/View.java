@@ -28,6 +28,7 @@ public class View extends JPanel {
             int smallDiameter = diameter / 3;
             int smallX = centerX + diameter - smallDiameter - 2;
             int smallY = centerY + diameter - smallDiameter - 2;
+
             switch (object) {
                 case Ingredient.BREAD:
                     //todo

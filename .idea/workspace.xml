@@ -5,63 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Nettoyage complet de l'arborescence : déplacement de tout les fichiers et dossiers à la racine et non dans le dossier data">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Agent/Agent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Furnitures/Counter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Furnitures/CuttingBoard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Furnitures/Furniture.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Furnitures/GasStove.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Furnitures/IngredientChest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Furnitures/Sink.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Furnitures/WorkSurface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HoldableObjects/HoldableObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HoldableObjects/Ingredient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HoldableObjects/KitchenUstensils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Model.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Player/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Recipes/BolognesePasta.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Recipes/Recipe.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Recipes/Sandwich.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Utils/Pair.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Utils/Util.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/PixelArts.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/View.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/TP1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/projet.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/WeAreCooked.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/overcooked.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/data.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Agent/Agent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Controller/Controller.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/Counter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/CuttingBoard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/Furniture.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/GasStove.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/IngredientChest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/Sink.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Furnitures/WorkSurface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/HoldableObjects/HoldableObject.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/HoldableObjects/Ingredient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/HoldableObjects/KitchenUstensils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Model/Model.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Player/Player.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Recipes/BolognesePasta.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Recipes/Recipe.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Recipes/Sandwich.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Utils/Pair.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/Utils/Util.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/View/PixelArts.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/View/View.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/View.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +20,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "JeremNcl"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Jemappelleulysse/WeAreCooked.git",
+    "accountId": "f2349026-8659-4512-8179-e183b9400dd6"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -93,7 +49,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "nettoyageArborescence",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/jerem/Documents/M1_IMAGINE_2025-2026/POA_SMA/Projet/projet.iml",
     "project.structure.last.edited": "Modules",
