@@ -12,8 +12,9 @@ public class Main {
 
         Model model = new Model();
         View view = new View();
-        Controller controller = new Controller(model);
-        model.setView(view);
+        Controller controller = new Controller(model, view);
+
+        //TODO : Modifier ses merde
         view.setModel(model);
 
         System.out.println("Displaying view...");
@@ -27,6 +28,6 @@ public class Main {
         frame.setResizable(false);
         frame.addKeyListener(controller);
 
-        model.start();
+        controller.start();
     }
 }

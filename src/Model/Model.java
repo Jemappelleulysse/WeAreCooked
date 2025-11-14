@@ -13,14 +13,8 @@ import java.util.ArrayList;
 
 public class Model {
 
-
-    long lastTime = System.nanoTime();
-
-    private boolean doContinue = true;
-    public Agent agent;
     public int[][] board;
     public Player player;
-    private View view;
     public ArrayList<Furniture> furnitures = new ArrayList<>();
 
     public void add(Furniture furniture) {
@@ -46,8 +40,6 @@ public class Model {
         return true;
     }
 
-    public void setView(View view) {this.view = view;}
-
     public boolean move(Pair p) {
         if (p.i == 1) {
             return move(1);
@@ -70,8 +62,6 @@ public class Model {
             }
         }
 
-
-        agent = new Agent(this, new BolognesePasta());
         add(new WorkSurface(3, 3));
         add(new WorkSurface(3, 3));
         add(new WorkSurface(3, 4));
@@ -99,6 +89,12 @@ public class Model {
 
     }
 
+    public void update(float dt){
+        for (Furniture furniture : furnitures) {
+            furniture.update(dt);
+        }
+    }
+
     @Override
     public String toString() {
         String s = "";
@@ -110,35 +106,4 @@ public class Model {
         }
         return s;
     }
-
-
-    public void start() {
-        //
-        // Des trucs à initialiser?
-        //
-
-        while(doContinue) {
-
-            float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
-
-            lastTime = System.nanoTime();
-
-            for (Furniture furniture : furnitures) {
-                furniture.update(dt);
-            }
-            view.update(dt);
-            //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");
-            agent.update(dt);
-
-            //System.out.println(System.currentTimeMillis() - dt + " ms needed for the agent Update");
-        }
-
-
-    }
-
-
-
-
-
-
 }
