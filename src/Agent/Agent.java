@@ -119,6 +119,8 @@ public class Agent {
             if (timeBeforeNextAction <=0) {
                 timeBeforeNextAction = timeBetweenActions;
 
+                System.out.println("Current agent : " + this.id);
+
                 // S'il n'y a plus de mouvement à faire → détermination de la prochaine action logique et des prochains mouvements
                 if (nextMoves.isEmpty()) {
                     doNextAction();
@@ -216,11 +218,12 @@ public class Agent {
             return;
         }
         if (Objects.isNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8]))){
-
+            nextMoves.add(new Vec2(0,0));
+        } else {
+            ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
+            nextMoves.addAll(actions);
+            nextMoves.add(destination.sub(new Vec2(furniture.getPosX(),furniture.getPosY())));
         }
-        ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
-        nextMoves.addAll(actions);
-        nextMoves.add(destination.sub(new Vec2(furniture.getPosX(),furniture.getPosY())));
     }
 
     public Vec2 nextEmptyCase(Vec2 pos) {
@@ -311,7 +314,12 @@ public class Agent {
         }
 
         if (workSurface == null) {
-            //System.out.print("PAS DE PLANCHE VIDE TROUVE");
+            goGrab(model.getPlayer(id).getObjectHeld());
+            nextMoves.clear();
+            nextMoves.add(new Vec2(0,0));
+            nextMoves.add(new Vec2(0,0));
+            nextMoves.add(new Vec2(0,0));
+            nextMoves.add(new Vec2(0,0));
             return;
         }
 
