@@ -5,6 +5,9 @@ import HoldableObjects.Ingredient;
 import Furnitures.*;
 import Player.Player;
 import Recipes.BolognesePasta;
+import Recipes.Salad;
+import Recipes.Sandwich;
+import Recipes.SteakAndFries;
 import Utils.Pair;
 import View.View;
 
@@ -91,7 +94,7 @@ public class Model {
         add(new CuttingBoard(5, 0));
         add(new GasStove(2,7));
         add(new GasStove(3,7));
-        add(new Counter(6, 7, new BolognesePasta()));
+        add(new Counter(6, 7, new SteakAndFries()));
         add(new Sink(7,3));
         add(new Sink(7,4));
         add(new OilSink(7,2));

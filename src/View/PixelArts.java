@@ -1,6 +1,7 @@
 package View;
 
 import HoldableObjects.Ingredient;
+import Recipes.Recipe;
 
 import java.awt.*;
 import java.util.Random;
@@ -634,12 +635,12 @@ public class PixelArts {
         g.fillRect(x, y, filledWidth, height);
     }
 
-    public static void drawRecipeProgress(Graphics g, int x, int y) {
+    public static void drawRecipeProgress(Graphics g, int x, int y, Recipe recipe) {
 
         int offsetx = 5+x;
         int offsety = 5+y;
 
-        int width = 120;
+        int width = 120+44;
         int height = 50;
 
         // Encadré blanc
@@ -651,8 +652,17 @@ public class PixelArts {
         g.drawRect(offsetx, offsety, width, height);
 
         // Image Recette
-        drawCookedPasta(g, offsetx+40, offsety+8);
-        drawSlicedTomato(g, offsetx+49, offsety+17);
+        for (int i = 0 ; i < recipe.getIngredients().size() ; i++) {
+            switch (recipe.getIngredients().get(i)) {
+                case Ingredient.COOKED_PASTA -> drawCookedPasta(g,offsetx+62+(i*9),offsety+8+(i*9));
+                case Ingredient.COOKED_MEAT -> drawCookedMeat(g,offsetx+62+(i*9),offsety+8+(i*9));
+                case Ingredient.SLICED_TOMATO -> drawSlicedTomato(g,offsetx+62+(i*9),offsety+8+(i*9));
+                case Ingredient.SLICED_BREAD -> drawSlicedBread(g,offsetx+62+(i*9),offsety+8+(i*9));
+                case Ingredient.WASHED_SALAD -> drawWashedSalad(g,offsetx+62+(i*9),offsety+8+(i*9));
+                case Ingredient.FRIED_POTATO -> drawFriedPotato(g,offsetx+62+(i*9),offsety+8+(i*9));
+                case Ingredient.COOKED_POTATO -> drawCookedPotato(g,offsetx+62+(i*9),offsety+8+(i*9));
+            }
+        }
 
         // Encadré Gris détail
         g.setColor(Color.LIGHT_GRAY);
@@ -663,7 +673,18 @@ public class PixelArts {
         g.drawRect(offsetx, offsety+height, width, height);
 
         // Image ingrédient
-        drawWholeTomato(g, offsetx+18, offsety+height+15);
-        drawRawPasta(g, offsetx+62, offsety+height+8);
+        for (int i = 0 ; i < recipe.getIngredients().size() ; i++) {
+            switch (recipe.getIngredients().get(i)) {
+                case Ingredient.COOKED_PASTA -> drawRawPasta(g,offsetx+(i*44),offsety+height+8);
+                case Ingredient.COOKED_MEAT -> drawRawMeat(g,offsetx+18+(i*44),offsety+height+8);
+                case Ingredient.SLICED_TOMATO -> drawWholeTomato(g,offsetx+(i*44),offsety+height+15);
+                case Ingredient.SLICED_BREAD -> drawBread(g,offsetx+18+(i*44),offsety+height+8);
+                case Ingredient.WASHED_SALAD -> drawSalad(g,offsetx+18+(i*44),offsety+height+8);
+                case Ingredient.FRIED_POTATO -> drawPotato(g,offsetx+18+(i*44),offsety+height+8);
+                case Ingredient.COOKED_POTATO -> drawPotato(g,offsetx+18+(i*44),offsety+height+8);
+            }
+        }
+        //drawWholeTomato(g, offsetx+18, offsety+height+15);
+        //drawRawPasta(g, offsetx+62, offsety+height+8);
     }
 }

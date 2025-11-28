@@ -72,6 +72,11 @@ public class GasStove extends Furniture {
             } else if (getIngredientInPot().equals(Ingredient.FRIED_POTATO)) {
                 returnedObject = getIngredientInPot();
                 setIngredientInPot(null);
+            } else if (getIngredientInPot().equals(Ingredient.RAW_MEAT)) {
+                returnedObject = objectInHand;
+            } else if (getIngredientInPot().equals(Ingredient.COOKED_MEAT)) {
+                returnedObject = getIngredientInPot();
+                setIngredientInPot(null);
             } else {
                 if (objectInHand == null) {
                     returnedObject = getIngredientInPot();

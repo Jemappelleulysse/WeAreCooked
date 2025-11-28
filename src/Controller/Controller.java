@@ -3,12 +3,16 @@ package Controller;
 import Agent.Agent;
 import Recipes.BolognesePasta;
 import Model.Model;
+import Recipes.Salad;
+import Recipes.Sandwich;
+import Recipes.SteakAndFries;
 import Utils.Pair;
 import View.View;
 
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
+import java.security.Key;
 import java.util.ArrayList;
 
 public class Controller extends KeyAdapter {
@@ -34,10 +38,9 @@ public class Controller extends KeyAdapter {
 
         //TODO : A Modifier (recuperer la/les recette via le model)
 
-        agents.add(new Agent(model, new BolognesePasta(), 0));
+        agents.add(new Agent(model, new SteakAndFries(), 0));
 
         while(isRunning) {
-
             float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
 
             lastTime = System.nanoTime();
@@ -66,6 +69,8 @@ public class Controller extends KeyAdapter {
             model.move(new Pair(1,0),0);
         } else if (key == KeyEvent.VK_D) {
             model.move(new Pair(-1,0),0);
+        } else if (key == KeyEvent.VK_T) {
+            agents.getFirst().start();
         }
     }
 }
