@@ -133,7 +133,7 @@ public class Model {
 
     public void movePlayer(int id, Vec2 nextMove) {
 
-        boolean b = false;
+        boolean isInteracting = false;
         Player player = this.getPlayer(id);
 
         int nextX = player.getPosX() - nextMove.getX();
@@ -146,10 +146,10 @@ public class Model {
                 // On interagit avec un meuble
                 Furniture furniture = furnitures.get(board[nextX][nextY]-1);
                 player.setObjectHeld(furniture.interact(player.getObjectHeld()));
-                b = true;
+                isInteracting = true;
             }
         }
-        if (!b) {
+        if (!isInteracting) {
             board[player.getPosX()][player.getPosY()] = -1;
             player.setPosX(nextX);
             player.setPosY(nextY);
