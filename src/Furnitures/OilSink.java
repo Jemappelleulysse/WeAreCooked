@@ -1,13 +1,15 @@
 package Furnitures;
 
-import HoldableObjects.*;
+import HoldableObjects.HoldableObject;
+import HoldableObjects.Ingredient;
+import HoldableObjects.KitchenUstensils;
 
-public class Sink extends Furniture {
+public class OilSink extends Furniture {
 
     /// /////////// ///
     /// CONSTRUCTOR ///
     /// /////////// ///
-    public Sink(int posX, int posY) {
+    public OilSink(int posX, int posY) {
         this.setPosX(posX);
         this.setPosY(posY);
     }
@@ -22,13 +24,8 @@ public class Sink extends Furniture {
         switch (objectInHand) {
 
             case KitchenUstensils.EMPTY_POT:
-                returnedObject = KitchenUstensils.WATER_POT;
+                returnedObject = KitchenUstensils.OIL_POT;
                 break;
-
-            case Ingredient.SALAD:
-                returnedObject = Ingredient.WASHED_SALAD;
-                break;
-
             default:
                 break;
         }

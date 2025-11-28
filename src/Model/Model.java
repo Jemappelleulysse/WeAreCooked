@@ -83,6 +83,10 @@ public class Model {
         add(new WorkSurface(4, 4));
         add(new IngredientChest(0, 1, Ingredient.PASTA));
         add(new IngredientChest(0, 2, Ingredient.TOMATO));
+        add(new IngredientChest(0,3,Ingredient.RAW_MEAT));
+        add(new IngredientChest(0,4,Ingredient.POTATO));
+        add(new IngredientChest(0,5,Ingredient.SALAD));
+        add(new IngredientChest(0,6,Ingredient.BREAD));
         add(new CuttingBoard(6, 0));
         add(new CuttingBoard(5, 0));
         add(new GasStove(2,7));
@@ -90,6 +94,7 @@ public class Model {
         add(new Counter(6, 7, new BolognesePasta()));
         add(new Sink(7,3));
         add(new Sink(7,4));
+        add(new OilSink(7,2));
         for (int x = 0; x < 8; x++) {
 
             if (!(x == 6 || x == 5)) add(new WorkSurface(x, 0));  // top row
@@ -97,8 +102,8 @@ public class Model {
         }
         for (int y = 1; y < 7; y++) { // avoid duplicating corners
 
-            if (!(y == 1 || y == 2)) add(new WorkSurface(0, y));   // left column
-            if (!(y ==3 || y ==4)) add(new WorkSurface(7, y));   // right column
+            if (!(y == 1 || y == 2 || y == 3 || y == 4 || y ==5 || y ==6 )) add(new WorkSurface(0, y));   // left column
+            if (!(y ==3 || y ==4 || y==2)) add(new WorkSurface(7, y));   // right column
         }
 
     }

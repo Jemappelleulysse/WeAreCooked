@@ -94,10 +94,10 @@ public class Agent {
 
     private int checkPotFull() {
         for (Furniture furniture : model.furnitures) {
-            if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == KitchenUstensils.FULL_POT && ((GasStove) furniture).getIngredientInPot() == null ) {
+            if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == KitchenUstensils.WATER_POT && ((GasStove) furniture).getIngredientInPot() == null ) {
                 return 2;
-            } else if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == KitchenUstensils.FULL_POT ||
-                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == KitchenUstensils.FULL_POT) {
+            } else if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == KitchenUstensils.WATER_POT ||
+                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == KitchenUstensils.WATER_POT) {
                 return 1;
             }
         }
@@ -130,7 +130,7 @@ public class Agent {
                 } else if (checkPotFull() == 1) {
                     //System.out.println("Je suis un Bozo3");
 
-                    goGrab(KitchenUstensils.FULL_POT);
+                    goGrab(KitchenUstensils.WATER_POT);
                 } else if (getFurnitureWithIngredientOn(KitchenUstensils.EMPTY_POT) != null){
                     goGrab(KitchenUstensils.EMPTY_POT);
                     //System.out.println("Je suis un Bozo4");
@@ -275,7 +275,7 @@ public class Agent {
                     }
                 }
                 break;
-            case KitchenUstensils.FULL_POT:
+            case KitchenUstensils.WATER_POT:
                 for (Furniture furniture : model.furnitures) {
                     if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == null) {
                         workSurface = furniture;

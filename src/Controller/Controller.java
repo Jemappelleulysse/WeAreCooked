@@ -3,6 +3,7 @@ package Controller;
 import Agent.Agent;
 import Recipes.BolognesePasta;
 import Model.Model;
+import Utils.Pair;
 import View.View;
 
 import java.awt.event.KeyEvent;
@@ -58,9 +59,13 @@ public class Controller extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_S) {
-            for(Agent agent : agents) {
-                agent.start();
-            }
+            model.move(new Pair(0,-1),0);
+        } else if (key == KeyEvent.VK_Z) {
+            model.move(new Pair(0,1),0);
+        } else if (key == KeyEvent.VK_Q) {
+            model.move(new Pair(1,0),0);
+        } else if (key == KeyEvent.VK_D) {
+            model.move(new Pair(-1,0),0);
         }
     }
 }
