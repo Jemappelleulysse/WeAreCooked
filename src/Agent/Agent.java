@@ -29,6 +29,8 @@ public class Agent {
     private final ArrayList<Ingredient> currentIngredients = new ArrayList<>();
     private ArrayList<Ingredient> missingIngredients;
 
+    private boolean doAction = false;
+
     /// //////////// ///
     /// CONSTRUCTORS ///
     /// //////////// ///
@@ -105,23 +107,28 @@ public class Agent {
     /// METHODS ///
     /// /////// ///
 
+    public void start(){
+        doAction = true;
+    }
+
     public void update(float dt) {
+        if (doAction){
+            timeBeforeNextAction -= dt;
 
-        timeBeforeNextAction -= dt;
+            // Si le temps entre chaque action est écoulé
+            if (timeBeforeNextAction <=0) {
+                timeBeforeNextAction = timeBetweenActions;
 
-        // Si le temps entre chaque action est écoulé
-        if (timeBeforeNextAction <=0) {
-            timeBeforeNextAction = timeBetweenActions;
+                // S'il n'y a plus de mouvement à faire → détermination de la prochaine action logique et des prochains mouvements
+                if (nextMoves.isEmpty()) {
+                    doNextAction();
+                }
 
-            // S'il n'y a plus de mouvement à faire → détermination de la prochaine action logique et des prochains mouvements
-            if (nextMoves.isEmpty()) {
-                doNextAction();
-            }
-
-            // On demande au model de bouger le joueur
-            Vec2 nextMove = nextMoves.removeFirst();
-            if (nextMove.isNotNull()) {
-                model.movePlayer(id, nextMove);
+                // On demande au model de bouger le joueur
+                Vec2 nextMove = nextMoves.removeFirst();
+                if (nextMove.isNotNull()) {
+                    model.movePlayer(id, nextMove);
+                }
             }
         }
     }
@@ -208,7 +215,9 @@ public class Agent {
         } else {
             return;
         }
+        if (Objects.isNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8]))){
 
+        }
         ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
         nextMoves.addAll(actions);
         nextMoves.add(destination.sub(new Vec2(furniture.getPosX(),furniture.getPosY())));

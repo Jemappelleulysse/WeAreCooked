@@ -8,9 +8,12 @@ import Recipes.Recipe;
 import Utils.Vec2;
 
 import javax.swing.*;
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 
 public class Model {
+
+    public static int BOARD_SQUARE_SIZE = 8;
 
     public int[][] board;
     public ArrayList<Player> players;
@@ -30,11 +33,11 @@ public class Model {
     }
 
     public Model() {
-        board = new int[8][8];
+        board = new int[BOARD_SQUARE_SIZE][BOARD_SQUARE_SIZE];
         this.players = new ArrayList<>();
         // Initialize board with zeros
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < BOARD_SQUARE_SIZE; i++) {
+            for (int j = 0; j < BOARD_SQUARE_SIZE; j++) {
                 board[i][j] = -1;
             }
         }
@@ -58,12 +61,12 @@ public class Model {
         addToBoard(new Sink(7,3));
         addToBoard(new Sink(7,4));
 
-        for (int x = 0; x < 8; x++) {
+        for (int x = 0; x < BOARD_SQUARE_SIZE; x++) {
 
             if (!(x == 6 || x == 5)) addToBoard(new WorkSurface(x, 0));  // top row
             if (!(x == 6 || x ==2 || x == 3)) addToBoard(new WorkSurface(x, 7));   // bottom row
         }
-        for (int y = 1; y < 7; y++) { // avoid duplicating corners
+        for (int y = 1; y < BOARD_SQUARE_SIZE-1; y++) { // avoid duplicating corners
 
             if (!(y == 1 || y == 2)) addToBoard(new WorkSurface(0, y));   // left column
             if (!(y ==3 || y ==4)) addToBoard(new WorkSurface(7, y));   // right column
@@ -107,9 +110,23 @@ public class Model {
     /// CONFIG ///
     /// ////// ///
 
+    public Vec2 getNewPlayerPos(){
+        for (int i = 0; i < BOARD_SQUARE_SIZE; ++i){
+            for (int j = 0; j < BOARD_SQUARE_SIZE; ++j){
+                if (board[i][j] == -1){
+                    return new Vec2(i,j);
+                }
+            }
+        }
+        throw new ArrayStoreException("Can't get new player position, " +
+                "all case of the board are full");
+    }
+
     //TODO : Modifier pour éviter que les players nouvellement créés ne se chevauchent
     public void addPlayer(int ID) {
-        players.add(new Player(2,3, ID));
+        Vec2 pos = getNewPlayerPos();
+        board[pos.getX()][pos.getY()] = 0;
+        players.add(new Player(pos.getX(),pos.getY(), ID));
     }
 
     public void addValidIngredient(Ingredient ingredient) {
@@ -133,7 +150,8 @@ public class Model {
 
     public void movePlayer(int id, Vec2 nextMove) {
 
-        boolean b = false;
+        boolean canMove = false;
+
         Player player = this.getPlayer(id);
 
         int nextX = player.getPosX() - nextMove.getX();
@@ -141,15 +159,18 @@ public class Model {
 
         // Si la case n'est pas vide
         if (board[nextX][nextY] != -1) {
+            if (board[nextX][nextY] == 0) {
+                canMove = true;
+            }
             // Si le meuble est dans la liste de meubles
-            if (board[nextX][nextY] <= furnitures.size()) {
+            else if (board[nextX][nextY] <= furnitures.size()) {
                 // On interagit avec un meuble
                 Furniture furniture = furnitures.get(board[nextX][nextY]-1);
                 player.setObjectHeld(furniture.interact(player.getObjectHeld()));
-                b = true;
+                canMove = true;
             }
         }
-        if (!b) {
+        if (!canMove) {
             board[player.getPosX()][player.getPosY()] = -1;
             player.setPosX(nextX);
             player.setPosY(nextY);

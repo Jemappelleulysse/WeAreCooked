@@ -37,7 +37,10 @@ public class Controller extends KeyAdapter {
         //TODO : A Modifier (recuperer la/les recette via le model)
 
         agents.add(new Agent(model, 0));
+        agents.add(new Agent(model, 1));
+
         model.addPlayer(0);
+        model.addPlayer(1);
 
         while(isRunning) {
             update();
@@ -65,7 +68,9 @@ public class Controller extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_S) {
-            start();
+            for (Agent agent : agents) {
+                agent.start();
+            }
         }
     }
 }
