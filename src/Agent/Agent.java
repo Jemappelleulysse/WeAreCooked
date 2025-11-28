@@ -26,7 +26,6 @@ public class Agent {
     private float timeBeforeNextAction = 0f;
     private final float timeBetweenActions;
 
-    private HoldableObject heldObject = null;
     private final ArrayList<Ingredient> currentIngredients = new ArrayList<>();
     private ArrayList<Ingredient> missingIngredients;
 
@@ -69,33 +68,36 @@ public class Agent {
     /// GETTERS ///
     /// /////// ///
     private boolean isPlayerHandEmpty() {
-        return (heldObject == null);
+        return (!model.getPlayer(id).isHoldingSomething());
     }
 
     private boolean isRecipeFinished() {
-        return (missingIngredients.isEmpty());
+        return (model.isRecipeFinished());
     }
 
     private boolean isHoldingNeededIngredient() {
-        return (missingIngredients.contains(heldObject));
+        HoldableObject heldObject = model.getPlayer(id).getObjectHeld();
+
+        if (heldObject != null) {
+            if (heldObject.getClass() == Ingredient.class) {
+                if (model.getRecipeIngredients().contains(heldObject)) {
+                    return (!model.getValidIngredients().contains(heldObject));
+                }
+            }
+        }
+        return false;
     }
 
     private Ingredient getNextIngredient() {
-        return missingIngredients.getFirst();
-    }
+        Ingredient nextIngredient = null;
 
-    /// /////// ///
-    /// SETTERS ///
-    /// /////// ///
-    private void refreshHand() {
-        heldObject = model.player.getObjectHeld();
-        //this.currentIngredients = currentIngredients;
-    }
+        for (Ingredient ingredient : model.getRecipeIngredients()) {
+            if (!model.getValidIngredients().contains(ingredient)) {
+                nextIngredient = ingredient;
+            }
+        }
 
-    private void reset(Recipe recipe) {
-        heldObject = null;
-        currentIngredients.clear();
-        missingIngredients = new ArrayList<Ingredient>(recipe.getIngredients());
+        return nextIngredient;
     }
 
 
@@ -116,10 +118,11 @@ public class Agent {
                 doNextAction();
             }
 
+            // On demande au model de bouger le joueur
             Vec2 nextMove = nextMoves.removeFirst();
-            if (nextMove.isNotNull())
-                model.move(nextMove);
-            refreshHand();
+            if (nextMove.isNotNull()) {
+                model.movePlayer(id, nextMove);
+            }
         }
     }
 
@@ -151,35 +154,23 @@ public class Agent {
     public void doNextAction() {
         if (isPlayerHandEmpty()) {
             if (isRecipeFinished()) {
-
                 goValidateRecipe();
-                currentIngredients.clear();
-                missingIngredients.clear();
-                missingIngredients.addAll(new BolognesePasta().getIngredients());
                 return;
             }
             Ingredient nextIngredient = getNextIngredient();
-            //System.out.println(",next ingredient is " + nextIngredient);
+
             if (nextIngredient == Ingredient.SLICED_TOMATO) {
                 goGrab(Ingredient.TOMATO);
             } else if (nextIngredient == Ingredient.COOKED_PASTA) {
                 if (getFurnitureWithIngredientOn(Ingredient.COOKED_PASTA) != null) {
                     goGrab(Ingredient.COOKED_PASTA);
-                    //System.out.println("Je suis un Bozo1");
-
                 } else if (checkPotFull() == 2) {
-                    //System.out.println("Je suis un Bozo2");
-
                     goGrab(Ingredient.PASTA);
                 } else if (checkPotFull() == 1) {
-                    //System.out.println("Je suis un Bozo3");
-
                     goGrab(KitchenUstensils.FULL_POT);
                 } else if (getFurnitureWithIngredientOn(KitchenUstensils.EMPTY_POT) != null){
                     goGrab(KitchenUstensils.EMPTY_POT);
-                    //System.out.println("Je suis un Bozo4");
                 } else {
-                    //System.out.println("Je suis un Bozo5");
                     nextMoves.add(new Vec2(0,0));
                 }
 
@@ -211,16 +202,16 @@ public class Agent {
             }
         }
 
-        destination = nextEmptyCase(new Vec2(furniture.getPosX(),furniture.getPosY()));
-
-        if (destination == null) {
+        if (furniture != null) {
+            Vec2 furniturePos = new Vec2(furniture.getPosX(),furniture.getPosY());
+            destination = nextEmptyCase(furniturePos);
+        } else {
             return;
         }
 
-        ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));
+        ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
         nextMoves.addAll(actions);
         nextMoves.add(destination.sub(new Vec2(furniture.getPosX(),furniture.getPosY())));
-        refreshHand();
     }
 
     public Vec2 nextEmptyCase(Vec2 pos) {
@@ -228,11 +219,11 @@ public class Agent {
         for (int i = 0; i < posAutour.length; i++) {
             int k = (i == 0) ? 1 : ((i == 1) ? -1 : 0);
             int l = (i == 2) ? 1 : ((i == 3) ? -1 : 0);
-            posAutour[i] = new Vec2(pos.i + k, pos.j + l);
+            posAutour[i] = new Vec2(pos.getX() + k, pos.getY() + l);
         }
         Vec2 destination = null;
         for (int i = 0; i < posAutour.length; i++) {
-            if (posAutour[i].i < 0 || posAutour[i].i >= model.board.length || posAutour[i].j < 0 || posAutour[i].j >= model.board.length) {
+            if (posAutour[i].getX() < 0 || posAutour[i].getX() >= model.board.length || posAutour[i].getY() < 0 || posAutour[i].getY() >= model.board.length) {
                 continue;
             }
             if (Vec2.getTableau(new Vec2(posAutour[i]),model.board) == -1) {
@@ -244,7 +235,7 @@ public class Agent {
     }
 
     public void goValidateRecipe() {
-        Vec2 destination = null;
+        Vec2 destination;
         Furniture workSurface = null;
         for (Furniture furniture : model.furnitures) {
             if (furniture.getClass() == Counter.class) {
@@ -261,21 +252,17 @@ public class Agent {
             nextMoves.add(new Vec2(0,-1));
             return;
         }
-        ArrayList<Vec2> actions =  Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));;
+        ArrayList<Vec2> actions =  Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));;
         nextMoves.addAll(actions);
         nextMoves.add(destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY())));
         nextMoves.add(destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY())));
-
-
-        // Aller valider la recette
-
-        //Recipe nextRecipe = world.getNextRecipe();
-        //reset(nextRecipe);
     }
 
     public void goPrepareHeldIngredient() {
         Vec2 destination = null;
         Furniture workSurface = null;
+        HoldableObject heldObject = model.getPlayer(id).getObjectHeld();
+
         switch (heldObject) {
             case Ingredient.TOMATO :
                 for (Furniture furniture : model.furnitures) {
@@ -312,27 +299,29 @@ public class Agent {
                 break;
             default :
                 //System.out.println("Pas d'ingredient dans la main");
-
         }
+
         if (workSurface == null) {
             //System.out.print("PAS DE PLANCHE VIDE TROUVE");
             return;
         }
+
         destination = nextEmptyCase(new Vec2(workSurface.getPosX(),workSurface.getPosY()));
-        //System.out.println("\n-----------------------------\n"+workSurface.getPosX() +" " + workSurface.getPosY()+"\n---------------------------------");
-        ArrayList<Vec2> actions =  Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));
+        ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
+
         nextMoves.addAll(actions);
+        Vec2 useFurniture = destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY()));
         if (workSurface.getClass() == CuttingBoard.class) {
-            nextMoves.add(destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY())));
-            nextMoves.add(destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY())));
-            nextMoves.add(destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY())));
-            nextMoves.add(destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY())));
+            nextMoves.add(useFurniture);
+            nextMoves.add(useFurniture);
+
+            nextMoves.add(useFurniture);
+
+            nextMoves.add(useFurniture);
+
 
         }
-        nextMoves.add(destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY())));
-
-
-        refreshHand();
+        nextMoves.add(useFurniture);
     }
 
     public void goPlaceHeldIngredientOnPlate() {
@@ -353,15 +342,10 @@ public class Agent {
         if (destination == null) {
             return;
         }
-        ArrayList<Vec2> actions =  Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.player.getPos(), destination, model.board, new int[8][8])));
+        ArrayList<Vec2> actions =  Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
         nextMoves.addAll(actions);
         nextMoves.add(destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY())));
 
-
-        currentIngredients.add((Ingredient) heldObject);
-        missingIngredients.remove(heldObject);
-
-
-        refreshHand();
+        // TODO: update la liste des ingrédients valides
     }
 }

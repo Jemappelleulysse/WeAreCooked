@@ -14,6 +14,7 @@ public class View extends JPanel {
 
         private ArrayList<Player> players;
         private ArrayList<Furniture> furnitures;
+        private ArrayList<Ingredient> ingredientsOnCounter;
 
         public View() {
             this.setBackground(Color.LIGHT_GRAY);
@@ -98,14 +99,14 @@ public class View extends JPanel {
             // Dessine le personnage en rouge
             for(Player p : players) {
                 int diameterPlayer = (int)(diameter * 2./3.);
-                int centerX = p.getPos().i * cellWidth + cellWidth / 2 - diameter / 2;
-                int centerXPlayer = p.getPos().i * cellWidth + cellWidth / 2 - diameterPlayer / 2;
-                int centerY = p.getPos().j * cellHeight + cellHeight / 2 - diameter / 2;
-                int centerYPlayer = p.getPos().j * cellHeight + cellHeight / 2 - diameterPlayer / 2+10;
+                int centerX = p.getPos().getX() * cellWidth + cellWidth / 2 - diameter / 2;
+                int centerXPlayer = p.getPos().getX() * cellWidth + cellWidth / 2 - diameterPlayer / 2;
+                int centerY = p.getPos().getY() * cellHeight + cellHeight / 2 - diameter / 2;
+                int centerYPlayer = p.getPos().getY() * cellHeight + cellHeight / 2 - diameterPlayer / 2+10;
                 g.setColor(Color.YELLOW);
                 g.fillOval(centerXPlayer, centerYPlayer, diameterPlayer, diameterPlayer);
-                drawChefHat(g,p.getPos().i*cellHeight+26,p.getPos().j * cellHeight);
-                drawMustache(g,centerXPlayer-3,p.getPos().j * cellHeight+70);
+                drawChefHat(g,p.getPos().getX()*cellHeight+26,p.getPos().getY() * cellHeight);
+                drawMustache(g,centerXPlayer-3,p.getPos().getY() * cellHeight+70);
 
                 if (p.getObjectHeld()!=null) {
                     drawHoldableObject(g, centerX, centerY, diameter, p.getObjectHeld());
@@ -163,7 +164,7 @@ public class View extends JPanel {
                         g.setColor(Color.lightGray);
                         g.fillOval(furnitureX+cellWidth/8, furnitureY+cellHeight/8, cellWidth-cellWidth/4, cellHeight-cellHeight/4);
                         int dec = -5;
-                        for (Ingredient ingredient : ((Counter)furniture).currentIngredients) {
+                        for (Ingredient ingredient : ingredientsOnCounter) {
                             drawHoldableObject(g,furnitureX+dec,furnitureY+dec,diameter,ingredient);
                             dec+=10;
                         }
@@ -196,9 +197,10 @@ public class View extends JPanel {
             drawRecipeProgress(g, 0,900);
     }
 
-    public void update(float dt, ArrayList<Player> players, ArrayList<Furniture> furnitures) {
+    public void update(float dt, ArrayList<Player> players, ArrayList<Furniture> furnitures, ArrayList<Ingredient> ingredientsOnCounter) {
             this.players = players;
             this.furnitures = furnitures;
+            this.ingredientsOnCounter = ingredientsOnCounter;
             repaint();
     }
 

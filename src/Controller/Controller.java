@@ -1,6 +1,7 @@
 package Controller;
 
 import Agent.Agent;
+import HoldableObjects.Ingredient;
 import Recipes.BolognesePasta;
 import Model.Model;
 import View.View;
@@ -12,11 +13,14 @@ import java.util.ArrayList;
 
 public class Controller extends KeyAdapter {
 
-    private final Model model;
-    private ArrayList<Agent> agents;
     private boolean isRunning;
-    private final View view;
     private long lastTime;
+
+    private final Model model;
+    private final View view;
+
+    private ArrayList<Agent> agents;
+    private int score;
 
     public Controller(Model model, View view) {
         this.model = model;
@@ -27,30 +31,33 @@ public class Controller extends KeyAdapter {
     }
 
     public void start() {
-        //
-        // Des trucs à initialiser?
-        //
+
+        this.score = 0;
 
         //TODO : A Modifier (recuperer la/les recette via le model)
 
-        agents.add(new Agent(model, new BolognesePasta(), 0));
+        agents.add(new Agent(model, 0));
+        model.addPlayer(0);
 
         while(isRunning) {
-
-            float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
-
-            lastTime = System.nanoTime();
-
-            model.update(dt);
-
-            view.update(dt, model.players, model.furnitures);
-            //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");
-            for (Agent agent : agents) {
-                agent.update(dt);
-            }
-
-            //System.out.println(System.currentTimeMillis() - dt + " ms needed for the agent Update");
+            update();
         }
+    }
+
+    private void update() {
+        float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
+
+        lastTime = System.nanoTime();
+
+        score += model.update(dt);
+
+        view.update(dt, model.players, model.furnitures, model.getValidIngredients());
+        //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");
+        for (Agent agent : agents) {
+            agent.update(dt);
+        }
+
+        //System.out.println(System.currentTimeMillis() - dt + " ms needed for the agent Update");
     }
 
     //TODO : A modifier pour que l'event s marche avec la nouvelle structure
@@ -58,9 +65,7 @@ public class Controller extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_S) {
-            for(Agent agent : agents) {
-                agent.start();
-            }
+            start();
         }
     }
 }

@@ -5,7 +5,7 @@ import Utils.Vec2;
 
 public class Player {
 
-    private int ID;
+    private final int ID;
     private int posX;
     private int posY;
     private boolean isHoldingSomething =  false;

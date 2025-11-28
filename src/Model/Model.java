@@ -1,102 +1,186 @@
 package Model;
 
-import Agent.Agent;
 import HoldableObjects.Ingredient;
 import Furnitures.*;
 import Player.Player;
 import Recipes.BolognesePasta;
-import View.View;
+import Recipes.Recipe;
+import Utils.Vec2;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class Model {
 
-
-    long lastTime = System.nanoTime();
-
-    private boolean doContinue = true;
-    public Agent agent;
     public int[][] board;
-    public Player player;
-    private View view;
+    public ArrayList<Player> players;
     public ArrayList<Furniture> furnitures = new ArrayList<>();
+    public Counter counter;
+    public Recipe currentRecipe;
+    public ArrayList<Ingredient> validIngredients;
 
-    public void add(Furniture furniture) {
+
+    /// /////////// ///
+    /// CONSTRUCTOR ///
+    /// /////////// ///
+
+    private void addToBoard(Furniture furniture) {
         furnitures.add(furniture);
         board[furniture.getPosX()][furniture.getPosY()] = furnitures.indexOf(furniture)+1;
     }
 
-
-    public boolean move(int direction) {
-        int k = (direction == 0) ? 1 : (direction == 1) ? -1 : 0;
-        int l =  (direction == 2) ? 1 : (direction == 3) ? -1 : 0;
-        if (board[player.getPosX()+k][player.getPosY()+l] != -1) {
-            if (board[player.getPosX()+k][player.getPosY()+l] <= furnitures.size()) {
-                player.setObjectHeld(furnitures.get(board[player.getPosX()+k][player.getPosY()+l]-1).interact(player.getObjectHeld()));
-                return false;
-            }
-        }
-        board[player.getPosX()][player.getPosY()] = -1;
-        player.setPosX(player.getPosX()+k);
-        player.setPosY(player.getPosY()+l);
-        board[player.getPosX()][player.getPosY()] = 0;
-
-        return true;
-    }
-
-    public void setView(View view) {this.view = view;}
-
-    public boolean move(Pair p) {
-        if (p.i == 1) {
-            return move(1);
-        }else if (p.i == -1) {
-            return move(0);
-        } else if (p.j == 1) {
-            return move(3);
-        } else {
-            return move(2);
-        }
-    }
-
     public Model() {
         board = new int[8][8];
-        player = new Player(2,3);
+        this.players = new ArrayList<>();
         // Initialize board with zeros
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                    board[i][j] = -1;
+                board[i][j] = -1;
             }
         }
 
+        this.currentRecipe = new BolognesePasta();
+        this.validIngredients = new ArrayList<>();
 
-        agent = new Agent(this, new BolognesePasta());
-        add(new WorkSurface(3, 3));
-        add(new WorkSurface(3, 3));
-        add(new WorkSurface(3, 4));
-        add(new WorkSurface(4, 3));
-        add(new WorkSurface(4, 4));
-        add(new IngredientChest(0, 1, Ingredient.PASTA));
-        add(new IngredientChest(0, 2, Ingredient.TOMATO));
-        add(new CuttingBoard(6, 0));
-        add(new CuttingBoard(5, 0));
-        add(new GasStove(2,7));
-        add(new GasStove(3,7));
-        add(new Counter(6, 7, new BolognesePasta()));
-        add(new Sink(7,3));
-        add(new Sink(7,4));
+        addToBoard(new WorkSurface(3, 3));
+        addToBoard(new WorkSurface(3, 3));
+        addToBoard(new WorkSurface(3, 4));
+        addToBoard(new WorkSurface(4, 3));
+        addToBoard(new WorkSurface(4, 4));
+        addToBoard(new IngredientChest(0, 1, Ingredient.PASTA));
+        addToBoard(new IngredientChest(0, 2, Ingredient.TOMATO));
+        addToBoard(new CuttingBoard(6, 0));
+        addToBoard(new CuttingBoard(5, 0));
+        addToBoard(new GasStove(2,7));
+        addToBoard(new GasStove(3,7));
+        counter = new Counter(6, 7, this);
+        addToBoard(counter);
+        addToBoard(new Sink(7,3));
+        addToBoard(new Sink(7,4));
+
         for (int x = 0; x < 8; x++) {
 
-            if (!(x == 6 || x == 5)) add(new WorkSurface(x, 0));  // top row
-            if (!(x == 6 || x ==2 || x == 3)) add(new WorkSurface(x, 7));   // bottom row
+            if (!(x == 6 || x == 5)) addToBoard(new WorkSurface(x, 0));  // top row
+            if (!(x == 6 || x ==2 || x == 3)) addToBoard(new WorkSurface(x, 7));   // bottom row
         }
         for (int y = 1; y < 7; y++) { // avoid duplicating corners
 
-            if (!(y == 1 || y == 2)) add(new WorkSurface(0, y));   // left column
-            if (!(y ==3 || y ==4)) add(new WorkSurface(7, y));   // right column
+            if (!(y == 1 || y == 2)) addToBoard(new WorkSurface(0, y));   // left column
+            if (!(y ==3 || y ==4)) addToBoard(new WorkSurface(7, y));   // right column
         }
 
     }
+
+
+    /// ////// ///
+    /// GETTER ///
+    /// ////// ///
+
+    public Player getPlayer(int ID) {
+        Player player = null;
+        for  (Player p : players) {
+            if (p.getID() == ID) {
+                player = p;
+                break;
+            }
+        }
+        if (player == null) {
+            throw new IllegalArgumentException("Player with ID " + ID + " not found");
+        }
+        return player;
+    }
+
+    public ArrayList<Ingredient> getRecipeIngredients() {
+        return currentRecipe.getIngredients();
+    }
+
+    public ArrayList<Ingredient> getValidIngredients() {
+        return validIngredients;
+    }
+
+    public boolean isRecipeFinished() {
+        return currentRecipe.isComplete(validIngredients);
+    }
+
+
+    /// ////// ///
+    /// CONFIG ///
+    /// ////// ///
+
+    //TODO : Modifier pour éviter que les players nouvellement créés ne se chevauchent
+    public void addPlayer(int ID) {
+        players.add(new Player(2,3, ID));
+    }
+
+    public void addValidIngredient(Ingredient ingredient) {
+        if (!currentRecipe.getIngredients().contains(ingredient)) {
+            throw new  IllegalArgumentException("Ingredient " + ingredient + " isn't in the current recipe: " + currentRecipe);
+        }
+
+        validIngredients.add(ingredient);
+    }
+
+    //TODO: Faire en sorte que la nouvelle recette soit aléatoire
+    public void updateRecipe() {
+        this.currentRecipe = new BolognesePasta();
+        this.validIngredients.clear();
+    }
+
+
+    /// //////////// ///
+    /// INTERACTIONS ///
+    /// //////////// ///
+
+    public void movePlayer(int id, Vec2 nextMove) {
+
+        boolean b = false;
+        Player player = this.getPlayer(id);
+
+        int nextX = player.getPosX() - nextMove.getX();
+        int nextY = player.getPosY() - nextMove.getY();
+
+        // Si la case n'est pas vide
+        if (board[nextX][nextY] != -1) {
+            // Si le meuble est dans la liste de meubles
+            if (board[nextX][nextY] <= furnitures.size()) {
+                // On interagit avec un meuble
+                Furniture furniture = furnitures.get(board[nextX][nextY]-1);
+                player.setObjectHeld(furniture.interact(player.getObjectHeld()));
+                b = true;
+            }
+        }
+        if (!b) {
+            board[player.getPosX()][player.getPosY()] = -1;
+            player.setPosX(nextX);
+            player.setPosY(nextY);
+            board[player.getPosX()][player.getPosY()] = 0;
+        }
+    }
+
+    public int update(float dt){
+
+        int score = 0;
+
+        // Update du timer des meubles
+        for (Furniture furniture : furnitures) {
+            furniture.update(dt);
+        }
+
+        // Update de la recette du comptoir
+
+        // TODO: Calcul du score
+//        if (isRecipeFinished()) {
+//            updateRecipe();
+//            score = 50;
+//        }
+
+        return score;
+    }
+
+
+    /// ///////// ///
+    /// TO STRING ///
+    /// ///////// ///
 
     @Override
     public String toString() {
@@ -109,35 +193,4 @@ public class Model {
         }
         return s;
     }
-
-
-    public void start() {
-        //
-        // Des trucs à initialiser?
-        //
-
-        while(doContinue) {
-
-            float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
-
-            lastTime = System.nanoTime();
-
-            for (Furniture furniture : furnitures) {
-                furniture.update(dt);
-            }
-            view.update(dt);
-            //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");
-            agent.update(dt);
-
-            //System.out.println(System.currentTimeMillis() - dt + " ms needed for the agent Update");
-        }
-
-
-    }
-
-
-
-
-
-
 }

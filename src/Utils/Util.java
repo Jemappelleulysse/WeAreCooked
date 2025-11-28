@@ -29,9 +29,6 @@ public class Util {
 
             // Si on est arrivé
             if (current.equals(posArrive)) {
-                for (Vec2 p : currentPath) {
-                    //System.out.print(p);
-                }
                 return currentPath;
             }
 
