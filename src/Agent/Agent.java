@@ -4,11 +4,8 @@ import Furnitures.*;
 import HoldableObjects.HoldableObject;
 import HoldableObjects.Ingredient;
 import HoldableObjects.KitchenUstensils;
-import Recipes.BolognesePasta;
-import Recipes.Recipe;
 import Utils.Vec2;
 import Model.Model;
-import Utils.Vec2;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -26,8 +23,6 @@ public class Agent {
     private float timeBeforeNextAction = 0f;
     private final float timeBetweenActions;
 
-    private final ArrayList<Ingredient> currentIngredients = new ArrayList<>();
-    private ArrayList<Ingredient> missingIngredients;
 
     /// //////////// ///
     /// CONSTRUCTORS ///
