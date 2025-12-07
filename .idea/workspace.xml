@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Changements en cours">
-      <change beforePath="$PROJECT_DIR$/src/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Model.java" afterDir="false" />
+    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Correction nomenclature d'un booleen">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +83,7 @@
       <workItem from="1763139249391" duration="510000" />
       <workItem from="1764333169610" duration="794000" />
       <workItem from="1764340523520" duration="5927000" />
+      <workItem from="1765129888363" duration="517000" />
     </task>
     <task id="LOCAL-00001" summary="Mise à jour du workspace et correction dans view">
       <option name="closed" value="true" />
@@ -107,7 +109,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763133483043</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Correction nomenclature d'un booleen">
+      <option name="closed" value="true" />
+      <created>1764347153391</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1764347153391</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,6 +140,7 @@
     <MESSAGE value="Test" />
     <MESSAGE value="Structuration de la classe Pair" />
     <MESSAGE value="Changements en cours" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changements en cours" />
+    <MESSAGE value="Correction nomenclature d'un booleen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correction nomenclature d'un booleen" />
   </component>
 </project>

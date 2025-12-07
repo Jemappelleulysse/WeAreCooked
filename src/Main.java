@@ -14,7 +14,7 @@ public class Main {
         View view = new View();
         Controller controller = new Controller(model, view);
 
-        //TODO : Modifier ses merde
+        //TODO : Modifier ces merde
 
         System.out.println("Displaying view...");
         JFrame frame = new JFrame("MVC Example");
