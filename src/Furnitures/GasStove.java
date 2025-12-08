@@ -53,7 +53,7 @@ public class GasStove extends Furniture {
         HoldableObject returnedObject = null;
 
         if ( !hasAPot() ) {     // Il n'y a pas de casserole sur la gazinière
-            if (objectInHand  == KitchenUstensils.EMPTY_POT || objectInHand  == KitchenUstensils.FULL_POT) {
+            if (objectInHand  == KitchenUstensils.EMPTY_POT || objectInHand  == KitchenUstensils.WATER_POT || objectInHand == KitchenUstensils.OIL_POT ) {
                 pot = (KitchenUstensils) objectInHand;
             } else {
                 returnedObject = objectInHand;
@@ -62,6 +62,19 @@ public class GasStove extends Furniture {
             if (getIngredientInPot().equals(Ingredient.PASTA)) {
                 returnedObject = objectInHand;
             } else if (getIngredientInPot().equals(Ingredient.COOKED_PASTA)) {
+                returnedObject = getIngredientInPot();
+                setIngredientInPot(null);
+            } else if (getIngredientInPot().equals(Ingredient.SLICED_POTATO)) {
+                returnedObject = objectInHand;
+            } else if (getIngredientInPot().equals(Ingredient.COOKED_POTATO)) {
+                returnedObject = getIngredientInPot();
+                setIngredientInPot(null);
+            } else if (getIngredientInPot().equals(Ingredient.FRIED_POTATO)) {
+                returnedObject = getIngredientInPot();
+                setIngredientInPot(null);
+            } else if (getIngredientInPot().equals(Ingredient.RAW_MEAT)) {
+                returnedObject = objectInHand;
+            } else if (getIngredientInPot().equals(Ingredient.COOKED_MEAT)) {
                 returnedObject = getIngredientInPot();
                 setIngredientInPot(null);
             } else {
@@ -73,7 +86,9 @@ public class GasStove extends Furniture {
                 }
             }
         } else {    // Il y a une casserole sans ingrédient
-            if (objectInHand == Ingredient.PASTA && pot == KitchenUstensils.FULL_POT) { // Le joueur tien des pâtes et la casserole contient de l'eau
+            if ((objectInHand == Ingredient.PASTA || objectInHand == Ingredient.SLICED_POTATO) && pot == KitchenUstensils.WATER_POT) { // Le joueur tien des pâtes et la casserole contient de l'eau
+                setIngredientInPot((Ingredient) objectInHand);
+            } else if (objectInHand == Ingredient.SLICED_POTATO && pot == KitchenUstensils.OIL_POT) {
                 setIngredientInPot((Ingredient) objectInHand);
             } else if (objectInHand == Ingredient.RAW_MEAT && pot == KitchenUstensils.EMPTY_POT) { // Le joueur tien de la viande crue et la casserole est vide
                 setIngredientInPot((Ingredient) objectInHand);
@@ -91,17 +106,24 @@ public class GasStove extends Furniture {
     @Override
     public void update(float temps) {
 
-        if (pot == KitchenUstensils.FULL_POT && ingredientInPot == Ingredient.PASTA) {
+        if (pot == KitchenUstensils.WATER_POT && (ingredientInPot == Ingredient.PASTA || ingredientInPot == Ingredient.SLICED_POTATO)) {
             currTime += temps;
             if (currTime >= cookingTime) {
                 pot = KitchenUstensils.EMPTY_POT;
-                setIngredientInPot(Ingredient.COOKED_PASTA);
+                setIngredientInPot((ingredientInPot == Ingredient.PASTA) ? Ingredient.COOKED_PASTA : Ingredient.COOKED_POTATO);
                 currTime = 0;
             }
         } else if (pot == KitchenUstensils.EMPTY_POT && ingredientInPot == Ingredient.RAW_MEAT) {
             currTime += temps;
             if (currTime >= cookingTime) {
-                setIngredientInPot(Ingredient.COOKED_PASTA);
+                setIngredientInPot(Ingredient.COOKED_MEAT);
+                currTime = 0;
+            }
+        } else if (pot == KitchenUstensils.OIL_POT && (ingredientInPot == Ingredient.SLICED_POTATO)) {
+            currTime += temps;
+            if (currTime >= cookingTime) {
+                pot = KitchenUstensils.EMPTY_POT;
+                setIngredientInPot(Ingredient.FRIED_POTATO);
                 currTime = 0;
             }
         }

@@ -68,7 +68,16 @@ public class CuttingBoard extends Furniture {
                         currNb = 0;
                     }
                     break;
-
+                case Ingredient.POTATO:
+                    if (currNb < cutNb-1) {
+                        currNb++;
+                        returnedObject = objectInHand;
+                    } else {
+                        setObjectOn(Ingredient.SLICED_POTATO);
+                        returnedObject = objectInHand;
+                        currNb = 0;
+                    }
+                    break;
                 default:    // Il y a un ingrédient non coupable sur la planche
                     if(objectInHand == null) {  // Le joueur a les mains vides
                         returnedObject = getObjectOn();

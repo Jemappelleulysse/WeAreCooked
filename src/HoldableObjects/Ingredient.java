@@ -10,5 +10,9 @@ public enum Ingredient implements HoldableObject{
     BREAD,
     SLICED_BREAD,
     PASTA,
-    COOKED_PASTA
+    COOKED_PASTA,
+    POTATO,
+    SLICED_POTATO,
+    FRIED_POTATO,
+    COOKED_POTATO,
 }

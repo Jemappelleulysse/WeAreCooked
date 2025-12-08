@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import HoldableObjects.*;
 import Furnitures.*;
 import Player.Player;
+import Recipes.BolognesePasta;
+import Recipes.Salad;
+import Recipes.Sandwich;
+import Recipes.SteakAndFries;
 
 import static View.PixelArts.*;
 
@@ -29,12 +33,10 @@ public class View extends JPanel {
 
             switch (object) {
                 case Ingredient.BREAD:
-                    //todo
-                    //drawBread(g, smallX, smallY, diameter);
+                    drawBread(g, smallX, smallY);
                     break;
                 case Ingredient.SLICED_BREAD:
-                    //todo
-                    //drawSlicedBread(g, smallX, smallY, smallDiameter);
+                    drawSlicedBread(g, smallX, smallY);
                     break;
                 case Ingredient.TOMATO:
                     drawWholeTomato( g, smallX, smallY );
@@ -43,20 +45,16 @@ public class View extends JPanel {
                     drawSlicedTomato(g, smallX, smallY);
                     break;
                 case Ingredient.SALAD:
-                    //todo
-                    //drawSalad(g, smallX, smallY);
+                    drawSalad(g, smallX, smallY);
                     break;
                 case Ingredient.WASHED_SALAD:
-                    //todo
-                    //drawWashedSalad(g, smallX, smallY);
+                    drawWashedSalad(g, smallX, smallY);
                     break;
                 case Ingredient.RAW_MEAT :
-                    //todo
-                    //drawRawMeat(g, smallX, smallY);
+                    drawRawMeat(g, smallX, smallY);
                     break;
                 case Ingredient.COOKED_MEAT:
-                    //todo
-                    //drawCookedMeat(g, smallX, smallY);
+                    drawCookedMeat(g, smallX, smallY);
                     break;
                 case Ingredient.PASTA :
                     drawRawPasta(g, smallX, smallY);
@@ -64,15 +62,31 @@ public class View extends JPanel {
                 case Ingredient.COOKED_PASTA:
                     drawCookedPasta(g, smallX, smallY);
                     break;
-                case KitchenUstensils.FULL_POT:
+                case KitchenUstensils.WATER_POT:
                     drawPotWithWater(g, centerX, centerY);
+                    break;
+                case KitchenUstensils.OIL_POT:
+                    drawPotWithOil(g,centerX,centerY);
                     break;
                 case KitchenUstensils.EMPTY_POT:
                     drawTopViewPot(g, centerX, centerY);
                     break;
+                case Ingredient.COOKED_POTATO:
+                    drawCookedPotato(g,smallX,smallY);
+                    break;
+                case Ingredient.POTATO:
+                    drawPotato(g,smallX,smallY);
+                    break;
+                case Ingredient.SLICED_POTATO:
+                    drawSlicedPotato(g,smallX,smallY);
+                    break;
+                case Ingredient.FRIED_POTATO:
+                    drawFriedPotato(g,smallX,smallY);
+                    break;
                 default:
                     throw new IllegalArgumentException("Objet inconnu : " + object.toString());
             }
+
         }
 
         @Override
@@ -153,7 +167,9 @@ public class View extends JPanel {
                             drawHoldableObject(g,furnitureX,furnitureY,diameter,((CuttingBoard)furniture).getObjectOn());
                         }
                         drawKnife(g,furnitureX+3,furnitureY+10);
-                        if (((CuttingBoard)furniture).hasSomethingOn() && ((CuttingBoard)furniture).getObjectOn() == Ingredient.TOMATO) {
+                        if (((CuttingBoard)furniture).hasSomethingOn() && (((CuttingBoard)furniture).getObjectOn() == Ingredient.TOMATO ||
+                                                                           ((CuttingBoard)furniture).getObjectOn() == Ingredient.BREAD ||
+                                                                            ((CuttingBoard)furniture).getObjectOn() == Ingredient.POTATO)) {
                             drawProgressBar(g,furnitureX+30,furnitureY,(int)(((CuttingBoard)furniture).currNb*100/(((CuttingBoard)furniture).cutNb)));
                         }
                         //g.setColor(Color.darkGray);
@@ -173,19 +189,46 @@ public class View extends JPanel {
                         g.setColor(new Color(221, 147, 62));
                         g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
                         drawMinimalStove(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
-                        if (((GasStove)furniture).hasIngredientInPot()) {
-                            drawPotWithPasta(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
-                            drawProgressBar(g,furnitureX+30,furnitureY,(int)((((GasStove)furniture).currTime*100)/((GasStove)furniture).cookingTime));
-                        } else if (((GasStove)furniture).hasAPot() && ((GasStove)furniture).getPot() == KitchenUstensils.FULL_POT) {
-                            drawPotWithWater(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                        if (((GasStove)furniture).getPot() == KitchenUstensils.WATER_POT ) {
+                            if (((GasStove) furniture).hasIngredientInPot()) {
+                                if (((GasStove) furniture).getIngredientInPot() == Ingredient.PASTA) {
+                                    drawPotWithPasta(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                                } else {
+                                    drawPotWithPotatoWater(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                                }
+                                drawProgressBar(g,furnitureX+30,furnitureY,(int)((((GasStove)furniture).currTime*100)/((GasStove)furniture).cookingTime));
+                            } else {
+                                drawPotWithWater(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                            }
+                        } else if (((GasStove)furniture).getPot() == KitchenUstensils.OIL_POT ) {
+                            if (((GasStove) furniture).hasIngredientInPot()) {
+                                drawPotWithPotatoOil(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                                drawProgressBar(g,furnitureX+30,furnitureY,(int)((((GasStove)furniture).currTime*100)/((GasStove)furniture).cookingTime));
+                            } else {
+                                drawPotWithOil(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                            }
                         } else if (((GasStove)furniture).hasAPot()) {
-                            drawTopViewPot(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                            if (((GasStove) furniture).getIngredientInPot() == Ingredient.RAW_MEAT) {
+                                drawPotWithMeat(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                                drawProgressBar(g,furnitureX+30,furnitureY,(int)((((GasStove)furniture).currTime*100)/((GasStove)furniture).cookingTime));
+                            } else if (((GasStove) furniture).hasIngredientInPot()) {
+                                drawTopViewPot(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2);
+                                drawIngredientInMiddle(g,furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2,((GasStove)furniture).getIngredientInPot());
+                            }
+                            else {
+                                drawTopViewPot(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2);
+                            }
                         }
                         break;
                     case "Sink" :
                         g.setColor(new Color(221, 147, 62));
                         g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
                         drawSink(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
+                        break;
+                    case "OilSink" :
+                        g.setColor(new Color(221, 147, 62));
+                        g.fillRect(furnitureX, furnitureY, cellWidth, cellHeight);
+                        drawOilSink(g, furnitureX + cellWidth / 2 - diameter / 2, furnitureY + cellHeight / 2 - diameter / 2 );
                         break;
                     default:
                         g.setColor(Color.GREEN);
@@ -194,7 +237,7 @@ public class View extends JPanel {
             }
             g.setColor(Color.BLACK);
             g.fillRect(0, 896, 900, 130);
-            drawRecipeProgress(g, 0,900);
+            drawRecipeProgress(g, 0,900,new BolognesePasta());
     }
 
     public void update(float dt, ArrayList<Player> players, ArrayList<Furniture> furnitures, ArrayList<Ingredient> ingredientsOnCounter) {
