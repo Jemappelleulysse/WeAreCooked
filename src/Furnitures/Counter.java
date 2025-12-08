@@ -38,7 +38,7 @@ public class Counter extends Furniture {
         if (heldObject instanceof Ingredient) {
             Ingredient heldIngredient = (Ingredient) heldObject;
 
-            if(model.getRecipeIngredients().contains(heldIngredient)){
+            if(model.getRecipeIngredients(0).contains(heldIngredient)){
                 if(!model.getValidIngredients().contains(heldIngredient)){
                     model.addValidIngredient(heldIngredient);
                     return null;

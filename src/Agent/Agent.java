@@ -75,7 +75,7 @@ public class Agent {
 
         if (heldObject != null) {
             if (heldObject.getClass() == Ingredient.class) {
-                if (model.getRecipeIngredients().contains(heldObject)) {
+                if (model.getRecipeIngredients(0).contains(heldObject)) {
                     return (!model.getValidIngredients().contains(heldObject));
                 }
             }
@@ -86,7 +86,7 @@ public class Agent {
     private Ingredient getNextIngredient() {
         Ingredient nextIngredient = null;
 
-        for (Ingredient ingredient : model.getRecipeIngredients()) {
+        for (Ingredient ingredient : model.getRecipeIngredients(0)) {
             if (!model.getValidIngredients().contains(ingredient)) {
                 nextIngredient = ingredient;
             }

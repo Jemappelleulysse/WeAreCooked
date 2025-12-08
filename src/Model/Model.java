@@ -16,7 +16,8 @@ public class Model {
     public ArrayList<Player> players;
     public ArrayList<Furniture> furnitures = new ArrayList<>();
     public Counter counter;
-    public Recipe currentRecipe;
+    public ArrayList<Recipe> recipes;//current == id 0
+    public int nbrRecipes;
     public ArrayList<Ingredient> validIngredients;
 
 
@@ -29,8 +30,9 @@ public class Model {
         board[furniture.getPosX()][furniture.getPosY()] = furnitures.indexOf(furniture)+1;
     }
 
-    public Model() {
+    public Model(int nbrRecipes) {
         board = new int[8][8];
+        this.recipes = new ArrayList<>();
         this.players = new ArrayList<>();
         // Initialize board with zeros
         for (int i = 0; i < 8; i++) {
@@ -39,7 +41,9 @@ public class Model {
             }
         }
 
-        this.currentRecipe = new BolognesePasta();
+        for(int i = 0; i < nbrRecipes; i++){
+            this.recipes.add(new BolognesePasta());
+        };
         this.validIngredients = new ArrayList<>();
 
         addToBoard(new WorkSurface(3, 3));
@@ -90,8 +94,8 @@ public class Model {
         return player;
     }
 
-    public ArrayList<Ingredient> getRecipeIngredients() {
-        return currentRecipe.getIngredients();
+    public ArrayList<Ingredient> getRecipeIngredients(int id) {
+        return recipes.get(id).getIngredients();
     }
 
     public ArrayList<Ingredient> getValidIngredients() {
@@ -99,7 +103,7 @@ public class Model {
     }
 
     public boolean isRecipeFinished() {
-        return currentRecipe.isComplete(validIngredients);
+        return recipes.getFirst().isComplete(validIngredients);
     }
 
 
@@ -121,21 +125,21 @@ public class Model {
 
     //TODO : Modifier pour éviter que les players nouvellement créés ne se chevauchent
     public void addPlayer(int ID) {
-//        Vec2 pos = getNewPlayerPos();
-//        board[pos.getX()][pos.getY()] = 0;
-//        players.add(new Player(pos.getX(), pos.getY(), ID));
-        if(ID == 0){
-            board[2][3] = 0;
-            players.add(new Player(2, 3, ID));
-        } else if(ID == 1){
-            board[5][4] = 0;
-            players.add(new Player(5, 4, ID));
-        }
+        Vec2 pos = getNewPlayerPos();
+        board[pos.getX()][pos.getY()] = 0;
+        players.add(new Player(pos.getX(), pos.getY(), ID));
+//        if(ID == 0){
+//            board[2][3] = 0;
+//            players.add(new Player(2, 3, ID));
+//        } else if(ID == 1){
+//            board[5][4] = 0;
+//            players.add(new Player(5, 4, ID));
+//        }
     }
 
     public void addValidIngredient(Ingredient ingredient) {
-        if (!currentRecipe.getIngredients().contains(ingredient)) {
-            throw new  IllegalArgumentException("Ingredient " + ingredient + " isn't in the current recipe: " + currentRecipe);
+        if (!recipes.getFirst().getIngredients().contains(ingredient)) {
+            throw new  IllegalArgumentException("Ingredient " + ingredient + " isn't in the current recipe: " + recipes.getFirst());
         }
 
         validIngredients.add(ingredient);
@@ -143,7 +147,7 @@ public class Model {
 
     //TODO: Faire en sorte que la nouvelle recette soit aléatoire
     public void updateRecipe() {
-        this.currentRecipe = new BolognesePasta();
+        //this.currentRecipe = new BolognesePasta();
         this.validIngredients.clear();
     }
 

@@ -24,6 +24,7 @@ public class AgentDuo {
     private AgentState state = AgentState.WAITING_TO_START;
     private int preparingIngredientId = -1;
     private final ArrayList<Vec2> nextMoves =  new ArrayList<>();
+    private int recipeId = 0;
 
     private float timeBeforeNextAction = 0f;
     private final float timeBetweenActions;
@@ -107,7 +108,7 @@ public class AgentDuo {
 
         if (heldObject != null) {
             if (heldObject.getClass() == Ingredient.class) {
-                if (model.getRecipeIngredients().contains(heldObject)) {
+                if (model.getRecipeIngredients(recipeId).contains(heldObject)) {
                     return (!model.getValidIngredients().contains(heldObject));
                 }
             }
@@ -122,7 +123,7 @@ public class AgentDuo {
 
     private Ingredient getRecipeIngredient(int ingredientId) {
 
-        ArrayList<Ingredient> recipeIngredients = model.getRecipeIngredients();
+        ArrayList<Ingredient> recipeIngredients = model.getRecipeIngredients(recipeId);
 
         if (recipeIngredients.size() <= ingredientId ) {
             throw new IllegalArgumentException("Recipe id " + ingredientId + " is invalid.");
@@ -135,12 +136,12 @@ public class AgentDuo {
         int nextIngredientId = preparingIngredientId + 1;
 
         // Si le mate prépare l'ingrédient suivant, on prend l'ingrédient d'après
-        if (mate.getPreparingIngredientId() == nextIngredientId) {
+        if (mate.getPreparingIngredientId() == nextIngredientId && mate.recipeId == this.recipeId) {
             nextIngredientId++;
         }
 
         // Si l'ingrédient d'après n'existe pas
-        if (nextIngredientId >= model.getRecipeIngredients().size()) {
+        if (nextIngredientId >= model.getRecipeIngredients(recipeId).size()) {
             return -1;
         }
 
@@ -259,18 +260,20 @@ public class AgentDuo {
 
             case WAITING_TO_START:
                 AgentState mateState = getMateState();
-                switch (mateState) {
-                    case WAITING_TO_START, WAITING_FOR_NEXT_RECIPE:
-                        this.state = AgentState.PREPARING_INGREDIENT;
-                        this.preparingIngredientId = 0;
-                        break;
-                    case PREPARING_INGREDIENT:
-                        this.state = AgentState.PREPARING_INGREDIENT;
-                        this.preparingIngredientId = 1;
-                        break;
-                    default:
-                        throw new IllegalStateException("Unknown state : { ownState: " + state + ", mateState: " + mateState + "}");
-                }
+//                switch (mateState) {
+//                    case WAITING_TO_START, WAITING_FOR_NEXT_RECIPE:
+//                        this.state = AgentState.PREPARING_INGREDIENT;
+//                        this.preparingIngredientId = 0;
+//                        break;
+//                    case PREPARING_INGREDIENT:
+//                        this.state = AgentState.PREPARING_INGREDIENT;
+//                        this.preparingIngredientId = 1;
+//                        break;
+//                    default:
+//                        throw new IllegalStateException("Unknown state : { ownState: " + state + ", mateState: " + mateState + "}");
+//                }
+                this.state = AgentState.PREPARING_INGREDIENT;
+                this.preparingIngredientId = getNextIngredientId();
                 break;
 
             case PREPARING_INGREDIENT:
@@ -301,7 +304,10 @@ public class AgentDuo {
                     else {
                         state = AgentState.PREPARING_INGREDIENT;
                         preparingIngredientId = getNextIngredientId();
-                        if (preparingIngredientId == -1) state = AgentState.WAITING_FOR_NEXT_RECIPE;
+                        if (preparingIngredientId == -1){
+                            recipeId = 1;
+                            preparingIngredientId = getNextIngredientId();
+                        }
                         break;
                     }
                 } else {
@@ -314,15 +320,20 @@ public class AgentDuo {
 
             case VALIDATING_RECIPE:
                 // TODO : Vérifier si la recette a été validée et si oui passer au prochain ingrédient
+                this.recipeId = 0;
+                mate.recipeId = 0;
                 state = AgentState.WAITING_FOR_NEXT_RECIPE;
                 break;
 
             case WAITING_FOR_COOKING:
-                Ingredient cookedIngredient = getRecipeIngredient(preparingIngredientId);
-                // Si l'ingrédient est cuit
-                if (getFurnitureWithIngredientOn(cookedIngredient) != null) {
-                    goGrab(cookedIngredient);
-                    state = AgentState.PREPARING_INGREDIENT;
+                if(isPlayerHandEmpty()){Ingredient cookedIngredient = getRecipeIngredient(preparingIngredientId);
+                    // Si l'ingrédient est cuit
+                    if (getFurnitureWithIngredientOn(cookedIngredient) != null) {
+                        goGrab(cookedIngredient);
+                        state = AgentState.PREPARING_INGREDIENT;
+                    }
+                } else { //Il c'est bloqué pendant le trajet
+                    goPrepareHeldIngredient();
                 }
                 break;
 
@@ -373,8 +384,10 @@ public class AgentDuo {
         // SI LA MAIN N'EST PAS VIDE
         else {
             if (isHoldingNeededIngredient()) {
-                goPlaceHeldIngredientOnPlate();
-                state = AgentState.VALIDATING_INGREDIENT;
+                if(recipeId == 0){
+                    goPlaceHeldIngredientOnPlate();
+                    state = AgentState.VALIDATING_INGREDIENT;
+                }
             } else {
                 goPrepareHeldIngredient();
             }
@@ -457,6 +470,9 @@ public class AgentDuo {
                 for (Furniture furniture : model.furnitures) {
                     if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getIngredientInPot() == null) {
                         workSurface = furniture;
+                        //TODO pas très propre d'être en waiting for cooked
+                        //     avant d'être arrivé ça force un doublon en gestion de cas spé
+                        //     comme la colision avec l'autre joueur
                         state = AgentState.WAITING_FOR_COOKING;
                         break;
                     }
