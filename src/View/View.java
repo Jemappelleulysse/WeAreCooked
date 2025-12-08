@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import HoldableObjects.*;
 import Furnitures.*;
 import Player.Player;
-import Recipes.BolognesePasta;
 
 import static View.PixelArts.*;
 
@@ -234,7 +233,7 @@ public class View extends JPanel {
             }
             g.setColor(Color.BLACK);
             g.fillRect(0, 896, 900, 130);
-            drawRecipeProgress(g, 0,900,new BolognesePasta());
+            drawRecipeProgress(g, 0,900, null, null);
     }
 
     public void update(float dt, ArrayList<Player> players, ArrayList<Furniture> furnitures, ArrayList<Ingredient> ingredientsOnCounter) {
