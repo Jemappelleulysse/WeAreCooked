@@ -26,6 +26,7 @@ public class OilSink extends Furniture {
             case KitchenUstensils.EMPTY_POT:
                 returnedObject = KitchenUstensils.OIL_POT;
                 break;
+
             default:
                 break;
         }

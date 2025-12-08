@@ -10,7 +10,6 @@ import Utils.Util;
 import Utils.Vec2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import static Utils.Util.pathFinding;
@@ -80,6 +79,7 @@ public class AgentDuo {
         }
         this.mate = mate;
     }
+
 
     /// /////// ///
     /// GETTERS ///
@@ -175,12 +175,12 @@ public class AgentDuo {
     private int checkFullPot() {
         for (Furniture furniture : model.furnitures) {
             // S'il y a une casserole pleine sur une gazinière
-            if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == KitchenUstensils.FULL_POT && ((GasStove) furniture).getIngredientInPot() == null ) {
+            if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == KitchenUstensils.WATER_POT && ((GasStove) furniture).getIngredientInPot() == null ) {
                 return 2;
             }
             // S'il y a une casserole pleine sur un autre meuble
-            else if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == KitchenUstensils.FULL_POT ||
-                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == KitchenUstensils.FULL_POT) {
+            else if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == KitchenUstensils.WATER_POT ||
+                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == KitchenUstensils.WATER_POT) {
                 return 1;
             }
         }
@@ -202,13 +202,17 @@ public class AgentDuo {
     }
 
     private Vec2 nextEmptyCase(Vec2 pos) {
+
         Vec2[] posAutour = new Vec2[4];
+
         for (int i = 0; i < posAutour.length; i++) {
             int k = (i == 0) ? 1 : ((i == 1) ? -1 : 0);
             int l = (i == 2) ? 1 : ((i == 3) ? -1 : 0);
             posAutour[i] = new Vec2(pos.getX() + k, pos.getY() + l);
         }
+
         Vec2 destination = null;
+
         for (int i = 0; i < posAutour.length; i++) {
             if (posAutour[i].getX() < 0 || posAutour[i].getX() >= model.board.length || posAutour[i].getY() < 0 || posAutour[i].getY() >= model.board.length) {
                 continue;
@@ -227,9 +231,7 @@ public class AgentDuo {
     /// /////// ///
 
     public void update(float dt) {
-//        System.out.println("Agent : " + this.id + " | x = "
-//                + this.model.getPlayer(this.id).getPosX()
-//                + " y = " + this.model.getPlayer(this.id).getPosY());
+
         timeBeforeNextAction -= dt;
 
         // Si le temps entre chaque action est écoulé
@@ -369,7 +371,7 @@ public class AgentDuo {
                         goGrab(Ingredient.PASTA);
                     } else if (potSituation == 1) {
                         // Il y a une casserole pleine ailleurs que sur le feu
-                        goGrab(KitchenUstensils.FULL_POT);
+                        goGrab(KitchenUstensils.WATER_POT);
                     } else if (getFurnitureWithIngredientOn(KitchenUstensils.EMPTY_POT) != null) {
                         // Il n'y a pas de casserole pleine
                         goGrab(KitchenUstensils.EMPTY_POT);
@@ -486,7 +488,7 @@ public class AgentDuo {
                     }
                 }
                 break;
-            case KitchenUstensils.FULL_POT:
+            case KitchenUstensils.WATER_POT:
                 for (Furniture furniture : model.furnitures) {
                     if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == null) {
                         workSurface = furniture;
