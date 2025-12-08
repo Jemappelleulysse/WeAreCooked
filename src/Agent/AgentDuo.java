@@ -108,8 +108,16 @@ public class AgentDuo {
 
         if (heldObject != null) {
             if (heldObject.getClass() == Ingredient.class) {
+                // Si la recette contient l'ingrédient tenu en main
                 if (model.getRecipeIngredients(recipeId).contains(heldObject)) {
-                    return (!model.getValidIngredients().contains(heldObject));
+                    // Si la recette est d'indice 0, on vérifie si l'objet n'est pas déjà sur l'assiette
+                    if(recipeId == 0) {
+                        return (!model.getValidIngredients().contains(heldObject));
+                    }
+                    // Sinon l'objet est nécessaire pour une recette future
+                    else {
+                        return true;
+                    }
                 }
             }
         }
@@ -331,7 +339,7 @@ public class AgentDuo {
                 // TODO : Vérifier si la recette a été validée et si oui passer au prochain ingrédient
                 this.recipeId = 0;
                 mate.recipeId = 0;
-                if(model.recipes.size() == 0) {
+                if(model.recipes.isEmpty()) {
                     state = AgentState.END;
                 } else {
                     state = AgentState.PREPARING_INGREDIENT;
@@ -353,7 +361,7 @@ public class AgentDuo {
                 break;
 
             case WAITING_FOR_NEXT_RECIPE:
-                if (model.recipes.isEmpty()) {
+                if (model.recipes.size() <= 1) {
                     state = AgentState.END;
                     recipeId = -1;
                     preparingIngredientId = -1;
@@ -587,7 +595,7 @@ public class AgentDuo {
                 KitchenUstensils wantedPot;
                 if(preparedIngredient == Ingredient.FRIED_POTATO) {
                     wantedPot = KitchenUstensils.OIL_POT;
-                } else if (preparedIngredient == Ingredient.RAW_MEAT) {
+                } else if (preparedIngredient == Ingredient.COOKED_MEAT) {
                     wantedPot = KitchenUstensils.EMPTY_POT;
                 } else {
                     wantedPot = KitchenUstensils.WATER_POT;

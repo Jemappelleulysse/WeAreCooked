@@ -65,11 +65,12 @@ public class Model {
         addToBoard(new GasStove(4,7));
         counter = new Counter(6, 7, this);
         addToBoard(counter);
+        addToBoard(new OilSink(3,0));
         addToBoard(new Sink(7,3));
         addToBoard(new Sink(7,4));
 
         for (int x = 0; x < 8; x++) {
-            if (x!=5 && x!=6) addToBoard(new WorkSurface(x, 0));  // top row
+            if (x!=3 && x!=5 && x!=6) addToBoard(new WorkSurface(x, 0));  // top row
             if (x!=3 && x!=4 && x!=6) addToBoard(new WorkSurface(x, 7));   // bottom row
         }
         for (int y = 1; y < 7; y++) { // avoid duplicating corners

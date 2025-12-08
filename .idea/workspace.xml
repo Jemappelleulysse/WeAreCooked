@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Correction de bugs. Prochain bug : logique de la viande crue buggée">
+    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Correction de bugs. Prochain bug : impossible de trouver une gazinière avec un pot vide">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Agent/AgentDuo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agent/AgentDuo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Recipes/Salad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Recipes/CaesarSalad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/View.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765235797948</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Correction de bugs. Prochain bug : impossible de trouver une gazinière avec un pot vide">
+      <option name="closed" value="true" />
+      <created>1765236763737</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1765236763737</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,6 +215,7 @@
     <MESSAGE value="Merge des nouvelles recettes. Erreur de pathfinding qui retourne null. Logique des nouveaux ingrédients à tester." />
     <MESSAGE value="Erreur du pathfinding corrigée. Nouvelle erreur où on va chercher des pâtes au lieu du pain" />
     <MESSAGE value="Correction de bugs. Prochain bug : logique de la viande crue buggée" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correction de bugs. Prochain bug : logique de la viande crue buggée" />
+    <MESSAGE value="Correction de bugs. Prochain bug : impossible de trouver une gazinière avec un pot vide" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correction de bugs. Prochain bug : impossible de trouver une gazinière avec un pot vide" />
   </component>
 </project>
