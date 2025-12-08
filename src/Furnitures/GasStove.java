@@ -58,6 +58,7 @@ public class GasStove extends Furniture {
             } else {
                 returnedObject = objectInHand;
             }
+            // TODO : faire un beau switch
         } else if (hasIngredientInPot()) {
             if (getIngredientInPot().equals(Ingredient.PASTA)) {
                 returnedObject = objectInHand;

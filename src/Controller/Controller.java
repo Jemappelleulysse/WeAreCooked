@@ -1,9 +1,6 @@
 package Controller;
 
-import Agent.Agent;
 import Agent.AgentDuo;
-import HoldableObjects.Ingredient;
-import Recipes.BolognesePasta;
 import Model.Model;
 import View.View;
 
@@ -65,7 +62,7 @@ public class Controller extends KeyAdapter {
         //System.out.println(System.currentTimeMillis() - dt + " ms needed for the agent Update");
     }
 
-    //TODO : A modifier pour que l'event s marche avec la nouvelle structure
+    //TODO : A modifier pour que l'event marche avec la nouvelle structure
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();

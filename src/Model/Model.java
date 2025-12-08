@@ -3,8 +3,7 @@ package Model;
 import HoldableObjects.Ingredient;
 import Furnitures.*;
 import Player.Player;
-import Recipes.BolognesePasta;
-import Recipes.Recipe;
+import Recipes.*;
 import Utils.Vec2;
 
 import javax.swing.*;
@@ -41,18 +40,25 @@ public class Model {
             }
         }
 
-        for(int i = 0; i < nbrRecipes; i++){
-            this.recipes.add(new BolognesePasta());
-        };
+//        for(int i = 0; i < nbrRecipes; i++){
+//            this.recipes.add(new BolognesePasta());
+//        };
+        this.recipes.add(new BolognesePasta());
+        this.recipes.add(new Sandwich());
+        this.recipes.add(new Salad());
+        this.recipes.add(new SteakAndFries());
+
         this.validIngredients = new ArrayList<>();
 
-        addToBoard(new WorkSurface(3, 3));
-        addToBoard(new WorkSurface(3, 3));
+        addToBoard(new IngredientChest(3, 3, Ingredient.RAW_MEAT));
         addToBoard(new WorkSurface(3, 4));
         addToBoard(new WorkSurface(4, 3));
         addToBoard(new WorkSurface(4, 4));
-        addToBoard(new IngredientChest(0, 1, Ingredient.PASTA));
+        addToBoard(new IngredientChest(0, 1, Ingredient.SALAD));
         addToBoard(new IngredientChest(0, 2, Ingredient.TOMATO));
+        addToBoard(new IngredientChest(0, 4, Ingredient.PASTA));
+        addToBoard(new IngredientChest(0, 5, Ingredient.POTATO));
+
         addToBoard(new CuttingBoard(6, 0));
         addToBoard(new CuttingBoard(5, 0));
         addToBoard(new GasStove(2,7));
@@ -63,14 +69,12 @@ public class Model {
         addToBoard(new Sink(7,4));
 
         for (int x = 0; x < 8; x++) {
-
-            if (!(x == 6 || x == 5)) addToBoard(new WorkSurface(x, 0));  // top row
-            if (!(x == 6 || x ==2 || x == 3)) addToBoard(new WorkSurface(x, 7));   // bottom row
+            if (x!=5 && x!=6) addToBoard(new WorkSurface(x, 0));  // top row
+            if (x!=2 && x!=3 && x!=6) addToBoard(new WorkSurface(x, 7));   // bottom row
         }
         for (int y = 1; y < 7; y++) { // avoid duplicating corners
-
-            if (!(y == 1 || y == 2)) addToBoard(new WorkSurface(0, y));   // left column
-            if (!(y ==3 || y ==4)) addToBoard(new WorkSurface(7, y));   // right column
+            if (y!=1 && y!=2 && y!=4 && y!=5) addToBoard(new WorkSurface(0, y));   // left column
+            if (y!=3 && y!=4) addToBoard(new WorkSurface(7, y));   // right column
         }
 
     }
@@ -95,6 +99,11 @@ public class Model {
     }
 
     public ArrayList<Ingredient> getRecipeIngredients(int id) {
+
+        if (recipes.size() <= id) {
+            return null;
+        }
+
         return recipes.get(id).getIngredients();
     }
 
@@ -148,6 +157,7 @@ public class Model {
     //TODO: Faire en sorte que la nouvelle recette soit aléatoire
     public void updateRecipe() {
         //this.currentRecipe = new BolognesePasta();
+        this.recipes.removeFirst();
         this.validIngredients.clear();
     }
 

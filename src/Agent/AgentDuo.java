@@ -125,6 +125,10 @@ public class AgentDuo {
 
         ArrayList<Ingredient> recipeIngredients = model.getRecipeIngredients(recipeId);
 
+        if(recipeIngredients == null || recipeIngredients.isEmpty()) {
+            return null;
+        }
+
         if (recipeIngredients.size() <= ingredientId ) {
             throw new IllegalArgumentException("Recipe id " + ingredientId + " is invalid.");
         }
@@ -172,19 +176,19 @@ public class AgentDuo {
     /// MAP INFOS RETRIEVER ///
     /// /////////////////// ///
 
-    private int checkFullPot() {
+    private int checkPot(KitchenUstensils pot) {
         for (Furniture furniture : model.furnitures) {
-            // S'il y a une casserole pleine sur une gazinière
-            if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == KitchenUstensils.WATER_POT && ((GasStove) furniture).getIngredientInPot() == null ) {
+            // S'il y a la casserole voulue sur une gazinière
+            if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == pot && ((GasStove) furniture).getIngredientInPot() == null ) {
                 return 2;
             }
-            // S'il y a une casserole pleine sur un autre meuble
-            else if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == KitchenUstensils.WATER_POT ||
-                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == KitchenUstensils.WATER_POT) {
+            // S'il y a la casserole voulue sur un autre meuble
+            else if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == pot ||
+                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == pot) {
                 return 1;
             }
         }
-        // S'il n'y a pas de casserole pleine
+        // S'il n'y a pas la casserole voulue
         return 0;
     }
 
@@ -255,25 +259,12 @@ public class AgentDuo {
         }
     }
 
-    // Ici on part du principe que les recettes contiennent au moins 2 ingrédients
+    // Ici, on part du principe que les recettes contiennent au moins 2 ingrédients
     public void updateState() {
-        //System.out.print("State change from " + this.state);
+        System.out.print("State change from " + this.state);
         switch (state) {
 
             case WAITING_TO_START:
-                AgentState mateState = getMateState();
-//                switch (mateState) {
-//                    case WAITING_TO_START, WAITING_FOR_NEXT_RECIPE:
-//                        this.state = AgentState.PREPARING_INGREDIENT;
-//                        this.preparingIngredientId = 0;
-//                        break;
-//                    case PREPARING_INGREDIENT:
-//                        this.state = AgentState.PREPARING_INGREDIENT;
-//                        this.preparingIngredientId = 1;
-//                        break;
-//                    default:
-//                        throw new IllegalStateException("Unknown state : { ownState: " + state + ", mateState: " + mateState + "}");
-//                }
                 this.state = AgentState.PREPARING_INGREDIENT;
                 this.preparingIngredientId = getNextIngredientId();
                 break;
@@ -290,12 +281,14 @@ public class AgentDuo {
                         if (getMateState() != AgentState.VALIDATING_RECIPE) {
                             state = AgentState.VALIDATING_RECIPE;
                             preparingIngredientId = -1;
+                            this.recipeId = 0;
+                            mate.recipeId = 0;
                             goValidateRecipe();
                             if (nextMoves.isEmpty()) {
                                 mate.moveFromCase();
                             }
                             break;
-                        } // Sinon on attend
+                        } // Sinon, on attend
                         else {
                             state = AgentState.WAITING_FOR_NEXT_RECIPE;
                             preparingIngredientId = -1;
@@ -304,11 +297,9 @@ public class AgentDuo {
                     }
                     // Si la recette n'est pas finie
                     else {
-                        state = AgentState.PREPARING_INGREDIENT;
                         preparingIngredientId = getNextIngredientId();
                         if (preparingIngredientId == -1){
-                            recipeId = 1;
-                            preparingIngredientId = getNextIngredientId();
+                            state = AgentState.WAITING_FOR_NEXT_RECIPE;
                         }
                         break;
                     }
@@ -328,27 +319,38 @@ public class AgentDuo {
                 break;
 
             case WAITING_FOR_COOKING:
-                if(isPlayerHandEmpty()){Ingredient cookedIngredient = getRecipeIngredient(preparingIngredientId);
+                if(isPlayerHandEmpty()){
+                    Ingredient cookedIngredient = getRecipeIngredient(preparingIngredientId);
                     // Si l'ingrédient est cuit
                     if (getFurnitureWithIngredientOn(cookedIngredient) != null) {
                         goGrab(cookedIngredient);
                         state = AgentState.PREPARING_INGREDIENT;
                     }
-                } else { //Il c'est bloqué pendant le trajet
+                } else { //Il s'est bloqué pendant le trajet
                     goPrepareHeldIngredient();
                 }
                 break;
 
             case WAITING_FOR_NEXT_RECIPE:
-                if (model.validIngredients.isEmpty()){
+                if (model.validIngredients.isEmpty() && !model.recipes.isEmpty()) {
                     state = AgentState.WAITING_TO_START;
+                } else {
+                    preparingIngredientId = 0;
+                    recipeId = 1;
+                    //Vérifie qu'il reste une autre recette
+                    if (getRecipeIngredient(0) != null){
+                        state = AgentState.PREPARING_INGREDIENT;
+                    } else {
+                        state = AgentState.END;
+                    }
                 }
                 break;
-
+            case END:
+                break;
             default:
                 throw new IllegalStateException("Unknown state : " + state);
         }
-        //System.out.println(" to " + this.state);
+        System.out.println(" to " + this.state);
     }
 
     void prepare(Ingredient ingredient) {
@@ -359,27 +361,94 @@ public class AgentDuo {
         // SI LA MAIN EST VIDE
         if (isPlayerHandEmpty()) {
 
-            switch (ingredient) {
-                case Ingredient.SLICED_TOMATO:
-                    goGrab(Ingredient.TOMATO);
-                    break;
+            // Si l'ingrédient fini est posé sur un plan de travail
+            if (getFurnitureWithIngredientOn(ingredient) != null) {
+                goGrab(ingredient);
+            }
+            else {
+                int potSituation;
 
-                case Ingredient.COOKED_PASTA:
-                    int potSituation = checkFullPot();
-                    if (potSituation == 2) {
-                        // Il y a une casserole pleine sur le feu
-                        goGrab(Ingredient.PASTA);
-                    } else if (potSituation == 1) {
-                        // Il y a une casserole pleine ailleurs que sur le feu
-                        goGrab(KitchenUstensils.WATER_POT);
-                    } else if (getFurnitureWithIngredientOn(KitchenUstensils.EMPTY_POT) != null) {
-                        // Il n'y a pas de casserole pleine
-                        goGrab(KitchenUstensils.EMPTY_POT);
-                    }
-                    break;
+                switch (ingredient) {
 
-                default:
-                    throw new IllegalStateException("Unknown ingredient : " + ingredient);
+                    case Ingredient.SLICED_TOMATO:
+                        goGrab(Ingredient.TOMATO);
+                        break;
+
+                    case Ingredient.WASHED_SALAD:
+                        goGrab(Ingredient.SALAD);
+                        break;
+
+                    case Ingredient.SLICED_BREAD:
+                        goGrab(Ingredient.BREAD);
+
+                    case Ingredient.COOKED_PASTA:
+                        potSituation = checkPot(KitchenUstensils.WATER_POT);
+                        if (potSituation == 2) {
+                            // Il y a une casserole d'eau vide sur le feu
+                            goGrab(Ingredient.PASTA);
+                        } else if (potSituation == 1) {
+                            // Il y a une casserole d'eau ailleurs
+                            goGrab(KitchenUstensils.WATER_POT);
+                        } else {
+                            // Il n'y a pas de casserole d'eau
+                            potSituation = checkPot(KitchenUstensils.EMPTY_POT);
+                            // S'il y a une casserole vide de dispo on va la chercher
+                            if (potSituation != 0) {
+                                goGrab(KitchenUstensils.EMPTY_POT);
+                            } // Sinon, on attend
+                        }
+                        break;
+
+                    case Ingredient.COOKED_MEAT:
+                        potSituation = checkPot(KitchenUstensils.EMPTY_POT);
+                        if (potSituation == 2) {
+                            // Il y a une casserole vide sur le feu
+                            goGrab(Ingredient.RAW_MEAT);
+                        } else if (potSituation == 1) {
+                            // Il y a une casserole vide ailleurs
+                            goGrab(KitchenUstensils.WATER_POT);
+                        } // Sinon, on attend
+                        break;
+
+                    case Ingredient.COOKED_POTATO:
+                        potSituation = checkPot(KitchenUstensils.WATER_POT);
+                        if (potSituation == 2) {
+                            // Il y a une casserole d'eau vide sur le feu
+                            goGrab(Ingredient.POTATO);
+                        } else if (potSituation == 1) {
+                            // Il y a une casserole d'eau ailleurs
+                            goGrab(KitchenUstensils.WATER_POT);
+                        } else {
+                            // Il n'y a pas de casserole d'eau
+                            potSituation = checkPot(KitchenUstensils.EMPTY_POT);
+                            // S'il y a une casserole vide de dispo on va la chercher
+                            if (potSituation != 0) {
+                                goGrab(KitchenUstensils.EMPTY_POT);
+                            } // Sinon, on attend
+                        }
+                        break;
+
+                    case Ingredient.FRIED_POTATO:
+                        potSituation = checkPot(KitchenUstensils.OIL_POT);
+                        if (potSituation == 2) {
+                            // Il y a une casserole d'huile vide sur le feu
+                            goGrab(Ingredient.POTATO);
+                        } else if (potSituation == 1) {
+                            // Il y a une casserole d'huile ailleurs
+                            goGrab(KitchenUstensils.OIL_POT);
+                        } else {
+                            // Il n'y a pas de casserole d'huile
+                            potSituation = checkPot(KitchenUstensils.EMPTY_POT);
+                            // S'il y a une casserole vide de dispo on va la chercher
+                            if (potSituation != 0) {
+                                goGrab(KitchenUstensils.EMPTY_POT);
+                            } // Sinon, on attend
+                        }
+                        break;
+
+                    default:
+                        throw new IllegalStateException("Unknown ingredient : " + ingredient);
+                }
             }
         }
 
@@ -454,33 +523,23 @@ public class AgentDuo {
     }
 
     private void goPrepareHeldIngredient() {
-        Vec2 destination = null;
+        Vec2 destination;
         Furniture workSurface = null;
         HoldableObject heldObject = model.getPlayer(id).getObjectHeld();
+        Ingredient preparedIngredient = getRecipeIngredient(preparingIngredientId);
 
         switch (heldObject) {
-            case Ingredient.TOMATO :
+
+            case Ingredient.TOMATO, Ingredient.POTATO, Ingredient.BREAD :
                 for (Furniture furniture : model.furnitures) {
                     if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == null) {
                         workSurface = furniture;
                         break;
                     }
                 }
+                break;
 
-                break;
-            case Ingredient.PASTA:
-                for (Furniture furniture : model.furnitures) {
-                    if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getIngredientInPot() == null) {
-                        workSurface = furniture;
-                        //TODO pas très propre d'être en waiting for cooked
-                        //     avant d'être arrivé ça force un doublon en gestion de cas spé
-                        //     comme la colision avec l'autre joueur
-                        state = AgentState.WAITING_FOR_COOKING;
-                        break;
-                    }
-                }
-                break;
-            case KitchenUstensils.EMPTY_POT:
+            case Ingredient.SALAD:
                 for (Furniture furniture : model.furnitures) {
                     if (furniture.getClass() == Sink.class) {
                         workSurface = furniture;
@@ -488,7 +547,64 @@ public class AgentDuo {
                     }
                 }
                 break;
-            case KitchenUstensils.WATER_POT:
+
+            case Ingredient.PASTA, Ingredient.SLICED_POTATO:
+                KitchenUstensils wantedPot;
+                if(preparedIngredient == Ingredient.FRIED_POTATO) {
+                    wantedPot = KitchenUstensils.OIL_POT;
+                } else {
+                    wantedPot = KitchenUstensils.WATER_POT;
+                }
+
+                for (Furniture furniture : model.furnitures) {
+                    if (furniture.getClass() == GasStove.class &&
+                            ((GasStove) furniture).getPot() == wantedPot &&
+                            ((GasStove) furniture).getIngredientInPot() == null)
+                    {
+                        workSurface = furniture;
+                        state = AgentState.WAITING_FOR_COOKING;
+                        break;
+                    }
+                }
+                break;
+
+            case KitchenUstensils.EMPTY_POT:
+                Object wantedFurniture;
+                switch (preparedIngredient) {
+                    case RAW_MEAT:
+                        wantedFurniture = GasStove.class;
+                        break;
+
+                    case COOKED_POTATO, COOKED_PASTA:
+                        wantedFurniture = Sink.class;
+                        break;
+
+                    case FRIED_POTATO:
+                        wantedFurniture = OilSink.class;
+                        break;
+
+                    case null, default:
+                        throw new IllegalStateException("Holding an empty pot while preparing ingredient : " + preparedIngredient);
+                }
+
+                if (wantedFurniture == GasStove.class) {
+                    for (Furniture furniture : model.furnitures) {
+                        if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == null) {
+                            workSurface = furniture;
+                            break;
+                        }
+                    }
+                } else {
+                    for (Furniture furniture : model.furnitures) {
+                        if (furniture.getClass() == wantedFurniture) {
+                            workSurface = furniture;
+                            break;
+                        }
+                    }
+                }
+                break;
+
+            case KitchenUstensils.WATER_POT, KitchenUstensils.OIL_POT:
                 for (Furniture furniture : model.furnitures) {
                     if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == null) {
                         workSurface = furniture;
@@ -496,29 +612,28 @@ public class AgentDuo {
                     }
                 }
                 break;
+
             default :
-                //System.out.println("Pas d'ingredient dans la main");
+                throw new IllegalStateException("L'objet tenu en main n'a pas de logique attribuée");
         }
 
         if (workSurface == null) {
-            //System.out.print("PAS DE PLANCHE VIDE TROUVE");
+            // Aucune surface de travail trouvée
             return;
         }
 
+        // Déplacement jusqu'au meuble
         destination = nextEmptyCase(new Vec2(workSurface.getPosX(),workSurface.getPosY()));
         ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
-
         nextMoves.addAll(actions);
+
+        // Interaction avec le meuble
         Vec2 useFurniture = destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY()));
         if (workSurface.getClass() == CuttingBoard.class) {
             nextMoves.add(useFurniture);
             nextMoves.add(useFurniture);
-
             nextMoves.add(useFurniture);
-
             nextMoves.add(useFurniture);
-
-
         }
         nextMoves.add(useFurniture);
     }
@@ -537,7 +652,7 @@ public class AgentDuo {
 
     private void goPlaceHeldIngredientOnPlate() {
         // Place l'ingrédient tenu sur l'assiette du comptoir
-        Vec2 destination = null;
+        Vec2 destination;
         Furniture workSurface = null;
         for (Furniture furniture : model.furnitures) {
             if (furniture.getClass() == Counter.class) {
