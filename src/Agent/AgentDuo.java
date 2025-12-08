@@ -236,6 +236,13 @@ public class AgentDuo {
 
     public void update(float dt) {
 
+        System.out.println("Agent : " + this.id);
+        System.out.print("NextMoves : [ ");
+        for (int i = 0; i < this.nextMoves.size(); i++) {
+            System.out.print(this.nextMoves.get(i).toString() + ", ");
+        }
+        System.out.println(" ]");
+
         timeBeforeNextAction -= dt;
 
         // Si le temps entre chaque action est écoulé
@@ -261,7 +268,12 @@ public class AgentDuo {
 
     // Ici, on part du principe que les recettes contiennent au moins 2 ingrédients
     public void updateState() {
+
         System.out.print("State change from " + this.state);
+        if(preparingIngredientId >= 0){
+            System.out.print("(" + getRecipeIngredient(preparingIngredientId) + ")");
+        }
+
         switch (state) {
 
             case WAITING_TO_START:
@@ -298,6 +310,7 @@ public class AgentDuo {
                     // Si la recette n'est pas finie
                     else {
                         preparingIngredientId = getNextIngredientId();
+                        // S'il n'y a pas de prochain ingrédient
                         if (preparingIngredientId == -1){
                             state = AgentState.WAITING_FOR_NEXT_RECIPE;
                         }
@@ -332,25 +345,33 @@ public class AgentDuo {
                 break;
 
             case WAITING_FOR_NEXT_RECIPE:
-                if (model.validIngredients.isEmpty() && !model.recipes.isEmpty()) {
-                    state = AgentState.WAITING_TO_START;
+                if (model.recipes.isEmpty()) {
+                    state = AgentState.END;
+                    recipeId = -1;
+                    preparingIngredientId = -1;
                 } else {
-                    preparingIngredientId = 0;
                     recipeId = 1;
-                    //Vérifie qu'il reste une autre recette
+                    // Vérifie que le premier ingrédient de la recette est accessible
                     if (getRecipeIngredient(0) != null){
                         state = AgentState.PREPARING_INGREDIENT;
+                        preparingIngredientId = 0;
                     } else {
-                        state = AgentState.END;
+                        throw new IllegalStateException("Next recipe trouvée mais premier ingrédient inaccessible.");
                     }
                 }
                 break;
+
             case END:
                 break;
+
             default:
                 throw new IllegalStateException("Unknown state : " + state);
         }
-        System.out.println(" to " + this.state);
+        System.out.print(" to " + this.state);
+        if(preparingIngredientId >= 0){
+            System.out.print("(" + getRecipeIngredient(preparingIngredientId) + ")");
+        }
+        System.out.print("\n");
     }
 
     void prepare(Ingredient ingredient) {
@@ -471,8 +492,11 @@ public class AgentDuo {
     /// ///////////////////// ///
 
     private void goGrab(HoldableObject object) {
+
         Furniture furniture = getFurnitureWithIngredientOn(object);
-        Vec2 destination = null;
+        Vec2 destination;
+
+        // Si l'objet voulu n'est pas sur un meuble, on cherche un coffre
         if (furniture == null) {
             for (Furniture fur : model.furnitures) {
                 if (fur.getClass() == IngredientChest.class && ((IngredientChest) fur).getIngredient().equals(object)) {
@@ -481,6 +505,7 @@ public class AgentDuo {
             }
         }
 
+        // Si un coffre est trouvé, on cherche la case vide la plus proche
         if (furniture != null) {
             Vec2 furniturePos = new Vec2(furniture.getPosX(),furniture.getPosY());
             destination = nextEmptyCase(furniturePos);
@@ -488,6 +513,7 @@ public class AgentDuo {
             return;
         }
 
+        // Si la case vide est trouvé, on ajoute les déplacements du pathfinding à la liste de mouvements
         if (destination != null) {
             ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
             nextMoves.addAll(actions);
@@ -523,7 +549,7 @@ public class AgentDuo {
     }
 
     private void goPrepareHeldIngredient() {
-        Vec2 destination;
+        Vec2 destination = null;
         Furniture workSurface = null;
         HoldableObject heldObject = model.getPlayer(id).getObjectHeld();
         Ingredient preparedIngredient = getRecipeIngredient(preparingIngredientId);
@@ -624,6 +650,10 @@ public class AgentDuo {
 
         // Déplacement jusqu'au meuble
         destination = nextEmptyCase(new Vec2(workSurface.getPosX(),workSurface.getPosY()));
+        if (destination == null) {
+            return;
+        }
+
         ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
         nextMoves.addAll(actions);
 
@@ -636,18 +666,6 @@ public class AgentDuo {
             nextMoves.add(useFurniture);
         }
         nextMoves.add(useFurniture);
-    }
-
-    private void moveFromCase(){
-        Player p = model.getPlayer(id);
-        ArrayList<Vec2> neighboors = Util.getNeighbors(p.getPos());
-        for(Vec2 v : neighboors){
-            if (model.board[v.getX()][v.getY()] == -1){
-                nextMoves.add(p.getPos().sub(new Vec2(v.getX(),v.getY())));
-                return;
-            }
-        }
-        throw new ArrayStoreException("Aucune case libre");
     }
 
     private void goPlaceHeldIngredientOnPlate() {
@@ -673,5 +691,17 @@ public class AgentDuo {
         nextMoves.add(destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY())));
 
         // TODO: update la liste des ingrédients valides
+    }
+
+    private void moveFromCase(){
+        Player p = model.getPlayer(id);
+        ArrayList<Vec2> neighboors = Util.getNeighbors(p.getPos());
+        for(Vec2 v : neighboors){
+            if (model.board[v.getX()][v.getY()] == -1){
+                nextMoves.add(p.getPos().sub(new Vec2(v.getX(),v.getY())));
+                return;
+            }
+        }
+        throw new ArrayStoreException("Aucune case libre");
     }
 }
