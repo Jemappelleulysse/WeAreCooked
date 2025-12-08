@@ -406,7 +406,129 @@ public class PixelArts {
         }
     }
 
+    // Salade (feuille verte)
+    public static void drawSalad(Graphics g, int i, int j) {
+        int w = 40, h = 30;
 
+        // Vert principal
+        g.setColor(new Color(80, 180, 80));
+        g.fillOval(i, j, w, h);
+
+        // Nervures plus foncées
+        g.setColor(new Color(40, 120, 40));
+        g.drawLine(i + w/2, j + 5, i + w/2, j + h - 5);
+        g.drawLine(i + 10, j + 10, i + w - 10, j + h - 10);
+        g.drawLine(i + 10, j + h - 10, i + w - 10, j + 10);
+
+        // Petites irrégularités (bord dentelé)
+        g.setColor(new Color(60, 160, 60));
+        g.fillOval(i - 4, j + 8, 8, 8);
+        g.fillOval(i + w - 4, j + 12, 8, 8);
+    }
+
+    public static void drawWashedSalad(Graphics g, int i, int j) {
+        int w = 40, h = 30;
+
+        // Vert plus clair/brillant
+        g.setColor(new Color(120, 220, 120));
+        g.fillOval(i, j, w, h);
+
+        // Nervures
+        g.setColor(new Color(60, 160, 60));
+        g.drawLine(i + w/2, j + 5, i + w/2, j + h - 5);
+        g.drawLine(i + 12, j + 8, i + w - 12, j + h - 8);
+
+        // Gouttelettes d’eau (bleu clair)
+        g.setColor(new Color(180, 220, 255));
+        g.fillOval(i + 8, j + 6, 4, 4);
+        g.fillOval(i + 20, j + 12, 3, 3);
+        g.fillOval(i + 28, j + 18, 5, 5);
+
+        // Reflets (blanc semi-transparent)
+        g.setColor(new Color(255, 255, 255, 180));
+        g.fillOval(i + 14, j + 10, 6, 3);
+    }
+
+    public static void drawRawMeat(Graphics g, int i, int j) {
+        int w = 30, h = 20;
+
+        // Contour de la viande (rouge foncé)
+        g.setColor(new Color(150, 30, 30));
+        g.fillRoundRect(i, j, w, h, 8, 8);
+
+        // Chair intérieure (rose)
+        g.setColor(new Color(255, 120, 120));
+        g.fillRoundRect(i + 3, j + 3, w - 6, h - 6, 6, 6);
+
+        // Os/blanc au centre
+        g.setColor(new Color(240, 240, 200));
+        g.fillOval(i + w/2 - 4, j + h/2 - 4, 8, 8);
+
+        // Petites fibres (traits plus clairs)
+        g.setColor(new Color(255, 180, 180));
+        g.fillRect(i + 8, j + 6, 3, 2);
+        g.fillRect(i + 14, j + 10, 4, 2);
+        g.fillRect(i + 20, j + 7, 3, 2);
+    }
+
+    public static void drawCookedMeat(Graphics g, int i, int j) {
+        int w = 30, h = 20;
+
+        // Contour de la viande (marron foncé)
+        g.setColor(new Color(50, 23, 2));
+        g.fillRoundRect(i, j, w, h, 8, 8);
+
+        // Chair intérieure (marron)
+        g.setColor(new Color(59, 28, 28));
+        g.fillRoundRect(i + 3, j + 3, w - 6, h - 6, 6, 6);
+
+        // Os/blanc au centre
+        g.setColor(new Color(240, 240, 200));
+        g.fillOval(i + w/2 - 4, j + h/2 - 4, 8, 8);
+
+        // Petites fibres (traits plus clairs)
+        g.setColor(new Color(255, 180, 180));
+        g.fillRect(i + 8, j + 6, 3, 2);
+        g.fillRect(i + 14, j + 10, 4, 2);
+        g.fillRect(i + 20, j + 7, 3, 2);
+    }
+
+    public static void drawBread(Graphics g, int i, int j) {
+        int w = 40, h = 25;
+
+        // Croûte (brun doré)
+        g.setColor(new Color(200, 150, 80));
+        g.fillRoundRect(i, j, w, h, 12, 12);
+
+        // Intérieur (mie, plus clair)
+        g.setColor(new Color(245, 220, 160));
+        g.fillRoundRect(i + 4, j + 4, w - 8, h - 8, 10, 10);
+
+        // Petits détails de texture
+        g.setColor(new Color(220, 190, 130));
+        g.fillOval(i + 10, j + 10, 3, 3);
+        g.fillOval(i + 20, j + 12, 2, 2);
+        g.fillOval(i + 26, j + 8, 2, 2);
+    }
+
+    public static void drawSlicedBread(Graphics g, int i, int j) {
+        int w = 40, h = 25;
+
+        // Croûte (brun doré)
+        g.setColor(new Color(200, 150, 80));
+        g.fillArc(i, j, w, h, 0, 180); // moitié supérieure
+        g.fillArc(i, j, w, h, 180, 180); // moitié inférieure
+
+        // Mie (intérieur clair)
+        g.setColor(new Color(245, 220, 160));
+        g.fillArc(i + 4, j + 2, w - 8, h/2, 0, 180); // haut
+        g.fillArc(i + 4, j + h/2, w - 8, h/2 - 2, 180, 180); // bas
+
+        // Petits détails de texture
+        g.setColor(new Color(220, 190, 130));
+        g.fillOval(i + 12, j + 6, 3, 3);
+        g.fillOval(i + 22, j + h/2 + 4, 2, 2);
+    }
 
     public static void drawMinimalStove(Graphics g, int i, int j) {
 
@@ -527,8 +649,41 @@ public class PixelArts {
         drawRawPasta(g, x+62, y+height+8);
     }
 
+    public static void drawRecipeSandwich(Graphics g, int x, int y) {
+        int width = 160;
+        int height = 50;
+
+        // Encadré blanc
+        g.setColor(Color.WHITE);
+        g.fillRect(x, y, width, height);
+
+        // Bord Gris
+        g.setColor(Color.GRAY);
+        g.drawRect(x, y, width, height);
+
+        // Image Recette
+        drawSlicedBread(g, x+50, y+8);
+        drawWashedSalad(g, x+70, y+17);
+        drawSlicedTomato(g, x+75, y+8);
+        drawCookedMeat(g, x+55, y+25);
+
+        // Encadré Gris détail
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(x, y+height, width, height);
+
+        // Bord Noir
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y+height, width, height);
+
+        // Image ingrédient
+        drawBread(g, x+5, y+height+13);
+        drawSalad(g, x+50, y+height+10);
+        drawWholeTomato(g, x+95, y+height+14);
+        drawRawMeat(g, x+127, y+height+15);
+    }
     public static void drawRecipe(Graphics g, int x, int y, Recipe recipe) {
-        drawRecipeBolognese(g, x, y);
+        //drawRecipeBolognese(g, x, y);
+        drawRecipeSandwich(g, x-22, y);
     }
 
     public static void drawRecipeProgress(Graphics g, int x, int y,
