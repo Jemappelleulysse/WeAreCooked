@@ -533,8 +533,12 @@ public class PixelArts {
 
     public static void drawRecipeProgress(Graphics g, int x, int y,
                                           Recipe current, Recipe next) {
-        drawRecipe(g,x+200,y+5,current);
+        if (current != null) {
+            drawRecipe(g,x+200,y+5,current);
+        }
         drawNext(g, x+350, y+30);
-        drawRecipe(g,x+550,y+5,next);
+        if (next != null) {
+            drawRecipe(g,x+550,y+5,next);
+        }
     }
 }

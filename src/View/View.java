@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import HoldableObjects.*;
 import Furnitures.*;
 import Player.Player;
+import Recipes.Recipe;
 
 import static View.PixelArts.*;
 
@@ -15,6 +16,9 @@ public class View extends JPanel {
         private ArrayList<Player> players;
         private ArrayList<Furniture> furnitures;
         private ArrayList<Ingredient> ingredientsOnCounter;
+        private Recipe currentRecipe;
+        private Recipe nextRecipe;
+
 
         public View() {
             this.setBackground(Color.LIGHT_GRAY);
@@ -233,13 +237,17 @@ public class View extends JPanel {
             }
             g.setColor(Color.BLACK);
             g.fillRect(0, 896, 900, 130);
-            drawRecipeProgress(g, 0,900, null, null);
+            drawRecipeProgress(g, 0,900, currentRecipe, nextRecipe);
     }
 
-    public void update(float dt, ArrayList<Player> players, ArrayList<Furniture> furnitures, ArrayList<Ingredient> ingredientsOnCounter) {
+    public void update(float dt, ArrayList<Player> players,
+                       ArrayList<Furniture> furnitures, ArrayList<Ingredient> ingredientsOnCounter,
+                       Recipe currentRecipe, Recipe nextRecipe) {
             this.players = players;
             this.furnitures = furnitures;
             this.ingredientsOnCounter = ingredientsOnCounter;
+            this.currentRecipe = currentRecipe;
+            this.nextRecipe = nextRecipe;
             repaint();
     }
 

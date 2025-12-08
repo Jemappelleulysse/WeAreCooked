@@ -51,8 +51,8 @@ public class Controller extends KeyAdapter {
 
         score += model.update(dt);
 
-        view.update(dt, model.players, model.furnitures, model.getValidIngredients());
-
+        view.update(dt, model.players, model.furnitures, model.getValidIngredients(),
+                model.getFirstRecipe(), model.getNextRecipe());
         if (move) {
             for (AgentDuo agent : agents) {
                 agent.update(dt);
