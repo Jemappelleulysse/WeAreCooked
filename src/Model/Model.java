@@ -51,8 +51,8 @@ public class Model {
         this.validIngredients = new ArrayList<>();
 
         addToBoard(new IngredientChest(3, 3, Ingredient.RAW_MEAT));
+        addToBoard(new IngredientChest(4, 3, Ingredient.BREAD));
         addToBoard(new WorkSurface(3, 4));
-        addToBoard(new WorkSurface(4, 3));
         addToBoard(new WorkSurface(4, 4));
         addToBoard(new IngredientChest(0, 1, Ingredient.SALAD));
         addToBoard(new IngredientChest(0, 2, Ingredient.TOMATO));
@@ -61,8 +61,8 @@ public class Model {
 
         addToBoard(new CuttingBoard(6, 0));
         addToBoard(new CuttingBoard(5, 0));
-        addToBoard(new GasStove(2,7));
         addToBoard(new GasStove(3,7));
+        addToBoard(new GasStove(4,7));
         counter = new Counter(6, 7, this);
         addToBoard(counter);
         addToBoard(new Sink(7,3));
@@ -70,7 +70,7 @@ public class Model {
 
         for (int x = 0; x < 8; x++) {
             if (x!=5 && x!=6) addToBoard(new WorkSurface(x, 0));  // top row
-            if (x!=2 && x!=3 && x!=6) addToBoard(new WorkSurface(x, 7));   // bottom row
+            if (x!=3 && x!=4 && x!=6) addToBoard(new WorkSurface(x, 7));   // bottom row
         }
         for (int y = 1; y < 7; y++) { // avoid duplicating corners
             if (y!=1 && y!=2 && y!=4 && y!=5) addToBoard(new WorkSurface(0, y));   // left column

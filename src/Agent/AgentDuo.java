@@ -236,12 +236,12 @@ public class AgentDuo {
 
     public void update(float dt) {
 
-        System.out.println("Agent : " + this.id);
-        System.out.print("NextMoves : [ ");
-        for (int i = 0; i < this.nextMoves.size(); i++) {
-            System.out.print(this.nextMoves.get(i).toString() + ", ");
-        }
-        System.out.println(" ]");
+        System.out.println("Agent : " + this.id + ", recipe : " + this.recipeId);
+//        System.out.print("NextMoves : [ ");
+//        for (int i = 0; i < this.nextMoves.size(); i++) {
+//            System.out.print(this.nextMoves.get(i).toString() + ", ");
+//        }
+//        System.out.println(" ]");
 
         timeBeforeNextAction -= dt;
 
@@ -313,6 +313,9 @@ public class AgentDuo {
                         // S'il n'y a pas de prochain ingrédient
                         if (preparingIngredientId == -1){
                             state = AgentState.WAITING_FOR_NEXT_RECIPE;
+                        } // S'il y a un prochain ingrédient
+                        else {
+                            state = AgentState.PREPARING_INGREDIENT;
                         }
                         break;
                     }
@@ -328,7 +331,12 @@ public class AgentDuo {
                 // TODO : Vérifier si la recette a été validée et si oui passer au prochain ingrédient
                 this.recipeId = 0;
                 mate.recipeId = 0;
-                state = AgentState.WAITING_FOR_NEXT_RECIPE;
+                if(model.recipes.size() == 0) {
+                    state = AgentState.END;
+                } else {
+                    state = AgentState.PREPARING_INGREDIENT;
+                    preparingIngredientId = getNextIngredientId();
+                }
                 break;
 
             case WAITING_FOR_COOKING:
@@ -401,6 +409,7 @@ public class AgentDuo {
 
                     case Ingredient.SLICED_BREAD:
                         goGrab(Ingredient.BREAD);
+                        break;
 
                     case Ingredient.COOKED_PASTA:
                         potSituation = checkPot(KitchenUstensils.WATER_POT);
@@ -479,6 +488,8 @@ public class AgentDuo {
                 if(recipeId == 0){
                     goPlaceHeldIngredientOnPlate();
                     state = AgentState.VALIDATING_INGREDIENT;
+                } else {
+                    System.out.print(" !!! Waiting : recipe id = " +  recipeId + " !!! ");
                 }
             } else {
                 goPrepareHeldIngredient();
