@@ -152,7 +152,7 @@ public class Model {
     /// INTERACTIONS ///
     /// //////////// ///
 
-    public void movePlayer(int id, Vec2 nextMove) {
+    public boolean movePlayer(int id, Vec2 nextMove) {
 
         boolean isInteracting = false;
         Player player = this.getPlayer(id);
@@ -163,7 +163,10 @@ public class Model {
         // Si la case n'est pas vide
         if (board[nextX][nextY] != -1) {
             // Si le meuble est dans la liste de meubles
-            if (board[nextX][nextY] <= furnitures.size()) {
+            if (board[nextX][nextY] == 0) {
+                return false; //Bloqué par un joueur
+            }
+            else if (board[nextX][nextY] <= furnitures.size()) {
                 // On interagit avec un meuble
                 Furniture furniture = furnitures.get(board[nextX][nextY]-1);
                 player.setObjectHeld(furniture.interact(player.getObjectHeld()));
@@ -176,6 +179,7 @@ public class Model {
             player.setPosY(nextY);
             board[player.getPosX()][player.getPosY()] = 0;
         }
+        return true;
     }
 
     public int update(float dt){
@@ -194,7 +198,6 @@ public class Model {
 //            updateRecipe();
 //            score = 50;
 //        }
-
         return score;
     }
 

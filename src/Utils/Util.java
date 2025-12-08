@@ -20,7 +20,7 @@ public class Util {
             if (current.getX() < 0 || current.getX() >= board.length || current.getY() < 0 || current.getY() >= board[0].length) {
                 continue;
             }
-            if (!(Vec2.getTableau(current,board) == -1 || Vec2.getTableau(current,board) == 0) || seen[current.getX()][current.getY()] == 1) {
+            if ((Vec2.getTableau(current,board) != -1 || seen[current.getX()][current.getY()] == 1) && !posDepart.equals(current)) {
                 continue;
             }
 
@@ -44,7 +44,7 @@ public class Util {
     }
 
 
-    private static ArrayList<Vec2> getNeighbors(Vec2 p) {
+    public static ArrayList<Vec2> getNeighbors(Vec2 p) {
         ArrayList<Vec2> neighbors = new ArrayList<>();
         neighbors.add(new Vec2(p.getX() - 1, p.getY())); // haut
         neighbors.add(new Vec2(p.getX() + 1, p.getY())); // bas

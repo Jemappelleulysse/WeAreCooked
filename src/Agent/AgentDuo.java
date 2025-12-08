@@ -5,9 +5,12 @@ import HoldableObjects.HoldableObject;
 import HoldableObjects.Ingredient;
 import HoldableObjects.KitchenUstensils;
 import Model.Model;
+import Player.Player;
+import Utils.Util;
 import Utils.Vec2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static Utils.Util.pathFinding;
@@ -150,7 +153,8 @@ public class AgentDuo {
 
     // Vérifie si l'ingrédient en cours de préparation a été placé sur le comptoir (liste des ingrédients validés)
     private boolean isIngredientValidated() {
-        return (model.getValidIngredients().contains(getRecipeIngredient(id)));
+        Ingredient test = getRecipeIngredient(preparingIngredientId);
+        return (model.getValidIngredients().contains(test));
     }
 
 
@@ -222,9 +226,9 @@ public class AgentDuo {
     /// /////// ///
 
     public void update(float dt) {
-        System.out.println("Agent : " + this.id + " | x = "
-                + this.model.getPlayer(this.id).getPosX()
-                + " y = " + this.model.getPlayer(this.id).getPosY());
+//        System.out.println("Agent : " + this.id + " | x = "
+//                + this.model.getPlayer(this.id).getPosX()
+//                + " y = " + this.model.getPlayer(this.id).getPosY());
         timeBeforeNextAction -= dt;
 
         // Si le temps entre chaque action est écoulé
@@ -233,7 +237,6 @@ public class AgentDuo {
 
             // S'il n'y a plus de mouvement à faire → détermination de la prochaine action logique et des prochains mouvements
             if (nextMoves.isEmpty()) {
-                System.out.println("empty");
                 updateState();
             }
 
@@ -241,7 +244,9 @@ public class AgentDuo {
                 // On demande au model de bouger le joueur
                 Vec2 nextMove = nextMoves.removeFirst();
                 if (nextMove.isNotNull()) {
-                    model.movePlayer(id, nextMove);
+                    if(!model.movePlayer(id, nextMove)){
+                        nextMoves.clear();
+                    }
                 }
             }
         }
@@ -249,13 +254,13 @@ public class AgentDuo {
 
     // Ici on part du principe que les recettes contiennent au moins 2 ingrédients
     public void updateState() {
-        System.out.print("State change from " + this.state);
+        //System.out.print("State change from " + this.state);
         switch (state) {
 
             case WAITING_TO_START:
                 AgentState mateState = getMateState();
                 switch (mateState) {
-                    case WAITING_TO_START:
+                    case WAITING_TO_START, WAITING_FOR_NEXT_RECIPE:
                         this.state = AgentState.PREPARING_INGREDIENT;
                         this.preparingIngredientId = 0;
                         break;
@@ -281,6 +286,9 @@ public class AgentDuo {
                             state = AgentState.VALIDATING_RECIPE;
                             preparingIngredientId = -1;
                             goValidateRecipe();
+                            if (nextMoves.isEmpty()) {
+                                mate.moveFromCase();
+                            }
                             break;
                         } // Sinon on attend
                         else {
@@ -296,11 +304,17 @@ public class AgentDuo {
                         if (preparingIngredientId == -1) state = AgentState.WAITING_FOR_NEXT_RECIPE;
                         break;
                     }
+                } else {
+                    goPlaceHeldIngredientOnPlate();
+                    if (nextMoves.isEmpty()) {
+                        mate.moveFromCase();
+                    }
                 }
                 break;
 
             case VALIDATING_RECIPE:
                 // TODO : Vérifier si la recette a été validée et si oui passer au prochain ingrédient
+                state = AgentState.WAITING_FOR_NEXT_RECIPE;
                 break;
 
             case WAITING_FOR_COOKING:
@@ -313,12 +327,15 @@ public class AgentDuo {
                 break;
 
             case WAITING_FOR_NEXT_RECIPE:
+                if (model.validIngredients.isEmpty()){
+                    state = AgentState.WAITING_TO_START;
+                }
                 break;
 
             default:
                 throw new IllegalStateException("Unknown state : " + state);
         }
-        System.out.println(" to " + this.state);
+        //System.out.println(" to " + this.state);
     }
 
     void prepare(Ingredient ingredient) {
@@ -387,9 +404,14 @@ public class AgentDuo {
             return;
         }
 
-        ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
-        nextMoves.addAll(actions);
-        nextMoves.add(destination.sub(new Vec2(furniture.getPosX(),furniture.getPosY())));
+        if (destination != null) {
+            ArrayList<Vec2> actions = Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
+            nextMoves.addAll(actions);
+            nextMoves.add(destination.sub(new Vec2(furniture.getPosX(),furniture.getPosY())));
+        } else {
+            Player p = model.getPlayer(id);
+            nextMoves.add(new Vec2(p.getPosX(),p.getPosY()).sub(new Vec2(furniture.getPosX(),furniture.getPosY())));
+        }
     }
 
     private void goValidateRecipe() {
@@ -481,6 +503,18 @@ public class AgentDuo {
 
         }
         nextMoves.add(useFurniture);
+    }
+
+    private void moveFromCase(){
+        Player p = model.getPlayer(id);
+        ArrayList<Vec2> neighboors = Util.getNeighbors(p.getPos());
+        for(Vec2 v : neighboors){
+            if (model.board[v.getX()][v.getY()] == -1){
+                nextMoves.add(p.getPos().sub(new Vec2(v.getX(),v.getY())));
+                return;
+            }
+        }
+        throw new ArrayStoreException("Aucune case libre");
     }
 
     private void goPlaceHeldIngredientOnPlate() {
