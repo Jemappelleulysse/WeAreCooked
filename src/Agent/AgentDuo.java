@@ -16,7 +16,7 @@ public class AgentDuo {
 
     private final Model model;
     private final int id;
-    private final AgentDuo mate;
+    private AgentDuo mate;
 
     private AgentState state = AgentState.WAITING_TO_START;
     private int preparingIngredientId = -1;
@@ -30,7 +30,7 @@ public class AgentDuo {
     /// CONSTRUCTORS ///
     /// //////////// ///
 
-    public AgentDuo(Model model, int id, AgentDuo mate) {
+    public AgentDuo(Model model, int id) {
         if (model == null) {
             throw new IllegalArgumentException("Model cannot be null.");
         }
@@ -40,11 +40,6 @@ public class AgentDuo {
             throw new IllegalArgumentException("Agent id cannot be negative.");
         }
         this.id = id;
-
-        if (mate == null) {
-            throw new IllegalArgumentException("Mate cannot be null.");
-        }
-        this.mate = mate;
 
         this.timeBetweenActions = 0.1f;
     }
@@ -69,6 +64,17 @@ public class AgentDuo {
             throw new IllegalArgumentException("Agent time cannot be negative or null.");
         }
         this.timeBetweenActions = timeBetweenActions;
+    }
+
+    /// /////// ///
+    /// SETTERS ///
+    /// /////// ///
+
+    public void setMate(AgentDuo mate) {
+        if (mate == null) {
+            throw new IllegalArgumentException("Mate cannot be null.");
+        }
+        this.mate = mate;
     }
 
     /// /////// ///
@@ -216,7 +222,9 @@ public class AgentDuo {
     /// /////// ///
 
     public void update(float dt) {
-
+        System.out.println("Agent : " + this.id + " | x = "
+                + this.model.getPlayer(this.id).getPosX()
+                + " y = " + this.model.getPlayer(this.id).getPosY());
         timeBeforeNextAction -= dt;
 
         // Si le temps entre chaque action est écoulé
@@ -225,20 +233,23 @@ public class AgentDuo {
 
             // S'il n'y a plus de mouvement à faire → détermination de la prochaine action logique et des prochains mouvements
             if (nextMoves.isEmpty()) {
+                System.out.println("empty");
                 updateState();
             }
 
-            // On demande au model de bouger le joueur
-            Vec2 nextMove = nextMoves.removeFirst();
-            if (nextMove.isNotNull()) {
-                model.movePlayer(id, nextMove);
+            if (!nextMoves.isEmpty()) {
+                // On demande au model de bouger le joueur
+                Vec2 nextMove = nextMoves.removeFirst();
+                if (nextMove.isNotNull()) {
+                    model.movePlayer(id, nextMove);
+                }
             }
         }
     }
 
     // Ici on part du principe que les recettes contiennent au moins 2 ingrédients
     public void updateState() {
-
+        System.out.print("State change from " + this.state);
         switch (state) {
 
             case WAITING_TO_START:
@@ -282,13 +293,14 @@ public class AgentDuo {
                     else {
                         state = AgentState.PREPARING_INGREDIENT;
                         preparingIngredientId = getNextIngredientId();
+                        if (preparingIngredientId == -1) state = AgentState.WAITING_FOR_NEXT_RECIPE;
                         break;
                     }
                 }
                 break;
 
             case VALIDATING_RECIPE:
-                // Vérifier si la recette a été validée et si oui passer au prochain ingrédient
+                // TODO : Vérifier si la recette a été validée et si oui passer au prochain ingrédient
                 break;
 
             case WAITING_FOR_COOKING:
@@ -300,9 +312,13 @@ public class AgentDuo {
                 }
                 break;
 
+            case WAITING_FOR_NEXT_RECIPE:
+                break;
+
             default:
                 throw new IllegalStateException("Unknown state : " + state);
         }
+        System.out.println(" to " + this.state);
     }
 
     void prepare(Ingredient ingredient) {

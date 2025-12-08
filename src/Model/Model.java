@@ -107,9 +107,30 @@ public class Model {
     /// CONFIG ///
     /// ////// ///
 
+    public Vec2 getNewPlayerPos(){
+        for (int i = 0; i < 8; ++i){
+            for (int j = 0; j < 8; ++j){
+                if (board[i][j] == -1){
+                    return new Vec2(i,j);
+                }
+            }
+        }
+        throw new ArrayStoreException("Can't get new player position, " +
+                "all case of the board are full");
+    }
+
     //TODO : Modifier pour éviter que les players nouvellement créés ne se chevauchent
     public void addPlayer(int ID) {
-        players.add(new Player(2,3, ID));
+//        Vec2 pos = getNewPlayerPos();
+//        board[pos.getX()][pos.getY()] = 0;
+//        players.add(new Player(pos.getX(), pos.getY(), ID));
+        if(ID == 0){
+            board[2][3] = 0;
+            players.add(new Player(2, 3, ID));
+        } else if(ID == 1){
+            board[5][4] = 0;
+            players.add(new Player(5, 4, ID));
+        }
     }
 
     public void addValidIngredient(Ingredient ingredient) {

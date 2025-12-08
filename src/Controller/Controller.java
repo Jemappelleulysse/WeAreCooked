@@ -1,6 +1,7 @@
 package Controller;
 
 import Agent.Agent;
+import Agent.AgentDuo;
 import HoldableObjects.Ingredient;
 import Recipes.BolognesePasta;
 import Model.Model;
@@ -19,7 +20,7 @@ public class Controller extends KeyAdapter {
     private final Model model;
     private final View view;
 
-    private ArrayList<Agent> agents;
+    private ArrayList<AgentDuo> agents;
     private int score;
 
     public Controller(Model model, View view) {
@@ -36,15 +37,17 @@ public class Controller extends KeyAdapter {
 
         //TODO : A Modifier (recuperer la/les recette via le model)
 
-        agents.add(new Agent(model, 0));
+        agents.add(new AgentDuo(model, 0));
+        agents.add(new AgentDuo(model, 1));
+        agents.get(0).setMate(agents.get(1));
+        agents.get(1).setMate(agents.get(0));
         model.addPlayer(0);
+        model.addPlayer(1);
 
-        while(isRunning) {
-            update();
-        }
+        update(false);
     }
 
-    private void update() {
+    private void update(boolean move) {
         float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
 
         lastTime = System.nanoTime();
@@ -53,8 +56,10 @@ public class Controller extends KeyAdapter {
 
         view.update(dt, model.players, model.furnitures, model.getValidIngredients());
         //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");
-        for (Agent agent : agents) {
-            agent.update(dt);
+        if (move) {
+            for (AgentDuo agent : agents) {
+                agent.update(dt);
+            }
         }
 
         //System.out.println(System.currentTimeMillis() - dt + " ms needed for the agent Update");
@@ -65,7 +70,7 @@ public class Controller extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_S) {
-            start();
+            update(true);
         }
     }
 }
