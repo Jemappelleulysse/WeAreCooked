@@ -40,9 +40,7 @@ public class Model {
             }
         }
 
-//        for(int i = 0; i < nbrRecipes; i++){
-//            this.recipes.add(new BolognesePasta());
-//        };
+        // TODO: modifier la liste de recettes
         this.recipes.add(new BolognesePasta());
         this.recipes.add(new Sandwich());
         this.recipes.add(new CaesarSalad());

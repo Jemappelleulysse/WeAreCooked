@@ -52,14 +52,12 @@ public class Controller extends KeyAdapter {
         score += model.update(dt);
 
         view.update(dt, model.players, model.furnitures, model.getValidIngredients());
-        //System.out.println(System.currentTimeMillis() - dt + " ms needed for the view Update");
+
         if (move) {
             for (AgentDuo agent : agents) {
                 agent.update(dt);
             }
         }
-
-        //System.out.println(System.currentTimeMillis() - dt + " ms needed for the agent Update");
     }
 
     //TODO : A modifier pour que l'event marche avec la nouvelle structure

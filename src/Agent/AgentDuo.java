@@ -244,13 +244,6 @@ public class AgentDuo {
 
     public void update(float dt) {
 
-        // System.out.println("Agent : " + this.id + ", recipe : " + this.recipeId);
-//        System.out.print("NextMoves : [ ");
-//        for (int i = 0; i < this.nextMoves.size(); i++) {
-//            System.out.print(this.nextMoves.get(i).toString() + ", ");
-//        }
-//        System.out.println(" ]");
-
         timeBeforeNextAction -= dt;
 
         // Si le temps entre chaque action est écoulé
@@ -276,11 +269,6 @@ public class AgentDuo {
 
     // Ici, on part du principe que les recettes contiennent au moins 2 ingrédients
     public void updateState() {
-
-        System.out.print("State change from " + this.state);
-        if(preparingIngredientId >= 0){
-            System.out.print("(" + getRecipeIngredient(preparingIngredientId) + ")");
-        }
 
         switch (state) {
 
@@ -336,7 +324,6 @@ public class AgentDuo {
                 break;
 
             case VALIDATING_RECIPE:
-                // TODO : Vérifier si la recette a été validée et si oui passer au prochain ingrédient
                 this.recipeId = 0;
                 mate.recipeId = 0;
                 if(model.recipes.isEmpty()) {
@@ -383,11 +370,6 @@ public class AgentDuo {
             default:
                 throw new IllegalStateException("Unknown state : " + state);
         }
-        System.out.print(" to " + this.state);
-        if(preparingIngredientId >= 0){
-            System.out.print("(" + getRecipeIngredient(preparingIngredientId) + ")");
-        }
-        System.out.print("\n");
     }
 
     void prepare(Ingredient ingredient) {
@@ -611,7 +593,6 @@ public class AgentDuo {
                         break;
                     }
                 }
-                System.out.println("!!! Pot non trouvé !!!");
                 break;
 
             case KitchenUstensils.EMPTY_POT:
