@@ -236,7 +236,7 @@ public class AgentDuo {
 
     public void update(float dt) {
 
-        System.out.println("Agent : " + this.id + ", recipe : " + this.recipeId);
+        // System.out.println("Agent : " + this.id + ", recipe : " + this.recipeId);
 //        System.out.print("NextMoves : [ ");
 //        for (int i = 0; i < this.nextMoves.size(); i++) {
 //            System.out.print(this.nextMoves.get(i).toString() + ", ");
@@ -488,8 +488,6 @@ public class AgentDuo {
                 if(recipeId == 0){
                     goPlaceHeldIngredientOnPlate();
                     state = AgentState.VALIDATING_INGREDIENT;
-                } else {
-                    System.out.print(" !!! Waiting : recipe id = " +  recipeId + " !!! ");
                 }
             } else {
                 goPrepareHeldIngredient();
@@ -585,10 +583,12 @@ public class AgentDuo {
                 }
                 break;
 
-            case Ingredient.PASTA, Ingredient.SLICED_POTATO:
+            case Ingredient.PASTA, Ingredient.SLICED_POTATO, Ingredient.RAW_MEAT:
                 KitchenUstensils wantedPot;
                 if(preparedIngredient == Ingredient.FRIED_POTATO) {
                     wantedPot = KitchenUstensils.OIL_POT;
+                } else if (preparedIngredient == Ingredient.RAW_MEAT) {
+                    wantedPot = KitchenUstensils.EMPTY_POT;
                 } else {
                     wantedPot = KitchenUstensils.WATER_POT;
                 }
@@ -603,6 +603,7 @@ public class AgentDuo {
                         break;
                     }
                 }
+                System.out.println("!!! Pot non trouvé !!!");
                 break;
 
             case KitchenUstensils.EMPTY_POT:

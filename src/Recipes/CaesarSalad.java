@@ -2,10 +2,9 @@ package Recipes;
 
 import HoldableObjects.Ingredient;
 
-public class Salad extends Recipe{
+public class CaesarSalad extends Recipe{
 
-
-    public Salad() {
+    public CaesarSalad() {
         super();
         ingredients.add(Ingredient.WASHED_SALAD);
         ingredients.add(Ingredient.COOKED_POTATO);

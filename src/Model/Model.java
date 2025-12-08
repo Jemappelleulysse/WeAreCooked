@@ -45,7 +45,7 @@ public class Model {
 //        };
         this.recipes.add(new BolognesePasta());
         this.recipes.add(new Sandwich());
-        this.recipes.add(new Salad());
+        this.recipes.add(new CaesarSalad());
         this.recipes.add(new SteakAndFries());
 
         this.validIngredients = new ArrayList<>();

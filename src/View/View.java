@@ -8,9 +8,6 @@ import HoldableObjects.*;
 import Furnitures.*;
 import Player.Player;
 import Recipes.BolognesePasta;
-import Recipes.Salad;
-import Recipes.Sandwich;
-import Recipes.SteakAndFries;
 
 import static View.PixelArts.*;
 
