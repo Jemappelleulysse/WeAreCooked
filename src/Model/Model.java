@@ -41,12 +41,6 @@ public class Model {
             }
         }
 
-        // TODO: modifier la liste de recettes
-        this.recipes.add(new BolognesePasta());
-        this.recipes.add(new Sandwich());
-        this.recipes.add(new CaesarSalad());
-        this.recipes.add(new SteakAndFries());
-
         this.validIngredients = new ArrayList<>();
 
         addToBoard(new IngredientChest(3, 3, Ingredient.RAW_MEAT));
@@ -137,10 +131,7 @@ public class Model {
         recipes.clear();
         RecipeEnum[] allRecipes = RecipeEnum.values();
         Random rand = new Random();
-        recipes.add(new Sandwich());
-        recipes.add(new CaesarSalad());
-        recipes.add(new BolognesePasta());
-        for (int i = 1; i < nbrRecipes; i++) {
+        for (int i = 0; i < nbrRecipes; i++) {
             switch (allRecipes[rand.nextInt(allRecipes.length)]){
                 case BOLOGNESE_PASTA:
                     recipes.add(new BolognesePasta());

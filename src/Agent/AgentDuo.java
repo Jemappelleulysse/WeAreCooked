@@ -217,14 +217,20 @@ public class AgentDuo {
     }
 
     private Furniture getFurnitureWithIngredientOn(HoldableObject neededObject) {
+        int id = 0;
         for (Furniture furniture : model.furnitures) {
             if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == neededObject ||
                     furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == neededObject ||
-                    furniture.getClass() == GasStove.class && ((GasStove)furniture).getPot() == neededObject ||
-                    (furniture.getClass() == GasStove.class && ((GasStove)furniture).getIngredientInPot() == neededObject && neededObject!= Ingredient.PASTA)
+                    (furniture.getClass() == GasStove.class && ((GasStove)furniture).getPot() == neededObject
+                    && mate.isNotUsingGasStove(id))
+                    || (furniture.getClass() == GasStove.class && ((GasStove)furniture).getIngredientInPot() == neededObject && neededObject!= Ingredient.PASTA)
             ) {
+                if(getRecipeIngredient(preparingIngredientId) == Ingredient.COOKED_MEAT) {
+                    usedGasStoveId = id;
+                }
                 return furniture;
             }
+            id++;
         }
         return null;
     }
@@ -270,7 +276,6 @@ public class AgentDuo {
             if (nextMoves.isEmpty()) {
                 updateState();
             }
-
             if (!nextMoves.isEmpty()) {
                 // On demande au model de bouger le joueur
                 Vec2 nextMove = nextMoves.removeFirst();
@@ -286,7 +291,6 @@ public class AgentDuo {
     // Ici, on part du principe que les recettes contiennent au moins 2 ingrédients
     public void updateState() {
 
-        System.out.print("State change from " + this.state);
         switch (state) {
 
             case WAITING_TO_START:
@@ -388,7 +392,6 @@ public class AgentDuo {
             default:
                 throw new IllegalStateException("Unknown state : " + state);
         }
-        System.out.println(" to " + this.state);
     }
 
     void prepare(Ingredient ingredient) {
@@ -398,7 +401,6 @@ public class AgentDuo {
 
         // SI LA MAIN EST VIDE
         if (isPlayerHandEmpty()) {
-
             // Si l'ingrédient fini est posé sur un plan de travail
             if (getFurnitureWithIngredientOn(ingredient) != null) {
                 goGrab(ingredient);
@@ -460,7 +462,7 @@ public class AgentDuo {
 
                     case Ingredient.FRIED_POTATO:
                         potIsAvailable = isAPotOnGasStove(KitchenUstensils.OIL_POT);
-                        if (potIsAvailable) {
+                        if (potIsAvailable) {;
                             // Il y a une casserole d'huile vide sur le feu
                             goGrab(Ingredient.POTATO);
                         } else {
