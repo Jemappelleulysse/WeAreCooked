@@ -207,7 +207,7 @@ public class Model {
         // Mise à jour du score
         int score = 0;
         if(recipeToCashIn != null) {
-            // Attribuer un score par recette
+            // TODO: Attribuer un score par recette
         }
         return score;
     }

@@ -1,6 +1,7 @@
 package Controller;
 
 import Agent.AgentDuo;
+import Agent.AgentState;
 import Model.Model;
 import View.View;
 
@@ -20,30 +21,46 @@ public class Controller extends KeyAdapter {
     private ArrayList<AgentDuo> agents;
     private int score;
 
+
+    /// /////////// ///
+    /// CONSTRUCTOR ///
+    /// /////////// ///
+
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
         this.agents = new ArrayList<>();
-        this.isRunning = true;
+        this.isRunning = false;
         this.lastTime = System.nanoTime();
     }
 
+
+    /// //// ///
+    /// INIT ///
+    /// //// ///
+
     public void start() {
 
-        this.score = 0;
-
-        //TODO : A Modifier (recuperer la/les recette via le model)
         agents.add(new AgentDuo(model, 0));
         agents.add(new AgentDuo(model, 1));
         agents.get(0).setMate(agents.get(1));
         agents.get(1).setMate(agents.get(0));
         model.addPlayer(0);
         model.addPlayer(1);
+        score = 0;
 
-        update(false);
+        while(true) {
+            update();
+        }
     }
 
-    private void update(boolean move) {
+
+    /// ////// ///
+    /// UPDATE ///
+    /// ////// ///
+
+    private void update() {
+
         float dt = (System.nanoTime() - lastTime) / 1000000000.0f;
 
         lastTime = System.nanoTime();
@@ -52,19 +69,34 @@ public class Controller extends KeyAdapter {
 
         view.update(dt, model.players, model.furnitures, model.getValidIngredients(),
                 model.getFirstRecipe(), model.getNextRecipe());
-        if (move) {
+
+        boolean winningCondition;
+        if(isRunning) {
+            winningCondition = true;
             for (AgentDuo agent : agents) {
                 agent.update(dt);
+                if(agent.getState() != AgentState.END) {
+                    winningCondition = false;
+                }
+            }
+
+            if(winningCondition) {
+                isRunning = false;
+                System.out.println("Score = "  + score);
             }
         }
     }
 
-    //TODO : A modifier pour que l'event marche avec la nouvelle structure
+
+    /// //////////// ///
+    /// KEY HANDLING ///
+    /// //////////// ///
+
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_S) {
-            update(true);
+            isRunning = !isRunning;
         }
     }
 }
