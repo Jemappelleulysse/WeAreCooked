@@ -20,7 +20,7 @@ public class Controller extends KeyAdapter {
 
     private ArrayList<AgentDuo> agents;
 
-    private final int nbrRecipes = 6;
+    private final int nbrRecipes = 2;
 
     private int score;
 

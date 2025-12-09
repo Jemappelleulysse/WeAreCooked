@@ -251,7 +251,6 @@ public class View extends JPanel {
     public void gameEnded(int score) {
         this.score = score;
         this.gameEnd = true;
-        System.out.println("aleddddd");
         repaint();
     }
 
