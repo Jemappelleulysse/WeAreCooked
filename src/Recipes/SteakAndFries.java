@@ -7,7 +7,7 @@ public class SteakAndFries extends Recipe {
 
 
     public SteakAndFries() {
-        super();
+        super(RecipeEnum.STEAK_AND_FRIES);
         ingredients.add(Ingredient.COOKED_MEAT);
         ingredients.add(Ingredient.FRIED_POTATO);
         ingredients.add(Ingredient.WASHED_SALAD);

@@ -8,9 +8,14 @@ public abstract class Recipe {
 
     protected ArrayList<Ingredient> ingredients;
 
-    protected Recipe() {
+    protected RecipeEnum recipeType;
+
+    protected Recipe(RecipeEnum recipeType) {
+        this.recipeType = recipeType;
         ingredients = new ArrayList<>();
     }
+
+    public RecipeEnum getRecipeType() { return recipeType; }
 
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
