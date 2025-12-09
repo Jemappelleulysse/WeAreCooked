@@ -52,56 +52,75 @@ public class GasStove extends Furniture {
 
         HoldableObject returnedObject = null;
 
-        if ( !hasAPot() ) {     // Il n'y a pas de casserole sur la gazinière
+        // S'il n'y a pas de casserole sur la gazinière
+        if ( !hasAPot() ) {
+            // Si l'objet en main est une casserole
             if (objectInHand  == KitchenUstensils.EMPTY_POT || objectInHand  == KitchenUstensils.WATER_POT || objectInHand == KitchenUstensils.OIL_POT ) {
                 pot = (KitchenUstensils) objectInHand;
             } else {
                 returnedObject = objectInHand;
             }
-            // TODO : faire un beau switch
+        // S'il y a une casserole sur la gazinière avec un ingrédient dedans
         } else if (hasIngredientInPot()) {
-            if (getIngredientInPot().equals(Ingredient.PASTA)) {
-                returnedObject = objectInHand;
-            } else if (getIngredientInPot().equals(Ingredient.COOKED_PASTA)) {
-                returnedObject = getIngredientInPot();
-                setIngredientInPot(null);
-            } else if (getIngredientInPot().equals(Ingredient.SLICED_POTATO)) {
-                returnedObject = objectInHand;
-            } else if (getIngredientInPot().equals(Ingredient.COOKED_POTATO)) {
-                returnedObject = getIngredientInPot();
-                setIngredientInPot(null);
-            } else if (getIngredientInPot().equals(Ingredient.FRIED_POTATO)) {
-                returnedObject = getIngredientInPot();
-                setIngredientInPot(null);
-            } else if (getIngredientInPot().equals(Ingredient.RAW_MEAT)) {
-                returnedObject = objectInHand;
-            } else if (getIngredientInPot().equals(Ingredient.COOKED_MEAT)) {
-                returnedObject = getIngredientInPot();
-                setIngredientInPot(null);
-            } else {
-                if (objectInHand == null) {
+            Ingredient ingredientInPot = getIngredientInPot();
+            switch (ingredientInPot) {
+                case RAW_MEAT, PASTA, SLICED_POTATO:
+                    returnedObject = objectInHand;
+                    break;
+
+                case COOKED_MEAT, COOKED_PASTA, COOKED_POTATO, FRIED_POTATO:
                     returnedObject = getIngredientInPot();
                     setIngredientInPot(null);
-                } else {
-                    returnedObject = objectInHand;
-                }
+                    break;
+
+                default:
+                    if (objectInHand == null) {
+                        returnedObject = getIngredientInPot();
+                        setIngredientInPot(null);
+                    } else {
+                        returnedObject = objectInHand;
+                    }
+                    break;
             }
-        } else {    // Il y a une casserole sans ingrédient
-            if ((objectInHand == Ingredient.PASTA || objectInHand == Ingredient.SLICED_POTATO) && pot == KitchenUstensils.WATER_POT) { // Le joueur tien des pâtes et la casserole contient de l'eau
-                setIngredientInPot((Ingredient) objectInHand);
-            } else if (objectInHand == Ingredient.SLICED_POTATO && pot == KitchenUstensils.OIL_POT) {
-                setIngredientInPot((Ingredient) objectInHand);
-            } else if (objectInHand == Ingredient.RAW_MEAT && pot == KitchenUstensils.EMPTY_POT) { // Le joueur tien de la viande crue et la casserole est vide
-                setIngredientInPot((Ingredient) objectInHand);
-            } else if (objectInHand  == null) { // Le joueur a les mains vides
-                returnedObject = pot;
-                pot = null;
-            } else {    // Autre situation
-                returnedObject  = objectInHand;
+        // S'il y a une casserole sans ingrédient
+        } else {
+            switch (objectInHand) {
+                case Ingredient.PASTA:
+                    if (pot == KitchenUstensils.WATER_POT) {
+                        setIngredientInPot((Ingredient) objectInHand);
+                    } else {
+                        returnedObject  = objectInHand;
+                    }
+                    break;
+
+                case Ingredient.SLICED_POTATO:
+                    if (pot == KitchenUstensils.WATER_POT || pot == KitchenUstensils.OIL_POT) {
+                        setIngredientInPot((Ingredient) objectInHand);
+                    } else {
+                        returnedObject  = objectInHand;
+                    }
+                    break;
+
+                case Ingredient.RAW_MEAT:
+                    if (pot == KitchenUstensils.EMPTY_POT) {
+                        setIngredientInPot((Ingredient) objectInHand);
+                    } else {
+                        returnedObject  = objectInHand;
+                    }
+                    break;
+
+                case null:
+                    returnedObject = pot;
+                    pot = null;
+                    break;
+
+                default:
+                    returnedObject  = objectInHand;
+                    break;
             }
         }
 
-        return returnedObject ;
+        return returnedObject;
     }
 
     @Override
