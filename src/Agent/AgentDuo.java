@@ -271,9 +271,6 @@ public class AgentDuo {
                 updateState();
             }
 
-            System.out.println("Agent : " + this.id + ", recipe : " + this.recipeId +
-                    " ingredientId : " + preparingIngredientId);
-
             if (!nextMoves.isEmpty()) {
                 // On demande au model de bouger le joueur
                 Vec2 nextMove = nextMoves.removeFirst();
