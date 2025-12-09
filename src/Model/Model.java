@@ -207,7 +207,27 @@ public class Model {
         // Mise à jour du score
         int score = 0;
         if(recipeToCashIn != null) {
-            // TODO: Attribuer un score par recette
+            switch(recipeToCashIn.getRecipeType()) {
+                case BOLOGNESE_PASTA:
+                    score += 10;
+                    break;
+
+                case CAESAR_SALAD:
+                    score += 15;
+                    break;
+
+                case SANDWICH:
+                    score += 20;
+                    break;
+
+                case STEAK_AND_FRIES:
+                    score += 30;
+                    break;
+
+                default:
+                    throw new  IllegalArgumentException("Logique de score non définie pour la recette : " + recipeToCashIn.getRecipeType());
+            }
+            recipeToCashIn = null;
         }
         return score;
     }
