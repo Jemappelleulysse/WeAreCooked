@@ -15,9 +15,9 @@ public class Model {
     public ArrayList<Player> players;
     public ArrayList<Furniture> furnitures = new ArrayList<>();
     public Counter counter;
-    public ArrayList<Recipe> recipes;//current == id 0
-    public int nbrRecipes;
+    public ArrayList<Recipe> recipes;
     public ArrayList<Ingredient> validIngredients;
+    private Recipe recipeToCashIn;
 
 
     /// /////////// ///
@@ -145,7 +145,7 @@ public class Model {
     }
 
     public void updateRecipes() {
-        this.recipes.removeFirst();
+        recipeToCashIn = this.recipes.removeFirst();
         this.validIngredients.clear();
     }
 
@@ -186,20 +186,16 @@ public class Model {
 
     public int update(float dt){
 
-        int score = 0;
-
         // Update du timer des meubles
         for (Furniture furniture : furnitures) {
             furniture.update(dt);
         }
 
-        // Update de la recette du comptoir
-
-        // TODO: Calcul du score
-//        if (isRecipeFinished()) {
-//            updateRecipe();
-//            score = 50;
-//        }
+        // Mise à jour du score
+        int score = 0;
+        if(recipeToCashIn != null) {
+            // Attribuer un score par recette
+        }
         return score;
     }
 
