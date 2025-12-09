@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Clean les system.out">
-      <change beforePath="$PROJECT_DIR$/src/Agent/Agent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Agent/AgentDuo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agent/AgentDuo.java" afterDir="false" />
+    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Ajout du système de score à compléter">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Recipes/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Recipes/Recipe.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +200,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765238193521</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Cleaning général">
+      <option name="closed" value="true" />
+      <created>1765238665860</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1765238665860</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Ajout du système de score à compléter">
+      <option name="closed" value="true" />
+      <created>1765239614898</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1765239614898</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,6 +249,8 @@
     <MESSAGE value="Correction de bugs. Prochain bug : impossible de trouver une gazinière avec un pot vide" />
     <MESSAGE value="CA MARCHE !!!" />
     <MESSAGE value="Clean les system.out" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clean les system.out" />
+    <MESSAGE value="Cleaning général" />
+    <MESSAGE value="Ajout du système de score à compléter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout du système de score à compléter" />
   </component>
 </project>
