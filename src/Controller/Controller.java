@@ -19,6 +19,9 @@ public class Controller extends KeyAdapter {
     private final View view;
 
     private ArrayList<AgentDuo> agents;
+
+    private final int nbrRecipes = 6;
+
     private int score;
 
     private boolean game = true;
@@ -49,6 +52,7 @@ public class Controller extends KeyAdapter {
         model.addPlayer(0);
         model.addPlayer(1);
         score = 0;
+        model.generateRecipes(nbrRecipes);
 
         while(game) {
             update();
