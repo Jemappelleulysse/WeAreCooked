@@ -471,6 +471,57 @@ public class PixelArts {
         g.fillRect(i + 20, j + 7, 3, 2);
     }
 
+    public static void drawPotato(Graphics g, int i, int j) {
+        int w = 35, h = 25;
+
+        // Peau (brun clair)
+        g.setColor(new Color(180, 140, 90));
+        g.fillOval(i, j, w, h);
+
+        // Petites taches
+        g.setColor(new Color(150, 110, 70));
+        g.fillOval(i + 8, j + 10, 3, 3);
+        g.fillOval(i + 18, j + 6, 2, 2);
+        g.fillOval(i + 22, j + 14, 3, 3);
+    }
+
+    // Pomme de terre coupée en tranches
+    public static void drawSlicedPotato(Graphics g, int i, int j) {
+        int w = 35, h = 25;
+
+        g.setColor(new Color(240, 220, 160));
+        g.fillOval(i, j, w, h);
+
+    }
+
+
+    // Pomme de terre frite (style frites)
+    public static void drawFriedPotato(Graphics g, int i, int j) {
+        // Plusieurs bâtonnets jaunes dorés
+        g.setColor(new Color(255, 210, 80));
+        g.fillRect(i, j, 6, 18);
+        g.fillRect(i + 8, j + 2, 6, 16);
+        g.fillRect(i + 16, j + 4, 6, 14);
+        g.fillRect(i + 24, j + 1, 6, 17);
+
+        // Ombres plus foncées
+        g.setColor(new Color(220, 170, 60));
+        g.fillRect(i, j + 14, 6, 4);
+        g.fillRect(i + 8, j + 12, 6, 4);
+        g.fillRect(i + 16, j + 10, 6, 4);
+        g.fillRect(i + 24, j + 13, 6, 4);
+    }
+
+    // Pomme de terre cuite (chair visible)
+    public static void drawCookedPotato(Graphics g, int i, int j) {
+        int w = 35, h = 25;
+
+        // Chair ouverte (jaune clair)
+        g.setColor(new Color(250, 230, 150));
+        g.fillArc(i + 5, j + 5, w - 10, h - 10, 30, 120);
+        g.fillArc(i + 5, j + 5, w - 10, h - 10, 210, 120);
+    }
+
     public static void drawCookedMeat(Graphics g, int i, int j) {
         int w = 30, h = 20;
 
@@ -681,9 +732,76 @@ public class PixelArts {
         drawWholeTomato(g, x+95, y+height+14);
         drawRawMeat(g, x+127, y+height+15);
     }
+
+    public static void drawRecipeCaesarSalad(Graphics g, int x, int y) {
+        int width = 130;
+        int height = 50;
+
+        // Encadré blanc
+        g.setColor(Color.WHITE);
+        g.fillRect(x, y, width, height);
+
+        // Bord Gris
+        g.setColor(Color.GRAY);
+        g.drawRect(x, y, width, height);
+
+        // Image Recette
+        drawWashedSalad(g, x+45, y+5);
+        drawCookedPotato(g, x+62, y+8);
+        drawSlicedTomato(g, x+46, y+22);
+
+
+        // Encadré Gris détail
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(x, y+height, width, height);
+
+        // Bord Noir
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y+height, width, height);
+
+        // Image ingrédient
+        drawSalad(g, x+8, y+height+10);
+        drawPotato(g, x+55, y+height+13);
+        drawWholeTomato(g, x+94, y+height+15);
+    }
+
+    public static void drawRecipeSteakAndFries(Graphics g, int x, int y) {
+        int width = 130;
+        int height = 50;
+
+        // Encadré blanc
+        g.setColor(Color.WHITE);
+        g.fillRect(x, y, width, height);
+
+        // Bord Gris
+        g.setColor(Color.GRAY);
+        g.drawRect(x, y, width, height);
+
+        // Image Recette
+        drawCookedMeat(g, x+43, y+7);
+        drawFriedPotato(g, x+62, y+8);
+        drawWashedSalad(g, x+46, y+22);
+
+
+        // Encadré Gris détail
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(x, y+height, width, height);
+
+        // Bord Noir
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y+height, width, height);
+
+        // Image ingrédient
+        drawRawMeat(g, x+5, y+height+15);
+        drawPotato(g, x+40, y+height+13);
+        drawSalad(g, x+82, y+height+10);
+    }
+
     public static void drawRecipe(Graphics g, int x, int y, Recipe recipe) {
         //drawRecipeBolognese(g, x, y);
-        drawRecipeSandwich(g, x-22, y);
+        //drawRecipeSandwich(g, x-22, y);
+        //drawRecipeCaesarSalad(g, x-6, y);
+        drawRecipeSteakAndFries(g, x-6, y);
     }
 
     public static void drawRecipeProgress(Graphics g, int x, int y,
