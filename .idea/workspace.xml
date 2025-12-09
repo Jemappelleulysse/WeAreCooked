@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Correction de bugs. Prochain bug : impossible de trouver une gazinière avec un pot vide">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Clean les system.out">
+      <change beforePath="$PROJECT_DIR$/src/Agent/Agent.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Agent/AgentDuo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agent/AgentDuo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Model.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +184,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765236763737</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="CA MARCHE !!!">
+      <option name="closed" value="true" />
+      <created>1765237954297</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1765237954297</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Clean les system.out">
+      <option name="closed" value="true" />
+      <created>1765238193521</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1765238193521</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,6 +231,8 @@
     <MESSAGE value="Erreur du pathfinding corrigée. Nouvelle erreur où on va chercher des pâtes au lieu du pain" />
     <MESSAGE value="Correction de bugs. Prochain bug : logique de la viande crue buggée" />
     <MESSAGE value="Correction de bugs. Prochain bug : impossible de trouver une gazinière avec un pot vide" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correction de bugs. Prochain bug : impossible de trouver une gazinière avec un pot vide" />
+    <MESSAGE value="CA MARCHE !!!" />
+    <MESSAGE value="Clean les system.out" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clean les system.out" />
   </component>
 </project>

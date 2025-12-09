@@ -127,22 +127,13 @@ public class Model {
                 }
             }
         }
-        throw new ArrayStoreException("Can't get new player position, " +
-                "all case of the board are full");
+        throw new ArrayStoreException("Can't get new player position, all case of the board are full");
     }
 
-    //TODO : Modifier pour éviter que les players nouvellement créés ne se chevauchent
     public void addPlayer(int ID) {
         Vec2 pos = getNewPlayerPos();
         board[pos.getX()][pos.getY()] = 0;
         players.add(new Player(pos.getX(), pos.getY(), ID));
-//        if(ID == 0){
-//            board[2][3] = 0;
-//            players.add(new Player(2, 3, ID));
-//        } else if(ID == 1){
-//            board[5][4] = 0;
-//            players.add(new Player(5, 4, ID));
-//        }
     }
 
     public void addValidIngredient(Ingredient ingredient) {
@@ -153,9 +144,7 @@ public class Model {
         validIngredients.add(ingredient);
     }
 
-    //TODO: Faire en sorte que la nouvelle recette soit aléatoire
-    public void updateRecipe() {
-        //this.currentRecipe = new BolognesePasta();
+    public void updateRecipes() {
         this.recipes.removeFirst();
         this.validIngredients.clear();
     }

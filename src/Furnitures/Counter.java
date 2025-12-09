@@ -31,7 +31,7 @@ public class Counter extends Furniture {
     public HoldableObject interact(HoldableObject heldObject){
 
         if (model.isRecipeFinished()) {
-            model.updateRecipe();
+            model.updateRecipes();
             return heldObject;
         }
 

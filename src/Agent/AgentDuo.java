@@ -690,8 +690,6 @@ public class AgentDuo {
         ArrayList<Vec2> actions =  Vec2.coordsToDirections(Objects.requireNonNull(pathFinding(model.getPlayer(id).getPos(), destination, model.board, new int[8][8])));
         nextMoves.addAll(actions);
         nextMoves.add(destination.sub(new Vec2(workSurface.getPosX(),workSurface.getPosY())));
-
-        // TODO: update la liste des ingrédients valides
     }
 
     private void moveFromCase(){

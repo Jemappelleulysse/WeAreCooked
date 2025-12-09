@@ -14,8 +14,6 @@ public class Main {
         View view = new View();
         Controller controller = new Controller(model, view);
 
-        //TODO : Modifier ces merde
-
         System.out.println("Displaying view...");
         JFrame frame = new JFrame("MVC Example");
         frame.setSize(900, 1050);
