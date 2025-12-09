@@ -798,10 +798,22 @@ public class PixelArts {
     }
 
     public static void drawRecipe(Graphics g, int x, int y, Recipe recipe) {
-        //drawRecipeBolognese(g, x, y);
-        //drawRecipeSandwich(g, x-22, y);
-        //drawRecipeCaesarSalad(g, x-6, y);
-        drawRecipeSteakAndFries(g, x-6, y);
+        switch (recipe.getRecipeType()){
+            case BOLOGNESE_PASTA:
+                drawRecipeBolognese(g, x, y);
+                break;
+            case SANDWICH:
+                drawRecipeSandwich(g, x-22, y);
+                break;
+            case CAESAR_SALAD:
+                drawRecipeCaesarSalad(g, x-6, y);
+                break;
+            case STEAK_AND_FRIES:
+                drawRecipeSteakAndFries(g, x-6, y);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid recipe type");
+        }
     }
 
     public static void drawRecipeProgress(Graphics g, int x, int y,

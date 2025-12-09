@@ -33,7 +33,6 @@ public class Controller extends KeyAdapter {
         this.score = 0;
 
         //TODO : A Modifier (recuperer la/les recette via le model)
-        model.setRecipes(3);
         agents.add(new AgentDuo(model, 0));
         agents.add(new AgentDuo(model, 1));
         agents.get(0).setMate(agents.get(1));
