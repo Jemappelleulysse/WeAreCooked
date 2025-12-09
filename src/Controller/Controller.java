@@ -33,7 +33,6 @@ public class Controller extends KeyAdapter {
         this.score = 0;
 
         //TODO : A Modifier (recuperer la/les recette via le model)
-
         agents.add(new AgentDuo(model, 0));
         agents.add(new AgentDuo(model, 1));
         agents.get(0).setMate(agents.get(1));
@@ -51,8 +50,8 @@ public class Controller extends KeyAdapter {
 
         score += model.update(dt);
 
-        view.update(dt, model.players, model.furnitures, model.getValidIngredients());
-
+        view.update(dt, model.players, model.furnitures, model.getValidIngredients(),
+                model.getFirstRecipe(), model.getNextRecipe());
         if (move) {
             for (AgentDuo agent : agents) {
                 agent.update(dt);

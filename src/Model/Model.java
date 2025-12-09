@@ -114,6 +114,19 @@ public class Model {
         return recipes.getFirst().isComplete(validIngredients);
     }
 
+    public Recipe getFirstRecipe() {
+        if (!recipes.isEmpty()){
+            return recipes.getFirst();
+        }
+        return null;
+    }
+
+    public Recipe getNextRecipe() {
+        if (recipes.size() >= 2){
+            return recipes.get(1);
+        }
+        return null;
+    }
 
     /// ////// ///
     /// CONFIG ///

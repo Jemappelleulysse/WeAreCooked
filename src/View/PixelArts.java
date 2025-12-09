@@ -1,7 +1,9 @@
 package View;
 
-import HoldableObjects.Ingredient;
+import Recipes.BolognesePasta;
 import Recipes.Recipe;
+
+import HoldableObjects.Ingredient;
 
 import java.awt.*;
 import java.util.Random;
@@ -373,6 +375,80 @@ public class PixelArts {
     }
 
 
+    public static void drawRawPasta(Graphics g, int i, int j) {
+        drawCompactPasta(g, i, j, 10);
+    }
+
+    public static void drawCookedPasta(Graphics g, int i, int j) {
+        drawCompactPasta(g, i, j, 0);
+    }
+
+    public static void drawCompactPasta(Graphics g, int i, int j,int seed) {
+        int w = 40, h = 35;
+        Random rand = new Random(seed);
+
+        // Fond transparent ou assiette (facultatif)
+        g.setColor(new Color(255, 245, 200)); // beige clair
+        g.fillOval(i, j, w, h);
+
+        // Pâtes (jaune pâle)
+        g.setColor(new Color(209, 162, 18));
+
+        // Spaghettis en courbes
+        for (int k = 0; k < 24; k++) {
+            int arcX = i + 4 + rand.nextInt(17);
+            int arcY = j + 4 + rand.nextInt(17);
+            int arcW = 12 + rand.nextInt(13);
+            int arcH = 6 + rand.nextInt(9);
+            int startAngle = rand.nextInt(360);
+            int arcAngle = 180 + rand.nextInt(90);
+            g.drawArc(arcX, arcY, arcW, arcH, startAngle, arcAngle);
+        }
+    }
+
+    // Salade (feuille verte)
+    public static void drawSalad(Graphics g, int i, int j) {
+        int w = 40, h = 30;
+
+        // Vert principal
+        g.setColor(new Color(80, 180, 80));
+        g.fillOval(i, j, w, h);
+
+        // Nervures plus foncées
+        g.setColor(new Color(40, 120, 40));
+        g.drawLine(i + w/2, j + 5, i + w/2, j + h - 5);
+        g.drawLine(i + 10, j + 10, i + w - 10, j + h - 10);
+        g.drawLine(i + 10, j + h - 10, i + w - 10, j + 10);
+
+        // Petites irrégularités (bord dentelé)
+        g.setColor(new Color(60, 160, 60));
+        g.fillOval(i - 4, j + 8, 8, 8);
+        g.fillOval(i + w - 4, j + 12, 8, 8);
+    }
+
+    public static void drawWashedSalad(Graphics g, int i, int j) {
+        int w = 40, h = 30;
+
+        // Vert plus clair/brillant
+        g.setColor(new Color(120, 220, 120));
+        g.fillOval(i, j, w, h);
+
+        // Nervures
+        g.setColor(new Color(60, 160, 60));
+        g.drawLine(i + w/2, j + 5, i + w/2, j + h - 5);
+        g.drawLine(i + 12, j + 8, i + w - 12, j + h - 8);
+
+        // Gouttelettes d’eau (bleu clair)
+        g.setColor(new Color(180, 220, 255));
+        g.fillOval(i + 8, j + 6, 4, 4);
+        g.fillOval(i + 20, j + 12, 3, 3);
+        g.fillOval(i + 28, j + 18, 5, 5);
+
+        // Reflets (blanc semi-transparent)
+        g.setColor(new Color(255, 255, 255, 180));
+        g.fillOval(i + 14, j + 10, 6, 3);
+    }
+
     public static void drawRawMeat(Graphics g, int i, int j) {
         int w = 30, h = 20;
 
@@ -393,6 +469,57 @@ public class PixelArts {
         g.fillRect(i + 8, j + 6, 3, 2);
         g.fillRect(i + 14, j + 10, 4, 2);
         g.fillRect(i + 20, j + 7, 3, 2);
+    }
+
+    public static void drawPotato(Graphics g, int i, int j) {
+        int w = 35, h = 25;
+
+        // Peau (brun clair)
+        g.setColor(new Color(180, 140, 90));
+        g.fillOval(i, j, w, h);
+
+        // Petites taches
+        g.setColor(new Color(150, 110, 70));
+        g.fillOval(i + 8, j + 10, 3, 3);
+        g.fillOval(i + 18, j + 6, 2, 2);
+        g.fillOval(i + 22, j + 14, 3, 3);
+    }
+
+    // Pomme de terre coupée en tranches
+    public static void drawSlicedPotato(Graphics g, int i, int j) {
+        int w = 35, h = 25;
+
+        g.setColor(new Color(240, 220, 160));
+        g.fillOval(i, j, w, h);
+
+    }
+
+
+    // Pomme de terre frite (style frites)
+    public static void drawFriedPotato(Graphics g, int i, int j) {
+        // Plusieurs bâtonnets jaunes dorés
+        g.setColor(new Color(255, 210, 80));
+        g.fillRect(i, j, 6, 18);
+        g.fillRect(i + 8, j + 2, 6, 16);
+        g.fillRect(i + 16, j + 4, 6, 14);
+        g.fillRect(i + 24, j + 1, 6, 17);
+
+        // Ombres plus foncées
+        g.setColor(new Color(220, 170, 60));
+        g.fillRect(i, j + 14, 6, 4);
+        g.fillRect(i + 8, j + 12, 6, 4);
+        g.fillRect(i + 16, j + 10, 6, 4);
+        g.fillRect(i + 24, j + 13, 6, 4);
+    }
+
+    // Pomme de terre cuite (chair visible)
+    public static void drawCookedPotato(Graphics g, int i, int j) {
+        int w = 35, h = 25;
+
+        // Chair ouverte (jaune clair)
+        g.setColor(new Color(250, 230, 150));
+        g.fillArc(i + 5, j + 5, w - 10, h - 10, 30, 120);
+        g.fillArc(i + 5, j + 5, w - 10, h - 10, 210, 120);
     }
 
     public static void drawCookedMeat(Graphics g, int i, int j) {
@@ -454,140 +581,6 @@ public class PixelArts {
         g.fillOval(i + 22, j + h/2 + 4, 2, 2);
     }
 
-    // Salade (feuille verte)
-    public static void drawSalad(Graphics g, int i, int j) {
-        int w = 40, h = 30;
-
-        // Vert principal
-        g.setColor(new Color(80, 180, 80));
-        g.fillOval(i, j, w, h);
-
-        // Nervures plus foncées
-        g.setColor(new Color(40, 120, 40));
-        g.drawLine(i + w/2, j + 5, i + w/2, j + h - 5);
-        g.drawLine(i + 10, j + 10, i + w - 10, j + h - 10);
-        g.drawLine(i + 10, j + h - 10, i + w - 10, j + 10);
-
-        // Petites irrégularités (bord dentelé)
-        g.setColor(new Color(60, 160, 60));
-        g.fillOval(i - 4, j + 8, 8, 8);
-        g.fillOval(i + w - 4, j + 12, 8, 8);
-    }
-
-    public static void drawWashedSalad(Graphics g, int i, int j) {
-        int w = 40, h = 30;
-
-        // Vert plus clair/brillant
-        g.setColor(new Color(120, 220, 120));
-        g.fillOval(i, j, w, h);
-
-        // Nervures
-        g.setColor(new Color(60, 160, 60));
-        g.drawLine(i + w/2, j + 5, i + w/2, j + h - 5);
-        g.drawLine(i + 12, j + 8, i + w - 12, j + h - 8);
-
-        // Gouttelettes d’eau (bleu clair)
-        g.setColor(new Color(180, 220, 255));
-        g.fillOval(i + 8, j + 6, 4, 4);
-        g.fillOval(i + 20, j + 12, 3, 3);
-        g.fillOval(i + 28, j + 18, 5, 5);
-
-        // Reflets (blanc semi-transparent)
-        g.setColor(new Color(255, 255, 255, 180));
-        g.fillOval(i + 14, j + 10, 6, 3);
-    }
-
-    // Pomme de terre entière
-    public static void drawPotato(Graphics g, int i, int j) {
-        int w = 35, h = 25;
-
-        // Peau (brun clair)
-        g.setColor(new Color(180, 140, 90));
-        g.fillOval(i, j, w, h);
-
-        // Petites taches
-        g.setColor(new Color(150, 110, 70));
-        g.fillOval(i + 8, j + 10, 3, 3);
-        g.fillOval(i + 18, j + 6, 2, 2);
-        g.fillOval(i + 22, j + 14, 3, 3);
-    }
-
-    // Pomme de terre coupée en tranches
-    public static void drawSlicedPotato(Graphics g, int i, int j) {
-        int w = 35, h = 25;
-
-        g.setColor(new Color(240, 220, 160));
-        g.fillOval(i, j, w, h);
-
-    }
-
-
-    // Pomme de terre frite (style frites)
-    public static void drawFriedPotato(Graphics g, int i, int j) {
-        // Plusieurs bâtonnets jaunes dorés
-        g.setColor(new Color(255, 210, 80));
-        g.fillRect(i, j, 6, 18);
-        g.fillRect(i + 8, j + 2, 6, 16);
-        g.fillRect(i + 16, j + 4, 6, 14);
-        g.fillRect(i + 24, j + 1, 6, 17);
-
-        // Ombres plus foncées
-        g.setColor(new Color(220, 170, 60));
-        g.fillRect(i, j + 14, 6, 4);
-        g.fillRect(i + 8, j + 12, 6, 4);
-        g.fillRect(i + 16, j + 10, 6, 4);
-        g.fillRect(i + 24, j + 13, 6, 4);
-    }
-
-    // Pomme de terre cuite (chair visible)
-    public static void drawCookedPotato(Graphics g, int i, int j) {
-        int w = 35, h = 25;
-
-        // Chair ouverte (jaune clair)
-        g.setColor(new Color(250, 230, 150));
-        g.fillArc(i + 5, j + 5, w - 10, h - 10, 30, 120);
-        g.fillArc(i + 5, j + 5, w - 10, h - 10, 210, 120);
-    }
-
-
-
-
-
-
-
-    public static void drawRawPasta(Graphics g, int i, int j) {
-        drawCompactPasta(g, i, j, 10);
-    }
-
-    public static void drawCookedPasta(Graphics g, int i, int j) {
-        drawCompactPasta(g, i, j, 0);
-    }
-
-    public static void drawCompactPasta(Graphics g, int i, int j,int seed) {
-        int w = 40, h = 35;
-        Random rand = new Random(seed);
-
-        // Fond transparent ou assiette (facultatif)
-        g.setColor(new Color(255, 245, 200)); // beige clair
-        g.fillOval(i, j, w, h);
-
-        // Pâtes (jaune pâle)
-        g.setColor(new Color(209, 162, 18));
-
-        // Spaghettis en courbes
-        for (int k = 0; k < 24; k++) {
-            int arcX = i + 4 + rand.nextInt(17);
-            int arcY = j + 4 + rand.nextInt(17);
-            int arcW = 12 + rand.nextInt(13);
-            int arcH = 6 + rand.nextInt(9);
-            int startAngle = rand.nextInt(360);
-            int arcAngle = 180 + rand.nextInt(90);
-            g.drawArc(arcX, arcY, arcW, arcH, startAngle, arcAngle);
-        }
-    }
-
-
-
     public static void drawMinimalStove(Graphics g, int i, int j) {
 
         int offsetx = 6;
@@ -635,56 +628,202 @@ public class PixelArts {
         g.fillRect(x, y, filledWidth, height);
     }
 
-    public static void drawRecipeProgress(Graphics g, int x, int y, Recipe recipe) {
+    public static void drawNext(Graphics g, int x, int y) {
+        int posX = x;
+        int spaceBetween = 10;
+        g.setColor(Color.WHITE);
+        //Lettre N
+        g.fillRect(x, y, 5, 40);
+        g.fillPolygon(new int[]{posX,posX,posX+20,posX+25,posX+25,posX+5},
+                      new int[]{y,y+5,y+40,y+40,y+35,y},
+                6);
+        posX += 20;
+        g.fillRect(posX, y, 5, 40);
+        posX += 5 + spaceBetween;
 
-        int offsetx = 5+x;
-        int offsety = 5+y;
+        //Lettre E
+        g.fillRect(posX, y, 5, 40);
+        g.fillRect(posX, y, 22, 5);
+        g.fillRect(posX, y+17, 22, 5);
+        g.fillRect(posX, y+35, 22, 5);
 
-        int width = 120+44;
+        //Lettre X
+        posX += 22 + spaceBetween;
+        g.fillPolygon(new int[]{posX,posX,posX+20,posX+25,posX+25,posX+5},
+                new int[]{y,y+5,y+40,y+40,y+35,y},
+                6);
+        g.fillPolygon(new int[]{posX, posX,posX+5,posX+25,posX+25,posX+20},
+                new int[]{y+35, y+40,y+40,y+5,y,y},
+                6);
+        posX += 25 + spaceBetween;
+
+        //Lettre T
+        g.fillRect(posX, y, 23, 6);
+        posX += 9;
+        g.fillRect(posX, y, 6, 40);
+        posX += 14 + spaceBetween;
+
+        //Fleche
+        g.fillRect(posX, y+15, 20, 10);
+        posX +=20;
+        g.fillPolygon(new int[]{posX, posX,posX+15},
+                new int[]{y+5,y+35,y+20},
+                3);
+    }
+
+    public static void drawRecipeBolognese(Graphics g, int x, int y) {
+        int width = 120;
         int height = 50;
 
         // Encadré blanc
         g.setColor(Color.WHITE);
-        g.fillRect(offsetx, offsety, width, height);
+        g.fillRect(x, y, width, height);
 
         // Bord Gris
         g.setColor(Color.GRAY);
-        g.drawRect(offsetx, offsety, width, height);
+        g.drawRect(x, y, width, height);
 
         // Image Recette
-        for (int i = 0 ; i < recipe.getIngredients().size() ; i++) {
-            switch (recipe.getIngredients().get(i)) {
-                case Ingredient.COOKED_PASTA -> drawCookedPasta(g,offsetx+62+(i*9),offsety+8+(i*9));
-                case Ingredient.COOKED_MEAT -> drawCookedMeat(g,offsetx+62+(i*9),offsety+8+(i*9));
-                case Ingredient.SLICED_TOMATO -> drawSlicedTomato(g,offsetx+62+(i*9),offsety+8+(i*9));
-                case Ingredient.SLICED_BREAD -> drawSlicedBread(g,offsetx+62+(i*9),offsety+8+(i*9));
-                case Ingredient.WASHED_SALAD -> drawWashedSalad(g,offsetx+62+(i*9),offsety+8+(i*9));
-                case Ingredient.FRIED_POTATO -> drawFriedPotato(g,offsetx+62+(i*9),offsety+8+(i*9));
-                case Ingredient.COOKED_POTATO -> drawCookedPotato(g,offsetx+62+(i*9),offsety+8+(i*9));
-            }
-        }
+        drawCookedPasta(g, x+40, y+8);
+        drawSlicedTomato(g, x+49, y+17);
 
         // Encadré Gris détail
         g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(offsetx, offsety+height, width, height);
+        g.fillRect(x, y+height, width, height);
 
         // Bord Noir
         g.setColor(Color.BLACK);
-        g.drawRect(offsetx, offsety+height, width, height);
+        g.drawRect(x, y+height, width, height);
 
         // Image ingrédient
-        for (int i = 0 ; i < recipe.getIngredients().size() ; i++) {
-            switch (recipe.getIngredients().get(i)) {
-                case Ingredient.COOKED_PASTA -> drawRawPasta(g,offsetx+(i*44),offsety+height+8);
-                case Ingredient.COOKED_MEAT -> drawRawMeat(g,offsetx+18+(i*44),offsety+height+8);
-                case Ingredient.SLICED_TOMATO -> drawWholeTomato(g,offsetx+(i*44),offsety+height+15);
-                case Ingredient.SLICED_BREAD -> drawBread(g,offsetx+18+(i*44),offsety+height+8);
-                case Ingredient.WASHED_SALAD -> drawSalad(g,offsetx+18+(i*44),offsety+height+8);
-                case Ingredient.FRIED_POTATO -> drawPotato(g,offsetx+18+(i*44),offsety+height+8);
-                case Ingredient.COOKED_POTATO -> drawPotato(g,offsetx+18+(i*44),offsety+height+8);
-            }
+        drawWholeTomato(g, x+18, y+height+15);
+        drawRawPasta(g, x+62, y+height+8);
+    }
+
+    public static void drawRecipeSandwich(Graphics g, int x, int y) {
+        int width = 160;
+        int height = 50;
+
+        // Encadré blanc
+        g.setColor(Color.WHITE);
+        g.fillRect(x, y, width, height);
+
+        // Bord Gris
+        g.setColor(Color.GRAY);
+        g.drawRect(x, y, width, height);
+
+        // Image Recette
+        drawSlicedBread(g, x+50, y+8);
+        drawWashedSalad(g, x+70, y+17);
+        drawSlicedTomato(g, x+75, y+8);
+        drawCookedMeat(g, x+55, y+25);
+
+        // Encadré Gris détail
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(x, y+height, width, height);
+
+        // Bord Noir
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y+height, width, height);
+
+        // Image ingrédient
+        drawBread(g, x+5, y+height+13);
+        drawSalad(g, x+50, y+height+10);
+        drawWholeTomato(g, x+95, y+height+14);
+        drawRawMeat(g, x+127, y+height+15);
+    }
+
+    public static void drawRecipeCaesarSalad(Graphics g, int x, int y) {
+        int width = 130;
+        int height = 50;
+
+        // Encadré blanc
+        g.setColor(Color.WHITE);
+        g.fillRect(x, y, width, height);
+
+        // Bord Gris
+        g.setColor(Color.GRAY);
+        g.drawRect(x, y, width, height);
+
+        // Image Recette
+        drawWashedSalad(g, x+45, y+5);
+        drawCookedPotato(g, x+62, y+8);
+        drawSlicedTomato(g, x+46, y+22);
+
+
+        // Encadré Gris détail
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(x, y+height, width, height);
+
+        // Bord Noir
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y+height, width, height);
+
+        // Image ingrédient
+        drawSalad(g, x+8, y+height+10);
+        drawPotato(g, x+55, y+height+13);
+        drawWholeTomato(g, x+94, y+height+15);
+    }
+
+    public static void drawRecipeSteakAndFries(Graphics g, int x, int y) {
+        int width = 130;
+        int height = 50;
+
+        // Encadré blanc
+        g.setColor(Color.WHITE);
+        g.fillRect(x, y, width, height);
+
+        // Bord Gris
+        g.setColor(Color.GRAY);
+        g.drawRect(x, y, width, height);
+
+        // Image Recette
+        drawCookedMeat(g, x+43, y+7);
+        drawFriedPotato(g, x+62, y+8);
+        drawWashedSalad(g, x+46, y+22);
+
+
+        // Encadré Gris détail
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(x, y+height, width, height);
+
+        // Bord Noir
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y+height, width, height);
+
+        // Image ingrédient
+        drawRawMeat(g, x+5, y+height+15);
+        drawPotato(g, x+40, y+height+13);
+        drawSalad(g, x+82, y+height+10);
+    }
+
+    public static void drawRecipe(Graphics g, int x, int y, Recipe recipe) {
+        switch (recipe.getRecipeType()){
+            case BOLOGNESE_PASTA:
+                drawRecipeBolognese(g, x, y);
+                break;
+            case SANDWICH:
+                drawRecipeSandwich(g, x-22, y);
+                break;
+            case CAESAR_SALAD:
+                drawRecipeCaesarSalad(g, x-6, y);
+                break;
+            case STEAK_AND_FRIES:
+                drawRecipeSteakAndFries(g, x-6, y);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid recipe type");
         }
-        //drawWholeTomato(g, offsetx+18, offsety+height+15);
-        //drawRawPasta(g, offsetx+62, offsety+height+8);
+    }
+
+    public static void drawRecipeProgress(Graphics g, int x, int y,
+                                          Recipe current, Recipe next) {
+        if (current != null) {
+            drawRecipe(g,x+200,y+5,current);
+        }
+        drawNext(g, x+350, y+30);
+        if (next != null) {
+            drawRecipe(g,x+550,y+5,next);
+        }
     }
 }
