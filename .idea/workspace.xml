@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Ajout de la gestion de la partie">
-      <change beforePath="$PROJECT_DIR$/src/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Model.java" afterDir="false" />
-    </list>
+    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Ajout du système de score" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -239,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765244895948</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Ajout du système de score">
+      <option name="closed" value="true" />
+      <created>1765245443396</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1765245443396</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -277,6 +283,7 @@
     <MESSAGE value="Clean" />
     <MESSAGE value="Réécriture de l'interaction de GasStove pour plus de lisibilité" />
     <MESSAGE value="Ajout de la gestion de la partie" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout de la gestion de la partie" />
+    <MESSAGE value="Ajout du système de score" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout du système de score" />
   </component>
 </project>
