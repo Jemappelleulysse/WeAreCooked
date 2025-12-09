@@ -18,7 +18,8 @@ public class View extends JPanel {
         private ArrayList<Ingredient> ingredientsOnCounter;
         private Recipe currentRecipe;
         private Recipe nextRecipe;
-
+        private boolean gameEnd = false;
+        private int score;
 
         public View() {
             this.setBackground(Color.LIGHT_GRAY);
@@ -238,6 +239,20 @@ public class View extends JPanel {
             g.setColor(Color.BLACK);
             g.fillRect(0, 896, 900, 130);
             drawRecipeProgress(g, 0,900, currentRecipe, nextRecipe);
+
+            if (gameEnd){
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 250, 900, 200);
+                drawScore(g, 300, 325);
+                drawNumber(g, score, 550,325);
+            }
+    }
+
+    public void gameEnded(int score) {
+        this.score = score;
+        this.gameEnd = true;
+        System.out.println("aleddddd");
+        repaint();
     }
 
     public void update(float dt, ArrayList<Player> players,

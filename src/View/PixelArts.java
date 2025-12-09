@@ -826,4 +826,163 @@ public class PixelArts {
             drawRecipe(g,x+550,y+5,next);
         }
     }
+
+    public static void drawScore(Graphics g, int x, int y) {
+        g.setColor(Color.WHITE);
+
+        double scale = 1.5;
+
+        int posX = x;
+
+        int letterWidth  = (int)(20 * scale);
+        int letterHeight = (int)(35 * scale);
+        int thick        = (int)(5  * scale);
+        int space        = (int)(8  * scale);
+
+        //Lettre S
+        g.fillRect(posX, y, letterWidth, thick);
+        g.fillRect(posX, y, thick, letterHeight / 2);
+        g.fillRect(posX, y + letterHeight/2 - thick, letterWidth, thick);
+        g.fillRect(posX + letterWidth - thick, y + letterHeight/2, thick, letterHeight/2);
+        g.fillRect(posX, y + letterHeight - thick, letterWidth, thick);
+        posX += letterWidth + space;
+
+        //Lettre C
+        g.fillRect(posX, y, letterWidth, thick);
+        g.fillRect(posX, y, thick, letterHeight);
+        g.fillRect(posX, y + letterHeight - thick, letterWidth, thick);
+        posX += letterWidth + space;
+
+        //Lettre O
+        g.fillRect(posX, y, letterWidth, thick);
+        g.fillRect(posX, y, thick, letterHeight);
+        g.fillRect(posX + letterWidth - thick, y, thick, letterHeight);
+        g.fillRect(posX, y + letterHeight - thick, letterWidth, thick);
+        posX += letterWidth + space;
+
+        //Lettre R
+        g.fillRect(posX, y, thick, letterHeight);
+        g.fillRect(posX, y, letterWidth, thick);
+        g.fillRect(posX + letterWidth - thick, y, thick, letterHeight/2);
+        g.fillRect(posX, y + letterHeight/2 - thick, letterWidth, thick);
+
+        // Diagonale prolongée (va jusqu'à la jambe droite du R)
+        g.fillPolygon(
+                new int[] {
+                        posX + thick,
+                        posX + thick + (int)(4*scale),
+                        posX + letterWidth,
+                        posX + letterWidth - thick
+                },
+                new int[]{
+                        y + letterHeight/2,
+                        y + letterHeight/2 + (int)(6*scale),
+                        y + letterHeight,
+                        y + letterHeight
+                },
+                4
+        );
+
+        posX += letterWidth + space;
+
+        //Lettre E
+        g.fillRect(posX, y, thick, letterHeight);
+        g.fillRect(posX, y, letterWidth, thick);
+        g.fillRect(posX, y + letterHeight/2 - thick/2, (int)(letterWidth * 0.75), thick);
+        g.fillRect(posX, y + letterHeight - thick, letterWidth, thick);
+    }
+    public static void drawDigit(Graphics g, int digit, int x, int y, double scale) {
+        g.setColor(Color.WHITE);
+
+        int w = (int)(20 * scale);   // largeur standard
+        int h = (int)(35 * scale);   // hauteur standard
+        int t = (int)(5  * scale);   // épaisseur segments
+
+        switch (digit) {
+            case 0:
+                g.fillRect(x, y, w, t);
+                g.fillRect(x, y, t, h);
+                g.fillRect(x + w - t, y, t, h);
+                g.fillRect(x, y + h - t, w, t);
+                break;
+
+            case 1:
+                g.fillRect(x + w - t, y, t, h);
+                break;
+
+            case 2:
+                g.fillRect(x, y, w, t);
+                g.fillRect(x + w - t, y, t, h/2);
+                g.fillRect(x, y + h/2 - t, w, t);
+                g.fillRect(x, y + h/2, t, h/2);
+                g.fillRect(x, y + h - t, w, t);
+                break;
+
+            case 3:
+                g.fillRect(x, y, w, t);
+                g.fillRect(x + w - t, y, t, h);
+                g.fillRect(x, y + h/2 - t, w, t);
+                g.fillRect(x, y + h - t, w, t);
+                break;
+
+            case 4:
+                g.fillRect(x, y, t, h/2);
+                g.fillRect(x + w - t, y, t, h);
+                g.fillRect(x, y + h/2 - t, w, t);
+                break;
+
+            case 5:
+                g.fillRect(x, y, w, t);
+                g.fillRect(x, y, t, h/2);
+                g.fillRect(x, y + h/2 - t, w, t);
+                g.fillRect(x + w - t, y + h/2, t, h/2);
+                g.fillRect(x, y + h - t, w, t);
+                break;
+
+            case 6:
+                g.fillRect(x, y, w, t);
+                g.fillRect(x, y, t, h);
+                g.fillRect(x, y + h/2 - t, w, t);
+                g.fillRect(x + w - t, y + h/2, t, h/2);
+                g.fillRect(x, y + h - t, w, t);
+                break;
+
+            case 7:
+                g.fillRect(x, y, w, t);
+                g.fillRect(x + w - t, y, t, h);
+                break;
+
+            case 8:
+                g.fillRect(x, y, w, t);
+                g.fillRect(x, y, t, h);
+                g.fillRect(x + w - t, y, t, h);
+                g.fillRect(x, y + h/2 - t, w, t);
+                g.fillRect(x, y + h - t, w, t);
+                break;
+
+            case 9:
+                g.fillRect(x, y, w, t);
+                g.fillRect(x, y, t, h/2);
+                g.fillRect(x, y + h/2 - t, w, t);
+                g.fillRect(x + w - t, y, t, h);
+                g.fillRect(x, y + h - t, w, t);
+                break;
+        }
+    }
+
+    public static void drawNumber(Graphics g, int number, int x, int y) {
+        double scale = 1.5;                   // même scale que SCORE
+        int digitWidth = (int)(20 * scale);
+        int space = (int)(6 * scale);
+
+        String numStr = String.valueOf(number);
+
+        int posX = x;
+
+        for (char c : numStr.toCharArray()) {
+            int digit = c - '0';
+            drawDigit(g, digit, posX, y, scale);
+            posX += digitWidth + space;
+        }
+    }
 }
