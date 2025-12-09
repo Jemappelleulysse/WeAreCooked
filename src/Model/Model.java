@@ -8,6 +8,7 @@ import Utils.Vec2;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Model {
 
@@ -29,7 +30,7 @@ public class Model {
         board[furniture.getPosX()][furniture.getPosY()] = furnitures.indexOf(furniture)+1;
     }
 
-    public Model(int nbrRecipes) {
+    public Model() {
         board = new int[8][8];
         this.recipes = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -131,6 +132,31 @@ public class Model {
     /// ////// ///
     /// CONFIG ///
     /// ////// ///
+
+    public void generateRecipes(int nbrRecipes) {
+        recipes.clear();
+        RecipeEnum[] allRecipes = RecipeEnum.values();
+        Random rand = new Random();
+        recipes.add(new Sandwich());
+        for (int i = 1; i < nbrRecipes; i++) {
+            switch (allRecipes[rand.nextInt(allRecipes.length)]){
+                case BOLOGNESE_PASTA:
+                    recipes.add(new BolognesePasta());
+                    break;
+                case SANDWICH:
+                    recipes.add(new Sandwich());
+                    break;
+                case CAESAR_SALAD:
+                    recipes.add(new CaesarSalad());
+                    break;
+                case STEAK_AND_FRIES:
+                    recipes.add(new SteakAndFries());
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid recipe type");
+            }
+        }
+    }
 
     public Vec2 getNewPlayerPos(){
         for (int i = 0; i < 8; ++i){

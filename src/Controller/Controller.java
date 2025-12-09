@@ -18,6 +18,9 @@ public class Controller extends KeyAdapter {
     private final View view;
 
     private ArrayList<AgentDuo> agents;
+
+    private final int nbrRecipes = 3;
+
     private int score;
 
     public Controller(Model model, View view) {
@@ -39,6 +42,7 @@ public class Controller extends KeyAdapter {
         agents.get(1).setMate(agents.get(0));
         model.addPlayer(0);
         model.addPlayer(1);
+        model.generateRecipes(nbrRecipes);
 
         update(false);
     }

@@ -149,9 +149,12 @@ public class AgentDuo {
         int nextIngredientId = preparingIngredientId + 1;
 
         // Si le mate prépare l'ingrédient suivant, on prend l'ingrédient d'après
-        if (mate.getPreparingIngredientId() == nextIngredientId && mate.recipeId == this.recipeId) {
-            nextIngredientId++;
+        if (mate.recipeId == this.recipeId){
+            while(mate.getPreparingIngredientId() >= nextIngredientId) nextIngredientId++;
         }
+//        if (mate.getPreparingIngredientId() >= nextIngredientId && mate.recipeId == this.recipeId) {
+//            nextIngredientId++;
+//        }
 
         // Si l'ingrédient d'après n'existe pas
         if (nextIngredientId >= model.getRecipeIngredients(recipeId).size()) {
@@ -256,6 +259,9 @@ public class AgentDuo {
                 updateState();
             }
 
+            System.out.println("Agent : " + this.id + ", recipe : " + this.recipeId +
+                    " ingredientId : " + preparingIngredientId);
+
             if (!nextMoves.isEmpty()) {
                 // On demande au model de bouger le joueur
                 Vec2 nextMove = nextMoves.removeFirst();
@@ -271,6 +277,7 @@ public class AgentDuo {
     // Ici, on part du principe que les recettes contiennent au moins 2 ingrédients
     public void updateState() {
 
+        System.out.print("State change from " + this.state);
         switch (state) {
 
             case WAITING_TO_START:
@@ -371,6 +378,7 @@ public class AgentDuo {
             default:
                 throw new IllegalStateException("Unknown state : " + state);
         }
+        System.out.println(" to " + this.state);
     }
 
     void prepare(Ingredient ingredient) {
