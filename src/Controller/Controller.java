@@ -21,6 +21,7 @@ public class Controller extends KeyAdapter {
     private ArrayList<AgentDuo> agents;
     private int score;
 
+    private boolean game = true;
 
     /// /////////// ///
     /// CONSTRUCTOR ///
@@ -49,9 +50,10 @@ public class Controller extends KeyAdapter {
         model.addPlayer(1);
         score = 0;
 
-        while(true) {
+        while(game) {
             update();
         }
+        view.gameEnded(score);
     }
 
 
@@ -82,6 +84,7 @@ public class Controller extends KeyAdapter {
 
             if(winningCondition) {
                 isRunning = false;
+                game = false;
                 System.out.println("Score = "  + score);
             }
         }
