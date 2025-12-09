@@ -138,6 +138,8 @@ public class Model {
         RecipeEnum[] allRecipes = RecipeEnum.values();
         Random rand = new Random();
         recipes.add(new Sandwich());
+        recipes.add(new CaesarSalad());
+        recipes.add(new BolognesePasta());
         for (int i = 1; i < nbrRecipes; i++) {
             switch (allRecipes[rand.nextInt(allRecipes.length)]){
                 case BOLOGNESE_PASTA:
