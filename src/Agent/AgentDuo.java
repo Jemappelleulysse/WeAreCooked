@@ -10,7 +10,6 @@ import Utils.Util;
 import Utils.Vec2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import static Utils.Util.pathFinding;
@@ -25,6 +24,7 @@ public class AgentDuo {
     private int preparingIngredientId = -1;
     private final ArrayList<Vec2> nextMoves =  new ArrayList<>();
     private int recipeId = 0;
+    private int usedGasStoveId = -1;
 
     private float timeBeforeNextAction = 0f;
     private final float timeBetweenActions;
@@ -94,6 +94,10 @@ public class AgentDuo {
         return preparingIngredientId;
     }
 
+    public boolean isNotUsingGasStove(int id) {
+        return (this.usedGasStoveId != id);
+    }
+
 
     /// ////////////////////// ///
     /// PLAYER INFOS RETRIEVER ///
@@ -149,9 +153,12 @@ public class AgentDuo {
         int nextIngredientId = preparingIngredientId + 1;
 
         // Si le mate prépare l'ingrédient suivant, on prend l'ingrédient d'après
-        if (mate.getPreparingIngredientId() == nextIngredientId && mate.recipeId == this.recipeId) {
-            nextIngredientId++;
+        if (mate.recipeId == this.recipeId){
+            while(mate.getPreparingIngredientId() >= nextIngredientId) nextIngredientId++;
         }
+//        if (mate.getPreparingIngredientId() >= nextIngredientId && mate.recipeId == this.recipeId) {
+//            nextIngredientId++;
+//        }
 
         // Si l'ingrédient d'après n'existe pas
         if (nextIngredientId >= model.getRecipeIngredients(recipeId).size()) {
@@ -185,31 +192,45 @@ public class AgentDuo {
     /// MAP INFOS RETRIEVER ///
     /// /////////////////// ///
 
-    private int checkPot(KitchenUstensils pot) {
+    private boolean isAPotOnGasStove(KitchenUstensils pot) {
+        int id = 0;
         for (Furniture furniture : model.furnitures) {
-            // S'il y a la casserole voulue sur une gazinière
-            if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == pot && ((GasStove) furniture).getIngredientInPot() == null ) {
-                return 2;
+            // S'il y a la casserole voulue sur une gazinière et que l'autre agent ne l'utilise pas
+            if (furniture.getClass() == GasStove.class && ((GasStove) furniture).getPot() == pot
+                    && ((GasStove) furniture).getIngredientInPot() == null
+                    && mate.isNotUsingGasStove(id)) {
+                // Si l'ingrédient préparé est une viande, on marque le gasStove comme utilisé car goGrab() ne pourra pas le faire
+                if(getRecipeIngredient(preparingIngredientId) == Ingredient.COOKED_MEAT) {
+                    usedGasStoveId = id;
+                }
+                return true;
             }
             // S'il y a la casserole voulue sur un autre meuble
-            else if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == pot ||
-                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == pot) {
-                return 1;
-            }
+//            else if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == pot ||
+//                    furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == pot) {
+//
+//            }
+            id++;
         }
         // S'il n'y a pas la casserole voulue
-        return 0;
+        return false;
     }
 
     private Furniture getFurnitureWithIngredientOn(HoldableObject neededObject) {
+        int id = 0;
         for (Furniture furniture : model.furnitures) {
             if (furniture.getClass() == CuttingBoard.class && ((CuttingBoard) furniture).getObjectOn() == neededObject ||
                     furniture.getClass() == WorkSurface.class && ((WorkSurface) furniture).getObjectOn() == neededObject ||
-                    furniture.getClass() == GasStove.class && ((GasStove)furniture).getPot() == neededObject ||
-                    (furniture.getClass() == GasStove.class && ((GasStove)furniture).getIngredientInPot() == neededObject && neededObject!= Ingredient.PASTA)
+                    (furniture.getClass() == GasStove.class && ((GasStove)furniture).getPot() == neededObject
+                    && mate.isNotUsingGasStove(id))
+                    || (furniture.getClass() == GasStove.class && ((GasStove)furniture).getIngredientInPot() == neededObject && neededObject!= Ingredient.PASTA)
             ) {
+                if(getRecipeIngredient(preparingIngredientId) == Ingredient.COOKED_MEAT) {
+                    usedGasStoveId = id;
+                }
                 return furniture;
             }
+            id++;
         }
         return null;
     }
@@ -255,7 +276,6 @@ public class AgentDuo {
             if (nextMoves.isEmpty()) {
                 updateState();
             }
-
             if (!nextMoves.isEmpty()) {
                 // On demande au model de bouger le joueur
                 Vec2 nextMove = nextMoves.removeFirst();
@@ -342,6 +362,7 @@ public class AgentDuo {
                     if (getFurnitureWithIngredientOn(cookedIngredient) != null) {
                         goGrab(cookedIngredient);
                         state = AgentState.PREPARING_INGREDIENT;
+                        usedGasStoveId = -1;
                     }
                 } else { //Il s'est bloqué pendant le trajet
                     goPrepareHeldIngredient();
@@ -380,13 +401,12 @@ public class AgentDuo {
 
         // SI LA MAIN EST VIDE
         if (isPlayerHandEmpty()) {
-
             // Si l'ingrédient fini est posé sur un plan de travail
             if (getFurnitureWithIngredientOn(ingredient) != null) {
                 goGrab(ingredient);
             }
             else {
-                int potSituation;
+                boolean potIsAvailable;
 
                 switch (ingredient) {
 
@@ -403,66 +423,54 @@ public class AgentDuo {
                         break;
 
                     case Ingredient.COOKED_PASTA:
-                        potSituation = checkPot(KitchenUstensils.WATER_POT);
-                        if (potSituation == 2) {
+                        potIsAvailable = isAPotOnGasStove(KitchenUstensils.WATER_POT);
+                        if (potIsAvailable) {
                             // Il y a une casserole d'eau vide sur le feu
                             goGrab(Ingredient.PASTA);
-                        } else if (potSituation == 1) {
-                            // Il y a une casserole d'eau ailleurs
-                            goGrab(KitchenUstensils.WATER_POT);
                         } else {
                             // Il n'y a pas de casserole d'eau
-                            potSituation = checkPot(KitchenUstensils.EMPTY_POT);
+                            potIsAvailable = isAPotOnGasStove(KitchenUstensils.EMPTY_POT);
                             // S'il y a une casserole vide de dispo on va la chercher
-                            if (potSituation != 0) {
-                                goGrab(KitchenUstensils.EMPTY_POT);
+                            if (potIsAvailable) {
+                                usedGasStoveId = goGrab(KitchenUstensils.EMPTY_POT);
                             } // Sinon, on attend
                         }
                         break;
 
                     case Ingredient.COOKED_MEAT:
-                        potSituation = checkPot(KitchenUstensils.EMPTY_POT);
-                        if (potSituation == 2) {
+                        potIsAvailable = isAPotOnGasStove(KitchenUstensils.EMPTY_POT);
+                        if (potIsAvailable) {
                             // Il y a une casserole vide sur le feu
                             goGrab(Ingredient.RAW_MEAT);
-                        } else if (potSituation == 1) {
-                            // Il y a une casserole vide ailleurs
-                            goGrab(KitchenUstensils.WATER_POT);
                         } // Sinon, on attend
                         break;
 
                     case Ingredient.COOKED_POTATO:
-                        potSituation = checkPot(KitchenUstensils.WATER_POT);
-                        if (potSituation == 2) {
+                        potIsAvailable = isAPotOnGasStove(KitchenUstensils.WATER_POT);
+                        if (potIsAvailable) {
                             // Il y a une casserole d'eau vide sur le feu
                             goGrab(Ingredient.POTATO);
-                        } else if (potSituation == 1) {
-                            // Il y a une casserole d'eau ailleurs
-                            goGrab(KitchenUstensils.WATER_POT);
                         } else {
                             // Il n'y a pas de casserole d'eau
-                            potSituation = checkPot(KitchenUstensils.EMPTY_POT);
+                            potIsAvailable = isAPotOnGasStove(KitchenUstensils.EMPTY_POT);
                             // S'il y a une casserole vide de dispo on va la chercher
-                            if (potSituation != 0) {
-                                goGrab(KitchenUstensils.EMPTY_POT);
+                            if (potIsAvailable) {
+                                usedGasStoveId = goGrab(KitchenUstensils.EMPTY_POT);
                             } // Sinon, on attend
                         }
                         break;
 
                     case Ingredient.FRIED_POTATO:
-                        potSituation = checkPot(KitchenUstensils.OIL_POT);
-                        if (potSituation == 2) {
+                        potIsAvailable = isAPotOnGasStove(KitchenUstensils.OIL_POT);
+                        if (potIsAvailable) {;
                             // Il y a une casserole d'huile vide sur le feu
                             goGrab(Ingredient.POTATO);
-                        } else if (potSituation == 1) {
-                            // Il y a une casserole d'huile ailleurs
-                            goGrab(KitchenUstensils.OIL_POT);
                         } else {
                             // Il n'y a pas de casserole d'huile
-                            potSituation = checkPot(KitchenUstensils.EMPTY_POT);
+                            potIsAvailable = isAPotOnGasStove(KitchenUstensils.EMPTY_POT);
                             // S'il y a une casserole vide de dispo on va la chercher
-                            if (potSituation != 0) {
-                                goGrab(KitchenUstensils.EMPTY_POT);
+                            if (potIsAvailable) {
+                                usedGasStoveId = goGrab(KitchenUstensils.EMPTY_POT);
                             } // Sinon, on attend
                         }
                         break;
@@ -491,10 +499,16 @@ public class AgentDuo {
     /// PLAYER ACTION METHODS ///
     /// ///////////////////// ///
 
-    private void goGrab(HoldableObject object) {
+    private int goGrab(HoldableObject object) {
 
-        Furniture furniture = getFurnitureWithIngredientOn(object);
+        int gasStoveId = -1;
         Vec2 destination;
+        Furniture furniture = getFurnitureWithIngredientOn(object);
+
+        // Si le meuble est une gazinière, on retourne son id
+        if(furniture instanceof GasStove){
+            gasStoveId = model.furnitures.indexOf(furniture);
+        }
 
         // Si l'objet voulu n'est pas sur un meuble, on cherche un coffre
         if (furniture == null) {
@@ -505,12 +519,12 @@ public class AgentDuo {
             }
         }
 
-        // Si un coffre est trouvé, on cherche la case vide la plus proche
+        // Si un meuble est trouvé, on cherche la case vide la plus proche
         if (furniture != null) {
             Vec2 furniturePos = new Vec2(furniture.getPosX(),furniture.getPosY());
             destination = nextEmptyCase(furniturePos);
         } else {
-            return;
+            return gasStoveId;
         }
 
         // Si la case vide est trouvé, on ajoute les déplacements du pathfinding à la liste de mouvements
@@ -522,6 +536,8 @@ public class AgentDuo {
             Player p = model.getPlayer(id);
             nextMoves.add(new Vec2(p.getPosX(),p.getPosY()).sub(new Vec2(furniture.getPosX(),furniture.getPosY())));
         }
+
+        return gasStoveId;
     }
 
     private void goValidateRecipe() {
