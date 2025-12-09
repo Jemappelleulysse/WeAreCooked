@@ -209,15 +209,11 @@ public class Model {
         if(recipeToCashIn != null) {
             switch(recipeToCashIn.getRecipeType()) {
                 case BOLOGNESE_PASTA:
-                    score += 10;
-                    break;
-
-                case CAESAR_SALAD:
                     score += 15;
                     break;
 
-                case SANDWICH:
-                    score += 20;
+                case CAESAR_SALAD, SANDWICH:
+                    score += 25;
                     break;
 
                 case STEAK_AND_FRIES:
