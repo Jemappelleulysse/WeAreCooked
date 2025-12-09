@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Réécriture de l'interaction de GasStove pour plus de lisibilité">
-      <change beforePath="$PROJECT_DIR$/src/Agent/AgentDuo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agent/AgentDuo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="ade43edc-1eb1-4308-95ab-23c1b1457c6e" name="Changes" comment="Cleaning" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -232,7 +229,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765242480266</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Fix le fait que les agents pouvaient essayer d'utiliser la même gazinière">
+      <option name="closed" value="true" />
+      <created>1765248745688</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1765248745688</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Cleaning">
+      <option name="closed" value="true" />
+      <created>1765249711762</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1765249711762</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,6 +282,8 @@
     <MESSAGE value="Ajout du système de score à compléter" />
     <MESSAGE value="Clean" />
     <MESSAGE value="Réécriture de l'interaction de GasStove pour plus de lisibilité" />
-    <option name="LAST_COMMIT_MESSAGE" value="Réécriture de l'interaction de GasStove pour plus de lisibilité" />
+    <MESSAGE value="Fix le fait que les agents pouvaient essayer d'utiliser la même gazinière" />
+    <MESSAGE value="Cleaning" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaning" />
   </component>
 </project>
